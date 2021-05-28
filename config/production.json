@@ -1,0 +1,6 @@
+{
+  "port": 0,
+  "jwtSecret": "Operkod",
+  "mongoUri": "mongodb+srv://Operkod:xKhcYWmnovIuFVOC@cluster0.csqru.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+  "baseUrl": ""
+}

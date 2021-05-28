@@ -1,0 +1,71 @@
+@import "../../style/variables.scss";
+
+.audio-player {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+// Цвет всех кнопок  плей / перемотки
+.rhap_main-controls-button {
+  svg {
+    path {
+      fill: $color-primary;
+      transition: all 0.2s ease-out;
+      &:hover {
+        fill: $color-secondary;
+      }
+    }
+  }
+}
+// Цвет ползунка
+.rhap_progress-indicator {
+  background-color: $color-primary;
+  transition: background-color 0.2s ease-out;
+  &:hover {
+    background-color: $color-secondary;
+  }
+}
+//  индикатора выполнения
+.rhap_progress-bar {
+  background-color: rgba($color-secondary, 0.2);
+}
+.rhap_volume-button {
+  svg {
+    path {
+      fill: $color-primary;
+      transition: all 0.2s ease-out;
+      &:hover {
+        fill: $color-secondary;
+      }
+    }
+  }
+}
+.rhap_volume-bar {
+  background-color: rgba($color-secondary, 0.2);
+}
+.rhap_volume-indicator {
+  background-color: $color-primary;
+  transition: all 0.2s ease-out;
+  &:hover {
+    background-color: $color-secondary;
+  }
+}
+.rhap_progress-filled {
+  background-color: $color-secondary;
+}
+.rhap_repeat-button {
+  svg {
+    path {
+      fill: $color-primary;
+      transition: all 0.2s ease-out;
+      &:hover {
+        fill: $color-secondary;
+      }
+    }
+  }
+}
+.rhap_time {
+  color: $color-primary;
+}

@@ -1,0 +1,33 @@
+{
+  "files": {
+    "main.css": "/static/css/main.17a368e5.chunk.css",
+    "main.js": "/static/js/main.e1d3d5ab.chunk.js",
+    "main.js.map": "/static/js/main.e1d3d5ab.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.1c1a213f.js",
+    "runtime-main.js.map": "/static/js/runtime-main.1c1a213f.js.map",
+    "static/css/2.c15bf874.chunk.css": "/static/css/2.c15bf874.chunk.css",
+    "static/js/2.f69d0e6a.chunk.js": "/static/js/2.f69d0e6a.chunk.js",
+    "static/js/2.f69d0e6a.chunk.js.map": "/static/js/2.f69d0e6a.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/2.c15bf874.chunk.css.map": "/static/css/2.c15bf874.chunk.css.map",
+    "static/css/main.17a368e5.chunk.css.map": "/static/css/main.17a368e5.chunk.css.map",
+    "static/js/2.f69d0e6a.chunk.js.LICENSE.txt": "/static/js/2.f69d0e6a.chunk.js.LICENSE.txt",
+    "static/media/App.scss": "/static/media/Nunito-Regular.e4eb7682.ttf",
+    "static/media/as.mp3": "/static/media/as.75695496.mp3",
+    "static/media/author.d1370a05.svg": "/static/media/author.d1370a05.svg",
+    "static/media/comment.df5e7701.svg": "/static/media/comment.df5e7701.svg",
+    "static/media/like-up.0fd910a4.svg": "/static/media/like-up.0fd910a4.svg",
+    "static/media/like.3202d8c4.svg": "/static/media/like.3202d8c4.svg",
+    "static/media/logo.51a0411d.svg": "/static/media/logo.51a0411d.svg",
+    "static/media/play.b82a9267.svg": "/static/media/play.b82a9267.svg",
+    "static/media/stop.a64e0090.svg": "/static/media/stop.a64e0090.svg",
+    "static/media/user.4a895b67.svg": "/static/media/user.4a895b67.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.1c1a213f.js",
+    "static/css/2.c15bf874.chunk.css",
+    "static/js/2.f69d0e6a.chunk.js",
+    "static/css/main.17a368e5.chunk.css",
+    "static/js/main.e1d3d5ab.chunk.js"
+  ]
+}
