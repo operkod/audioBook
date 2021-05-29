@@ -4,7 +4,7 @@ import { Pagination, BackTop } from 'antd'
 import { Header } from 'components'
 import { Article } from 'containers'
 import { StateType } from 'redux/reducer'
-import { Actions, fetchBooks } from 'redux/action/books'
+import { Actions } from 'redux/action/books'
 
 
 const Home = () => {
@@ -19,12 +19,12 @@ const Home = () => {
     dispatch(Actions.searchValue(value))
   }
   React.useEffect(() => {
-    dispatch(fetchBooks({ search: searchValue }))
-  }, [searchValue])
+    dispatch(Actions.requestBook({ search: searchValue }))
+  }, [searchValue, dispatch])
 
   const handlePageClick = (page: number) => {
     setPage(page)
-    dispatch(fetchBooks({ page: page - 1, search: searchValue }))
+    dispatch(Actions.requestBook({ page: page - 1, search: searchValue }))
   }
 
   return (

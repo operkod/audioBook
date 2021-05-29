@@ -5,6 +5,7 @@ import bookApi from "utils/api/book"
 import { openNotification } from 'utils/helpers/openNotification'
 
 import { Actions as ActionsBooks, ActionsTypes as ActionsBooksTypes } from 'redux/action/books'
+import { call, put, select, takeEvery } from "@redux-saga/core/effects"
 export type ActionsTypes = InferActionsTypes<typeof Actions>
 
 export const Actions = {
@@ -31,57 +32,79 @@ export const Actions = {
 }
 
 
-export const fetchComments = (id: string) => {
-  return async (dispatch: ThunkDispatch<StateType, {}, ActionsTypes | ActionsBooksTypes>, getState: () => StateType) => {
-    const isAuth = getState().user.isAuth
-    if (!isAuth) {
-      openNotification({
-        title: 'Ошибка',
-        text: 'Только овтаризованые пользователи могут оставлять коментарии',
+export const fetchComments = (payload: string) => ({
+  type: "COMMENT@REQUEST_ITEM",
+  payload
+}
+)
+function* sagaWorkerComment(action: { type: string, payload: string }) {
+  //@ts-ignore
+  const isAuth = yield select((state: StateType) => state.user.isAuth)
+  if (!isAuth) {
+    openNotification({
+      title: 'Ошибка',
+      text: 'Только овтаризованые пользователи могут оставлять коментарии',
+      type: 'warning'
+    })
+    // @ts-ignore
+    const countMessage = yield select((sate: StateType) => {
+      return sate.books.items.find(el => el._id === action.payload)?.comments.length
+    })
+    if (countMessage < 0) {
+      return openNotification({
+        title: '',
+        text: 'Коментарий нет, ',
         type: 'warning'
       })
-      const countMessage = getState().books.items.find(el => el._id === id)?.comments.length
-      if (!countMessage) {
-        return openNotification({
-          title: '',
-          text: 'Коментарий нет, ',
-          type: 'warning'
-        })
-      }
     }
+  }
 
-    try {
-      dispatch(Actions.isShowComments(true))
-      dispatch(Actions.isLoader(true))
-      dispatch(Actions.setCommentId(id))
-      const { data } = await bookApi.getBookComment(id)
-      dispatch(Actions.setComments(data))
-      dispatch(Actions.isLoader(false))
-    } catch (e) {
-      openNotification({
-        type: 'error',
-        text: 'Произошла ошибка попробуйте ещё fetchComments'
-      })
-    }
+  try {
+    yield put(Actions.isShowComments(true))
+    yield put(Actions.isLoader(true))
+    yield put(Actions.setCommentId(action.payload))
+    const { data } = yield call(bookApi.getBookComment, action.payload)
+    yield put(Actions.setComments(data))
+    yield put(Actions.isLoader(false))
+  } catch (e) {
+    openNotification({
+      type: 'error',
+      text: 'Произошла ошибка попробуйте ещё'
+    })
+    yield put(Actions.isShowComments(false))
+    yield put(Actions.isLoader(false))
   }
 }
-export const fetchAddComment = (text: string) => {
-  return async (dispatch: ThunkDispatch<StateType, {}, ActionsTypes | ActionsBooksTypes>, getState: () => StateType) => {
-    const { comments } = getState()
-    const createComment = {
-      bookId: comments.id,
-      text,
-    }
-    try {
-      const { data } = await bookApi.setBookComment(createComment)
-      console.log('response :', data)
-      dispatch(Actions.addComment(data))
-      dispatch(ActionsBooks.addCountBook(comments.id))
-    } catch (e) {
-      openNotification({
-        type: 'error',
-        text: 'Произошла ошибка попробуйте ещё'
-      })
-    }
+
+
+export const fetchAddComment = (payload: string) => ({
+  type: "COMMENT@REQUEST_ADD_ITEM",
+  payload
+})
+
+
+function* sagaWorkerAddComment(action: any) {
+  const { comments } = yield select()
+  const createComment = {
+    bookId: comments.id,
+    text: action.payload
   }
+  try {
+    const { data } = yield call(bookApi.setBookComment, createComment)
+    yield put(Actions.addComment(data))
+    yield put(ActionsBooks.addCountBook(comments.id))
+  } catch (e) {
+    openNotification({
+      type: 'error',
+      text: 'Произошла ошибка попробуйте при отправки сообщения '
+    })
+  }
+}
+
+
+
+export function* sagaWatcherComment() {
+  yield takeEvery("COMMENT@REQUEST_ADD_ITEM", sagaWorkerAddComment)
+  yield takeEvery("COMMENT@REQUEST_ITEM", sagaWorkerComment)
+
 }

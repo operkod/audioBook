@@ -1,8 +1,10 @@
 import { ThunkDispatch } from 'redux-thunk'
 import { InferActionsTypes, StateType } from 'redux/reducer'
-import bookApi from 'utils/api/book'
+import bookApi, { BookApiType } from 'utils/api/book'
 import { BookType } from "types"
 import { openNotification } from 'utils/helpers/openNotification'
+
+import { call, put, select, takeEvery } from "redux-saga/effects"
 
 export type ActionsTypes = InferActionsTypes<typeof Actions>
 
@@ -30,21 +32,32 @@ export const Actions = {
   addCommentBookError: (payload: string) => ({
     type: 'BOOKS@ADD_COMMENT_ERROR',
     payload
+  } as const),
+  requestBook: (payload: { page?: number, search?: string }) => ({
+    type: "BOOKS@REQUEST_BOOK",
+    payload
   } as const)
 }
 
-export const fetchBooks = ({ page, search }: { page?: number, search?: string }) =>
-  async (dispatch: ThunkDispatch<StateType, {}, ActionsTypes>) => {
-    try {
-      dispatch(Actions.setBooksLoader(true))
-      const { data } = await bookApi.getBook({ page, search })
-      dispatch(Actions.setBooks(data.books))
-      dispatch(Actions.setTotalNumberBooks(data.total))
-      dispatch(Actions.setBooksLoader(false))
-    } catch (e) {
-      openNotification({
-        type: 'error',
-        text: 'Произошла ошибка попробуйте ещё'
-      })
-    }
+
+function* sagaWorker(action: any) {
+  try {
+    yield put(Actions.setBooksLoader(true))
+    const { data } = yield call(bookApi.getBook, action.payload)
+    yield put(Actions.setBooks(data.books))
+    yield put(Actions.setTotalNumberBooks(data.total))
+    yield put(Actions.setBooksLoader(false))
+  } catch (e) {
+    openNotification({
+      type: 'error',
+      text: 'Произошла ошибка попробуйте ещё'
+    })
   }
+}
+
+
+
+export function* sagaWatcherBook() {
+  //@ts-ignore
+  yield takeEvery("BOOKS@REQUEST_BOOK", sagaWorker)
+}
