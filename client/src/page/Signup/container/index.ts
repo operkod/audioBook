@@ -1,6 +1,6 @@
 import { withFormik } from 'formik'
 import RegisterForm from '../component'
-import validateForm from 'utils/helpers/validate'
+import validateForm from 'helpers/validate'
 import { fetchUserRegister } from 'redux/action/user'
 import { connect } from 'react-redux'
 

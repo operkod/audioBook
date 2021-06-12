@@ -11,8 +11,6 @@ const initialState = {
   isLoader: false
 }
 
-
-
 export const comments = (state = initialState, action: ActionsTypes): initialStateType => {
   return produce(state, draft => {
     switch (action.type) {

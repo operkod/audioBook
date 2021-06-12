@@ -3,14 +3,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Pagination, BackTop } from 'antd'
 import { Header } from 'components'
 import { Article } from 'containers'
-import { StateType } from 'redux/reducer'
 import { Actions } from 'redux/action/books'
-
+import { getBooks, getSearchValue, getTotalBooks } from 'redux/selectors'
 
 const Home = () => {
-  const books = useSelector(({ books }: StateType) => books.items)
-  const total = useSelector(({ books }: StateType) => books.total)
-  const searchValue = useSelector(({ books }: StateType) => books.searchValue)
+  const books = useSelector(getBooks)
+  const total = useSelector(getTotalBooks)
+  const searchValue = useSelector(getSearchValue)
   const [page, setPage] = React.useState(0)
   const dispatch = useDispatch()
 

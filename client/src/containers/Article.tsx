@@ -1,10 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Actions as ActionsAudio } from 'redux/action/audioPlayer'
-import { fetchComments } from 'redux/action/comments'
+import { Actions as ActionsComments } from 'redux/action/comments'
 import { Article as ArticleBase } from 'components'
 import { StateType } from 'redux/reducer'
 import { BookType } from 'types'
+import { getAuth } from 'redux/selectors'
 
 
 type mapStateToPropsTypes = {
@@ -52,11 +53,11 @@ const Article: React.FC<Props> = (props) => {
 }
 
 const mapStateToProps = (state: StateType): mapStateToPropsTypes => ({
-  isAuth: state.user.isAuth,
+  isAuth: getAuth(state),
 })
 
 const mapDispatchToProps: mapDispatchToPropsTypes = {
-  fetchComments,
+  fetchComments: ActionsComments.fetchComments,
   isPlay: ActionsAudio.isPlay,
   setAudio: ActionsAudio.setAudio,
   setAudioBookId: ActionsAudio.setAudioBookId

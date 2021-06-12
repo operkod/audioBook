@@ -10,7 +10,7 @@ import { Statistic } from 'antd'
 import logo from 'assets/img/logo.svg'
 import like from 'assets/img/like-up.svg'
 import likeUp from 'assets/img/like.svg'
-import { openNotification } from 'utils/helpers/openNotification'
+import { openNotification } from 'helpers/openNotification'
 
 
 type Props = {
@@ -36,12 +36,10 @@ const Article: React.FC<Props> = (props) => {
     isAuth,
     visibleComment,
   } = props
-  console.log('render Article');
 
   const [activeLike, setLike] = React.useState(false)
   const [countLike, setCountLike] = React.useState<number>(0)
   const handleClick = () => visibleComment(id)
-
 
   const handleLike = () => {
     if (!isAuth) {

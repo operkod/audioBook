@@ -1,10 +1,5 @@
-import { ThunkDispatch } from 'redux-thunk'
-import { InferActionsTypes, StateType } from 'redux/reducer'
-import bookApi, { BookApiType } from 'utils/api/book'
-import { BookType } from "types"
-import { openNotification } from 'utils/helpers/openNotification'
-
-import { call, put, select, takeEvery } from "redux-saga/effects"
+import { InferActionsTypes } from 'redux/reducer'
+import { BookType } from 'types'
 
 export type ActionsTypes = InferActionsTypes<typeof Actions>
 
@@ -40,24 +35,3 @@ export const Actions = {
 }
 
 
-function* sagaWorker(action: any) {
-  try {
-    yield put(Actions.setBooksLoader(true))
-    const { data } = yield call(bookApi.getBook, action.payload)
-    yield put(Actions.setBooks(data.books))
-    yield put(Actions.setTotalNumberBooks(data.total))
-    yield put(Actions.setBooksLoader(false))
-  } catch (e) {
-    openNotification({
-      type: 'error',
-      text: 'Произошла ошибка попробуйте ещё'
-    })
-  }
-}
-
-
-
-export function* sagaWatcherBook() {
-  //@ts-ignore
-  yield takeEvery("BOOKS@REQUEST_BOOK", sagaWorker)
-}

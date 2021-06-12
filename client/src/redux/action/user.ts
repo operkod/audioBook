@@ -1,9 +1,9 @@
 import { Dispatch } from "react"
 import { ThunkDispatch } from "redux-thunk"
 import { InferActionsTypes, StateType } from "redux/reducer"
-import { ResponseAuth } from "utils/api/user"
-import userApi from "utils/api/user"
-
+import { ResponseAuth } from "api/user"
+import { signIn, signUp, getMe, savePhoto } from "api/user"
+import { removeToken } from "helpers/token"
 
 export type ActionsTypes = InferActionsTypes<typeof Actions>
 
@@ -21,15 +21,15 @@ const Actions = {
   } as const)
 }
 
+// TODO
 export const logOut = () => (dispatch: Dispatch<ActionsTypes>) => {
-  window.localStorage.clear()
-  window.axios.defaults.headers.authorization = null
+  removeToken()
   dispatch(Actions.setIsAuth(false))
   dispatch(Actions.setLogOut())
 }
 export const fetchUserLogin = (postData: any) => async (dispatch: Dispatch<ActionsTypes>) => {
   try {
-    const { data } = await userApi.signIn(postData)
+    const { data } = await signIn(postData)
     dispatch(Actions.setUserData(data))
     dispatch(Actions.setIsAuth(true))
   } catch (e) {
@@ -38,7 +38,7 @@ export const fetchUserLogin = (postData: any) => async (dispatch: Dispatch<Actio
 }
 export const fetchUserRegister = (postData: any) => async (dispatch: Dispatch<ActionsTypes>) => {
   try {
-    const { data } = await userApi.signUp(postData)
+    const { data } = await signUp(postData)
     dispatch(Actions.setUserData(data))
     dispatch(Actions.setIsAuth(true))
   } catch (e) {
@@ -47,7 +47,7 @@ export const fetchUserRegister = (postData: any) => async (dispatch: Dispatch<Ac
 }
 export const getUserProfile = () => async (dispatch: ThunkDispatch<StateType, {}, ActionsTypes>) => {
   try {
-    const { data } = await userApi.getMe()
+    const { data } = await getMe()
     dispatch(Actions.setUserData(data))
   } catch (e) {
     dispatch(logOut())
@@ -55,7 +55,7 @@ export const getUserProfile = () => async (dispatch: ThunkDispatch<StateType, {}
 }
 
 export const updateAvatar = (fille: any) => async (dispatch: ThunkDispatch<StateType, {}, ActionsTypes>) => {
-  const { data } = await userApi.savePhoto(fille)
+  const { data } = await savePhoto(fille)
   dispatch(Actions.setUserData(data))
 }
 

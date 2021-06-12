@@ -1,12 +1,18 @@
+import "./Modal.scss"
 import React from "react"
 import { StateType } from "redux/reducer"
 import { connect } from "react-redux"
 import { Modal as ModalBase, Input, Button } from "antd"
-import { Actions, fetchAddComment } from "redux/action/comments"
+import { Actions } from "redux/action/comments"
 import { CommentsType } from "types"
 import Loader from "components/Loader"
 import { Comment } from "components"
-import "./Modal.scss"
+import {
+  getComments,
+  getCommentsShow,
+  getAuth,
+  getCommentsLoader
+} from "redux/selectors"
 
 type StateProps = {
   isShow: boolean
@@ -57,7 +63,7 @@ const Modal: React.FC<Props> = ({ isLoader, isShow, items, isAuth, isShowComment
           <Input style={{ width: "100%" }} value={value} onChange={handleChange} />
           <Button type="primary" onClick={handleClick}>
             Send
-            </Button>
+          </Button>
         </div>
       )}
     </ModalBase>
@@ -65,14 +71,14 @@ const Modal: React.FC<Props> = ({ isLoader, isShow, items, isAuth, isShowComment
 }
 
 const mapStateToProps = (state: StateType): StateProps => ({
-  items: state.comments.items,
-  isShow: state.comments.isShow,
-  isAuth: state.user.isAuth,
-  isLoader: state.comments.isLoader
+  items: getComments(state),
+  isShow: getCommentsShow(state),
+  isAuth: getAuth(state),
+  isLoader: getCommentsLoader(state)
 })
 const mapDispatchToProps: DispatchProps = {
   isShowComments: Actions.isShowComments,
-  fetchAddComment
+  fetchAddComment: Actions.fetchComments
 }
 
 

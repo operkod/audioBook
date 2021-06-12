@@ -1,11 +1,9 @@
 import React from 'react'
-
 import playIcon from 'assets/img/play.svg'
 import stopIcon from 'assets/img/stop.svg'
-import { StateType } from 'redux/reducer'
 import { useDispatch, useSelector } from 'react-redux'
-
 import { Actions } from 'redux/action/audioPlayer'
+import { getAudioId, getPlay } from 'redux/selectors'
 
 const pathMp3 = require('assets/audio/as.mp3')
 
@@ -14,8 +12,8 @@ type Props = {
 }
 
 const ButtonPlay: React.FC<Props> = ({ bookId }) => {
-  const audioPlayerId = useSelector((state: StateType) => state.audio.id)
-  const isPlay = useSelector((state: StateType) => state.audio.isPlay)
+  const audioPlayerId = useSelector(getAudioId)
+  const isPlay = useSelector(getPlay)
   const dispatch = useDispatch()
 
   const handleClick = () => {
@@ -23,6 +21,7 @@ const ButtonPlay: React.FC<Props> = ({ bookId }) => {
       dispatch(Actions.isPlay(!isPlay))
       return
     }
+    // TODO
     dispatch(Actions.setAudioBookId(bookId))
     dispatch(Actions.setAudio(pathMp3.default))
     dispatch(Actions.isPlay(true))
@@ -39,4 +38,5 @@ const ButtonPlay: React.FC<Props> = ({ bookId }) => {
     </div>
   )
 }
+
 export default ButtonPlay

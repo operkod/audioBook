@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux'
-
 import { audio } from './audio'
 import { user } from './user'
 import { comments } from './comments'
@@ -11,7 +10,6 @@ const rootReducer = combineReducers({
   comments,
   books
 })
-
 
 type rootReducerType = typeof rootReducer
 export type StateType = ReturnType<rootReducerType>

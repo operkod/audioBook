@@ -1,5 +1,5 @@
 import {Form, Input} from 'antd'
-import validateField from 'utils/helpers/validateField'
+import validateField from 'helpers/validateField'
 
 const FormField = props => {
   const {name, placeholder, type, handleChange, handleBlur, touched, errors, values} = props

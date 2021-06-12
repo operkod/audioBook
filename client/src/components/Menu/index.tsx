@@ -1,10 +1,9 @@
+import './Avatar.scss'
 import React from 'react'
 import { WebMenu } from './components/WebMenu'
 import { MobileMenu } from './components/MobileMenu'
 import { useSelector } from 'react-redux'
-import { StateType } from 'redux/reducer'
-import './Avatar.scss'
-
+import { getAuth, getAvatar } from 'redux/selectors'
 
 const width: number = window.innerWidth
 const currentWidth: number = 850
@@ -16,9 +15,8 @@ export type MenuProps = {
 
 const Menu = () => {
   const [showMenu, setShowMenu] = React.useState<boolean>(width > currentWidth)
-  const isAuth = useSelector((state: StateType) => state.user.isAuth)
-  const avatar = useSelector((state: StateType) => state.user.data?.avatar)
-
+  const isAuth = useSelector(getAuth)
+  const avatar = useSelector(getAvatar)
 
   const handleResize = React.useCallback(() => {
     let clientWidth = document.body.clientWidth
@@ -31,7 +29,6 @@ const Menu = () => {
     return () => window.removeEventListener('resize', handleResize)
   }, [handleResize])
 
-
   return (
     <>
       {showMenu
@@ -41,6 +38,7 @@ const Menu = () => {
     </>
   )
 }
+
 export default Menu
 
 

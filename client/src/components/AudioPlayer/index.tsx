@@ -1,26 +1,16 @@
+import './AudioPlayer.scss'
+import 'react-h5-audio-player/src/styles.scss'
 import React from 'react'
 import H5AudioPlayer from 'react-h5-audio-player'
-import { connect } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Actions } from 'redux/action/audioPlayer'
-import { StateType } from 'redux/reducer'
+import { getAudioId, getPlay } from 'redux/selectors'
 
-import 'react-h5-audio-player/src/styles.scss'
-import './AudioPlayer.scss'
-
-type mapStateToPropsTypes = {
-  isPlay: boolean
-  audioSrc: string
-}
-type mapDispatchToProps = {
-  isAudioPlay: (v: boolean) => void
-}
-type Props = mapStateToPropsTypes & mapDispatchToProps
-
-
-const AudioPlayer: React.FC<Props> = ({ isPlay, audioSrc, isAudioPlay }) => {
-  const myPlayer = React.useRef<any>()
-  const onPlay = () => isAudioPlay(true)
-  const onPause = () => isAudioPlay(false)
+const AudioPlayer = () => {
+  const myPlayer = React.useRef<any>(null)
+  const dispatch = useDispatch()
+  const isPlay = useSelector(getPlay)
+  const audioSrc = useSelector(getAudioId)
 
   React.useEffect(() => {
     if (isPlay) {
@@ -29,6 +19,7 @@ const AudioPlayer: React.FC<Props> = ({ isPlay, audioSrc, isAudioPlay }) => {
       return myPlayer.current.audio.current.pause()
     }
   }, [isPlay])
+
   return (
     <div className="audio-player">
       <div className="container">
@@ -36,8 +27,8 @@ const AudioPlayer: React.FC<Props> = ({ isPlay, audioSrc, isAudioPlay }) => {
           autoPlay={true}
           ref={myPlayer}
           src={audioSrc}
-          onPlay={onPlay}
-          onPause={onPause}
+          onPlay={() => dispatch(Actions.isPlay(false))}
+          onPause={() => dispatch(Actions.isPlay(true))}
           autoPlayAfterSrcChange={true}
         />
       </div>
@@ -45,8 +36,4 @@ const AudioPlayer: React.FC<Props> = ({ isPlay, audioSrc, isAudioPlay }) => {
   )
 }
 
-const mapStateToProps = (state: StateType): mapStateToPropsTypes => ({
-  isPlay: state.audio.isPlay,
-  audioSrc: state.audio.item
-})
-export default connect<mapStateToPropsTypes, mapDispatchToProps, any, StateType>(mapStateToProps, { isAudioPlay: Actions.isPlay })(AudioPlayer)
+export default AudioPlayer

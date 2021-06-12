@@ -1,3 +1,4 @@
+import { getToken } from "helpers/token"
 import produce from "immer"
 import { ActionsTypes } from "redux/action/user"
 
@@ -9,8 +10,8 @@ export type ProfileTypes = {
   fullname: string
 }
 const initialState = {
-  isAuth: !!window.localStorage.token,
-  token: window.localStorage.getItem('token'),
+  isAuth: !!getToken(),
+  token: getToken(),
   data: initialUser as ProfileTypes
 }
 
