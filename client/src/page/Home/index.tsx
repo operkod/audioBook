@@ -13,26 +13,23 @@ const Home = () => {
   const [page, setPage] = React.useState(0)
   const dispatch = useDispatch()
 
-  const onSearchBook = (value: string) => {
-    setPage(1)
-    dispatch(Actions.searchValue(value))
-  }
-  React.useEffect(() => {
-    dispatch(Actions.requestBook({ search: searchValue }))
-  }, [searchValue, dispatch])
-
   const handlePageClick = (page: number) => {
     setPage(page)
     dispatch(Actions.requestBook({ page: page - 1, search: searchValue }))
   }
+  React.useEffect(() => {
+    dispatch(Actions.requestBook({ page: page, search: searchValue }))
+  }, [page, getSearchValue])
 
   return (
     <>
-      <Header onSearchBook={onSearchBook} value={searchValue} />
       <div className="container">
         <div className="articles">
-          {
-            books.map((book: any, index: number) => <Article key={book._id} {...book} index={index} />)}
+          {books.length
+            ? books.map((book: any, index: number) => <Article key={book._id} {...book} index={index} />)
+            : <div style={{ height: '100%', textAlign: 'center', fontSize: '30px', fontWeight: 'bold' }}>Нечего не наедено</div>
+          }
+
           {total > 5 ? (
             <Pagination
               style={{ textAlign: 'center' }}

@@ -8,12 +8,14 @@ import PrivateRoute from './PrivateRoute'
 import PublicRoute from './PublicRoute'
 import { Signin, Signup, Profile, Home, AddBook } from 'page'
 import Modal from 'components/Modal'
+import Header from 'components/Header'
 
 const AppRouters = () => {
   const isAudio = useSelector(getAudioId)
   const showModal = useSelector(getCommentsShow)
   return <Router>
     <div className="wrapper">
+      <Header />
       <Switch>
         <PublicRoute exact path={routers.getSignin()} component={Signin} />
         <PublicRoute exact path={routers.getSignup()} component={Signup} />
