@@ -2,7 +2,9 @@ import './style/App.scss'
 import { Provider } from 'react-redux'
 import store from "./redux/store"
 import AppRouters from 'components/AppRouter'
+import Actions from 'redux/action/user'
 
+store.dispatch(Actions.userProfile())
 const App = () => {
   return (
     <Provider store={store}>

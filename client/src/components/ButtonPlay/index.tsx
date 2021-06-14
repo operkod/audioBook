@@ -1,3 +1,4 @@
+import './Style.scss'
 import React from 'react'
 import playIcon from 'assets/img/play.svg'
 import stopIcon from 'assets/img/stop.svg'
@@ -34,9 +35,11 @@ const ButtonPlay: React.FC<Props> = ({ bookId }) => {
       ) : (
         <img src={playIcon} alt="play" />
       )}
-      <span>Воспроизвести</span>
+
+      <span className="audio-play">Воспроизвести</span>
     </div>
   )
 }
+
 
 export default ButtonPlay

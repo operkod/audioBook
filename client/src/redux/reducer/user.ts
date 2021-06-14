@@ -1,9 +1,9 @@
-import { getToken } from "helpers/token"
-import produce from "immer"
-import { ActionsTypes } from "redux/action/user"
+import { getToken } from 'helpers/token'
+import produce from 'immer'
+import { ActionsTypes } from 'redux/action/user'
 
 type initialStateType = typeof initialState
-const initialUser = { id: '', avatar: '', fullname: "" }
+const initialUser = { id: '', avatar: '', fullname: '' }
 export type ProfileTypes = {
   id: string
   avatar: string
@@ -11,8 +11,8 @@ export type ProfileTypes = {
 }
 const initialState = {
   isAuth: !!getToken(),
-  token: getToken(),
-  data: initialUser as ProfileTypes
+  data: initialUser as ProfileTypes,
+  isLoader: false
 }
 
 export const user = (state = initialState, action: ActionsTypes): initialStateType => {
@@ -22,13 +22,13 @@ export const user = (state = initialState, action: ActionsTypes): initialStateTy
         draft.isAuth = action.payload
         break
       case 'USER@SET_DATA':
-        const { user, token } = action.payload
-        draft.data = user
-        draft.token = token
+        draft.data = action.payload
         break
       case 'USER@LOG_OUT':
         draft.data = initialUser
-        draft.token = ''
+        break
+      case 'USER@LOADER':
+        draft.isLoader = action.payload
         break
       default:
     }

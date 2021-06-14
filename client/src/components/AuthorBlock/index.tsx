@@ -5,15 +5,16 @@ import classNames from "classnames"
 import './AuthorBlock.scss'
 
 type props = {
-  name?: string 
+  name?: string
   onClick?: () => void
   icon?: string
-  className?: string | null
+  className?: string
+  style?: any
 }
 
 
-const AuthorBlock: React.FC<props> = ({onClick , name, icon, className}) => (
-  <div className={classNames("author", {[`${className}`]: !!className})} onClick={onClick}>
+const AuthorBlock: React.FC<props> = ({ onClick, name, icon, className, style }) => (
+  <div className={classNames("author", { [`${className}`]: !!className })} onClick={onClick} style={style}>
     <div className="author-img">
       <img src={icon || authorIcon} alt={name} />
     </div>

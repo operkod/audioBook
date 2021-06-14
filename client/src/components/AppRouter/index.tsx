@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux'
 import { getAudioId, getCommentsShow } from 'redux/selectors'
 import PrivateRoute from './PrivateRoute'
 import PublicRoute from './PublicRoute'
-import { Signin, Signup, Profile, Home } from 'page'
+import { Signin, Signup, Profile, Home, AddBook } from 'page'
 import Modal from 'components/Modal'
 
 const AppRouters = () => {
@@ -17,6 +17,7 @@ const AppRouters = () => {
       <Switch>
         <PublicRoute exact path={routers.getSignin()} component={Signin} />
         <PublicRoute exact path={routers.getSignup()} component={Signup} />
+        <PrivateRoute exact path={routers.getAddBook()} component={AddBook} />
         <PrivateRoute exact path={routers.getProfile()} component={Profile} />
         <Route path={routers.getBase()} component={Home} />
         <Route path="*">

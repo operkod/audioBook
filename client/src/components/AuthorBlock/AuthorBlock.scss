@@ -1,11 +1,13 @@
-@import '../../style/variables.scss';
+@import "../../style/variables.scss";
 .author {
   margin: 5px 0px;
   display: flex;
   align-items: center;
   cursor: pointer;
   &:hover {
-    color: $color-secondary;
+    .author-name {
+      color: $color-secondary;
+    }
   }
   &-img {
     width: 20px;

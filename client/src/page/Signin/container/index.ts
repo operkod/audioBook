@@ -15,7 +15,7 @@ const LoginFormWithFormik = withFormik({
     validateForm({ isAuth: true, values, errors })
     return errors
   },
-  handleSubmit: (values, { props, setSubmitting, setErrors }) => {
+  handleSubmit: (values, { props }) => {
     //@ts-ignore
     props.dispatch(Actions.fetchAuthorization(values))
   },

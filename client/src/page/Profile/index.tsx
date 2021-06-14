@@ -6,15 +6,16 @@ import { useHistory } from "react-router-dom"
 import { Actions as ActionsBook } from 'redux/action/books'
 import { Header } from 'components'
 import ActionsUser from 'redux/action/user'
-import { getAvatar, getSearchValue, getUserName } from 'redux/selectors'
+import { getAvatar, getBooks, getSearchValue, getUserName } from 'redux/selectors'
 import CardBook from './CardBook'
 
 const { Title } = Typography
 
 const Profile = () => {
+  const searchValue = useSelector(getSearchValue)
+  const books = useSelector(getBooks)
   const history = useHistory()
   const dispatch = useDispatch()
-  const searchValue = useSelector(getSearchValue)
   const SearchBook = (value: string) => {
     dispatch(ActionsBook.searchValue(value))
     history.push("/")
@@ -45,7 +46,7 @@ const Profile = () => {
       <Card>
         <Title level={3}>Выбраные киниги:</Title>
         <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-          <CardBook />
+          {books.map((book) => <CardBook key={book._id} {...book} />)}
         </div>
       </Card>
     </div>

@@ -1,6 +1,7 @@
 import { InferActionsTypes } from 'redux/reducer'
 import { ResponseAuth } from 'api/user'
 import { LoginFormType, RegistrationFormType } from 'types'
+import { ProfileTypes } from 'redux/reducer/user'
 
 export type ActionsTypes = InferActionsTypes<typeof Actions>
 
@@ -13,7 +14,7 @@ const Actions = {
     type: 'USER@IS_AUTH',
     payload
   } as const),
-  setUserData: (payload: ResponseAuth) => ({
+  setUserData: (payload: ProfileTypes) => ({
     type: 'USER@SET_DATA',
     payload
   } as const),
@@ -28,9 +29,8 @@ const Actions = {
     type: 'USER@REGISTRATION',
     payload
   } as const),
-  userProfile: (payload: any) => ({
+  userProfile: () => ({
     type: 'USER@PROFILE',
-    payload
   } as const),
   updateAvatar: (payload: any) => ({
     type: 'USER@UPDATE_AVATAR',

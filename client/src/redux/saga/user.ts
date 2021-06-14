@@ -11,6 +11,7 @@ function* workerLogout() {
 }
 
 function* workerAuthorization(action: { type: string, payload: LoginFormType }) {
+  yield put(Actions.isLoader(true))
   try {
     const { data } = yield call(signIn, action.payload)
     yield setToken(data.token)
@@ -22,10 +23,13 @@ function* workerAuthorization(action: { type: string, payload: LoginFormType }) 
       title: 'Authorization',
       text: e.response.data.message
     })
+  } finally {
+    yield put(Actions.isLoader(false))
   }
 }
 
 function* workerRegistration(action: any) {
+  yield put(Actions.isLoader(true))
   try {
     const { data } = yield call(signUp, action.payload)
     yield setToken(data.token)
@@ -37,6 +41,8 @@ function* workerRegistration(action: any) {
       title: 'Registration',
       text: e.response.data.message
     })
+  } finally {
+    yield put(Actions.isLoader(false))
   }
 }
 
@@ -47,6 +53,7 @@ function* workerProfile() {
     yield put(Actions.setUserData(data.user))
     yield put(Actions.setIsAuth(true))
   } catch (e) {
+    yield put(Actions.logOut())
   }
 }
 
