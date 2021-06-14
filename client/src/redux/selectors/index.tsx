@@ -12,6 +12,7 @@ const getAudioSrc = (state: StateType) => state.audio.item
 const getComments = (state: StateType) => state.comments.items
 const getCommentsShow = (state: StateType) => state.comments.isShow
 const getCommentsLoader = (state: StateType) => state.comments.isLoader
+const getCommentsCount = (state: StateType) => state.comments.items.length
 
 const getBooks = (state: StateType) => state.books.items
 const getTotalBooks = (state: StateType) => state.books.total
@@ -30,4 +31,5 @@ export {
   getTotalBooks,
   getSearchValue,
   getUserName,
+  getCommentsCount,
 }

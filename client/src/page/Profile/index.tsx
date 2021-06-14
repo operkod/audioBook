@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Card, Image } from 'antd'
 import { Typography } from 'antd'
 import { useHistory } from "react-router-dom"
-import { Actions } from 'redux/action/books'
+import { Actions as ActionsBook } from 'redux/action/books'
 import { Header } from 'components'
-import { updateAvatar } from 'redux/action/user'
-import { getAvatar, getSearchValue } from 'redux/selectors'
-import { getUserName } from 'helpers/token'
+import ActionsUser from 'redux/action/user'
+import { getAvatar, getSearchValue, getUserName } from 'redux/selectors'
+import CardBook from './CardBook'
 
 const { Title } = Typography
 
@@ -16,14 +16,14 @@ const Profile = () => {
   const dispatch = useDispatch()
   const searchValue = useSelector(getSearchValue)
   const SearchBook = (value: string) => {
-    dispatch(Actions.searchValue(value))
+    dispatch(ActionsBook.searchValue(value))
     history.push("/")
   }
   const avatar = useSelector(getAvatar)
   const userName = useSelector(getUserName)
 
   const onChange = (e: any) => {
-    dispatch(updateAvatar(e.target.files[0]))
+    dispatch(ActionsUser.updateAvatar(e.target.files[0]))
   }
 
   return <>
@@ -44,6 +44,9 @@ const Profile = () => {
       </Card>
       <Card>
         <Title level={3}>Выбраные киниги:</Title>
+        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+          <CardBook />
+        </div>
       </Card>
     </div>
   </>

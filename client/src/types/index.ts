@@ -11,3 +11,16 @@ export type CommentsType = {
   author: string
   text: string
 }
+
+
+export type LoginFormType = {
+  email: string
+  password: string
+}
+
+export type RegistrationFormType = {
+  email: string
+  fullname: string
+  password: string
+  password_2: string
+}

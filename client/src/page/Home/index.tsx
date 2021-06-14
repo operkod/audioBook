@@ -2,7 +2,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Pagination, BackTop } from 'antd'
 import { Header } from 'components'
-import { Article } from 'containers'
+import { Article } from 'components'
 import { Actions } from 'redux/action/books'
 import { getBooks, getSearchValue, getTotalBooks } from 'redux/selectors'
 

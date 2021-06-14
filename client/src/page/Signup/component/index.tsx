@@ -3,15 +3,9 @@ import { Form, Button } from "antd"
 import { Link } from "react-router-dom"
 import { FormikProps } from "formik"
 import { FormField } from "components"
+import { RegistrationFormType } from 'types'
 
-type FormValues = {
-  email: string
-  fullname: string
-  password: string
-  password_2: string
-}
-
-const RegisterForm = (props: FormikProps<FormValues>) => {
+const RegisterForm = (props: FormikProps<RegistrationFormType>) => {
   const {
     values,
     touched,
@@ -84,11 +78,11 @@ const RegisterForm = (props: FormikProps<FormValues>) => {
                 size="large"
               >
                 Зарегистрироваться
-            </Button>
+              </Button>
             </Form.Item>
             <Link className="auth__register-link" to="/signin">
               Войти в аккаунт
-          </Link>
+            </Link>
           </form>
         </div>
       </div>

@@ -1,21 +1,22 @@
 import { Switch, Redirect, Route } from 'react-router'
 import { BrowserRouter as Router } from 'react-router-dom'
-import PrivateRoute from './PrivateRoute'
 import routers from 'const/routers'
 import { AudioPlayer } from 'components'
 import { useSelector } from 'react-redux'
-import { getAudioId, getAuth } from 'redux/selectors'
+import { getAudioId, getCommentsShow } from 'redux/selectors'
+import PrivateRoute from './PrivateRoute'
 import PublicRoute from './PublicRoute'
 import { Signin, Signup, Profile, Home } from 'page'
+import Modal from 'components/Modal'
 
 const AppRouters = () => {
-  const isAuth = useSelector(getAuth)
   const isAudio = useSelector(getAudioId)
+  const showModal = useSelector(getCommentsShow)
   return <Router>
     <div className="wrapper">
       <Switch>
-        <Route exact path={routers.getSignin()} component={Signin} />
-        <Route exact path={routers.getSignin()} component={Signup} />
+        <PublicRoute exact path={routers.getSignin()} component={Signin} />
+        <PublicRoute exact path={routers.getSignup()} component={Signup} />
         <PrivateRoute exact path={routers.getProfile()} component={Profile} />
         <Route path={routers.getBase()} component={Home} />
         <Route path="*">
@@ -23,6 +24,7 @@ const AppRouters = () => {
         </Route>
       </Switch>
       {!!isAudio && <AudioPlayer />}
+      {showModal && <Modal />}
     </div>
   </Router>
 }

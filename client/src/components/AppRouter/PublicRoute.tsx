@@ -1,10 +1,11 @@
 import routers from 'const/routers'
-import { getToken } from 'helpers/token'
 import { FC, ReactElement } from 'react'
+import { useSelector } from 'react-redux'
 import { Route, Redirect } from 'react-router-dom'
+import { getAuth } from 'redux/selectors'
 
 interface IPublicRoute {
-  component: () => ReactElement | any
+  component: () => ReactElement
   exact?: boolean
   computedMatch?: object
   path: string
@@ -12,11 +13,13 @@ interface IPublicRoute {
 }
 
 const PublicRoute: FC<IPublicRoute> = ({ component: Component, ...rest }) => {
-  if (getToken() === null) {
-    return <Route {...rest} render={(props) => {
-      //@ts-ignore
-      return <Component {...props} />
-    }} />
+  const isAuth = useSelector(getAuth)
+  if (!isAuth) {
+    return <Route
+      exact={rest.exact}
+      path={rest.path}
+      render={() => <Component />}
+    />
   }
   return <Redirect to={routers.getBase()} />
 }

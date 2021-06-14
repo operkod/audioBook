@@ -1,45 +1,55 @@
-import React from 'react'
-import { AuthorBlock, ButtonPlay } from 'components'
-
 import './Article.scss'
-
+import React from 'react'
+import { connect } from 'react-redux'
+import { Actions as ActionsAudio } from 'redux/action/audioPlayer'
+import { Actions as ActionsComments } from 'redux/action/comments'
+import { AuthorBlock, ButtonPlay } from 'components'
+import { openNotification } from 'helpers/openNotification'
+import { getAuth } from 'redux/selectors'
 import commentIcon from 'assets/img/comment.svg'
-
 import { Statistic } from 'antd'
 
 import logo from 'assets/img/logo.svg'
 import like from 'assets/img/like-up.svg'
 import likeUp from 'assets/img/like.svg'
-import { openNotification } from 'helpers/openNotification'
+import { StateType } from 'redux/reducer'
 
+type mapStateToPropsTypes = {
+  isAuth: boolean
+}
+type mapDispatchToPropsTypes = {
+  isPlay: (v: boolean) => void
+  fetchComments: (v: string) => void
+}
 
-type Props = {
-  id: string
+type Props = mapStateToPropsTypes & mapDispatchToPropsTypes & OwnProps
+
+type OwnProps = {
+  _id: string
   name?: string
   author?: string
   imgUrl?: string
   description?: string
   audioId?: string
-  commentsSize: number
-  isAuth: boolean
-  visibleComment: (arg: string) => void
+  comments: []
 }
 
 const Article: React.FC<Props> = (props) => {
   const {
-    id,
+    _id,
     name,
     author,
     imgUrl,
     description,
-    commentsSize,
+    comments,
     isAuth,
-    visibleComment,
+    fetchComments,
   } = props
 
   const [activeLike, setLike] = React.useState(false)
   const [countLike, setCountLike] = React.useState<number>(0)
-  const handleClick = () => visibleComment(id)
+
+  const handleClick = () => fetchComments(_id)
 
   const handleLike = () => {
     if (!isAuth) {
@@ -74,10 +84,10 @@ const Article: React.FC<Props> = (props) => {
         <AuthorBlock name={author}
         />
         <div className="article-description__footer">
-          <ButtonPlay bookId={id} />
+          <ButtonPlay bookId={_id} />
           <AuthorBlock
             className="center"
-            name={!!commentsSize ? `${commentsSize} коментария` : 'нет коментариев'}
+            name={!!comments.length ? `${comments.length} коментария` : 'нет коментариев'}
             icon={commentIcon}
             onClick={handleClick}
           />
@@ -87,10 +97,15 @@ const Article: React.FC<Props> = (props) => {
   )
 }
 
+const mapStateToProps = (state: StateType): mapStateToPropsTypes => ({
+  isAuth: getAuth(state),
+})
 
-// const propsAreEqual = (prevProps: Props, nextProps: Props): boolean => {
-//   return nextProps.audioId === nextProps.id && prevProps.isPlay !== nextProps.isPlay
-// }
+const mapDispatchToProps: mapDispatchToPropsTypes = {
+  fetchComments: ActionsComments.fetchComments,
+  isPlay: ActionsAudio.isPlay,
+}
 
-export default React.memo(Article)
+
+export default connect<mapStateToPropsTypes, mapDispatchToPropsTypes, OwnProps, StateType>(mapStateToProps, mapDispatchToProps)(Article)
 

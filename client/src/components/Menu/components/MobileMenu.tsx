@@ -2,27 +2,28 @@
 import { Menu as MenuAntd, Dropdown, Avatar, Button } from 'antd'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { logOut } from 'redux/action/user'
+import Actions from 'redux/action/user'
 
 import userIcon from 'assets/img/user.svg'
 
 import { MenuProps } from 'components/Menu'
+import routers from 'const/routers'
 
 export const MobileMenu: React.FC<MenuProps> = ({ isAuth, avatar }) => {
   const dispatch = useDispatch()
   return (
     <MenuAntd>
-      { !isAuth
+      {!isAuth
         ? <>
           <Dropdown overlay={
             <>
               <MenuAntd.Item>
-                <Link to="/signin">
+                <Link to={routers.getSignin()}>
                   <Button block={true} type="primary">Войти</Button>
                 </Link>
               </MenuAntd.Item>
               <MenuAntd.Item>
-                <Link to="/signup">
+                <Link to={routers.getSignup()}>
                   <Button type="primary">Зарегестрироватся</Button>
                 </Link>
               </MenuAntd.Item>
@@ -40,9 +41,9 @@ export const MobileMenu: React.FC<MenuProps> = ({ isAuth, avatar }) => {
                   <Link className="nav-link" to='/addbook'>Добавить книгу</Link>
                 </MenuAntd.Item>
                 <MenuAntd.Item>
-                  <Link to='profile'>Profile</Link>
+                  <Link to={routers.getProfile()}>Profile</Link>
                 </MenuAntd.Item>
-                <MenuAntd.Item onClick={() => dispatch(logOut())} danger>
+                <MenuAntd.Item onClick={() => dispatch(Actions.logOut())} danger>
                   Выйти
                 </MenuAntd.Item>
               </MenuAntd>

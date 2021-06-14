@@ -1,7 +1,7 @@
 import { withFormik } from 'formik'
 import LoginForm from '../component'
 import validateForm from 'helpers/validate'
-import { fetchUserLogin } from 'redux/action/user'
+import Actions from 'redux/action/user'
 import { connect } from 'react-redux'
 
 const LoginFormWithFormik = withFormik({
@@ -17,14 +17,11 @@ const LoginFormWithFormik = withFormik({
   },
   handleSubmit: (values, { props, setSubmitting, setErrors }) => {
     //@ts-ignore
-    props.dispatch(fetchUserLogin(values)).catch(e => {
-      setErrors({ email: e.message, password: e.message })
-      setSubmitting(false)
-    })
+    props.dispatch(Actions.fetchAuthorization(values))
   },
   displayName: 'LoginForm'
 })(LoginForm)
 
 
-const LoginFormContainer = connect()(LoginFormWithFormik)
+const LoginFormContainer: any = connect()(LoginFormWithFormik)
 export default LoginFormContainer

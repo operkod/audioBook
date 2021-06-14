@@ -1,25 +1,26 @@
-import { getToken } from 'helpers/token';
 import { FC, ReactElement } from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import routers from 'const/routers'
+import { getAuth } from 'redux/selectors'
+import { useSelector } from 'react-redux'
 
-interface PrivateRouteType {
+type PrivateRouteType = {
   component: () => ReactElement
   exact?: boolean
-  computedMatch?: object
   path: string
-  url?: string
 }
 
 const PrivateRoute: FC<PrivateRouteType> = ({ component: Component, ...rest }) => {
-  if (getToken() === null) {
+  const isAuth = useSelector(getAuth)
+  if (!isAuth) {
     return <Redirect to={routers.getSignin()} />
   }
   return (
-    <Route {...rest} render={(props) => {
-      //@ts-ignore
-      return <Component  {...props} />
-    }} />
+    <Route
+      exact={rest.exact}
+      path={rest.path}
+      render={() => <Component />}
+    />
   )
 }
 

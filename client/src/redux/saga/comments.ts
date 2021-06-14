@@ -2,24 +2,22 @@ import { getBookComment, setBookComment } from "api/book"
 import { openNotification } from 'helpers/openNotification'
 import { Actions as ActionsBooks } from 'redux/action/books'
 import { call, put, select, takeEvery } from "@redux-saga/core/effects"
-import { getAuth } from "redux/selectors"
+import { getAuth, getCommentsCount } from "redux/selectors"
 import { Actions } from "redux/action/comments"
 
 function* sagaWorkerComment(action: { type: string, payload: string }) {
-  //@ts-ignore
-  const isAuth = yield select(getAuth())
+  const isAuth: boolean = yield select(getAuth)
   if (!isAuth) {
     openNotification({
       title: 'Ошибка',
       text: 'Только овтаризованые пользователи могут оставлять коментарии',
       type: 'warning'
     })
-    // @ts-ignore
-    const countMessage = yield select((sate: StateType) => sate.books.items.find(el => el._id === action.payload)?.comments.length)
+    const countMessage: number = yield select(getCommentsCount)
 
     if (countMessage < 0) {
       return openNotification({
-        title: '',
+        title: 'Ошибкa',
         text: 'Коментарий нет, ',
         type: 'warning'
       })
@@ -43,10 +41,6 @@ function* sagaWorkerComment(action: { type: string, payload: string }) {
   }
 }
 
-export const fetchAddComment = (payload: string) => ({
-  type: "COMMENT@REQUEST_ADD_ITEM",
-  payload
-})
 
 function* sagaWorkerAddComment(action: any) {
   const { comments } = yield select()

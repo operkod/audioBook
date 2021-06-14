@@ -27,5 +27,9 @@ export const Actions = {
   fetchComments: (payload: string) => ({
     type: "COMMENT@REQUEST_ITEM",
     payload
+  } as const),
+  fetchAddComment: (payload: string) => ({
+    type: "COMMENT@REQUEST_ADD_ITEM",
+    payload
   } as const)
 }
