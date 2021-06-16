@@ -1,0 +1,30 @@
+.profile {
+  &__header {
+    display: flex;
+    &-field {
+      display: block;
+    }
+  }
+  &__list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    &-card {
+      display: flex;
+      padding: 10px;
+      border-radius: 19px;
+      border: 1px solid #eef0f1;
+      .img {
+        height: 90px;
+        width: 90px;
+        border-radius: 50%;
+        overflow: hidden;
+      }
+      .title {
+        margin: 0 0 0 25px;
+        font-weight: bold;
+        font-size: 20px;
+      }
+    }
+  }
+}

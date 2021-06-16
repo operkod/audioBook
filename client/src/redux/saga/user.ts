@@ -60,7 +60,7 @@ function* workerProfile() {
 function* workerUpdateAvatar(action: any) {
   try {
     const { data } = yield call(savePhoto, action.payload)
-    yield put(Actions.setUserData(data))
+    yield put(Actions.setUserData(data.user))
   } catch (e) {
     openNotification({
       type: 'error',

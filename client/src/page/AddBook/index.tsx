@@ -1,57 +1,81 @@
 import './AddBook.scss'
 import React from 'react'
-import { Input, Button } from 'antd'
+import { Button } from 'antd'
+import TextArea from 'components/input/TextArea'
+import { AddBookType } from 'types'
+import { useDispatch } from 'react-redux'
+import { Actions } from 'redux/action/books'
 
-
-const { TextArea } = Input
+const initValue = {
+  name: '',
+  author: '',
+  description: '',
+}
 
 const AddBook = () => {
-  //TODO Созданть rvgjytn Input , и и зделать ошибки что бы нетправлялость с пустым полем 
-  const [inputValue, setValue] = React.useState<{ [key: string]: string }>({})
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const { name, value } = e.target
-    setValue((prev) => ({ ...prev, [name]: value }))
+  const dispatch = useDispatch()
+  const [formaData, setFormData] = React.useState<AddBookType>(initValue)
+  const [error, setError] = React.useState<{ [key: string]: boolean }>({})
+
+  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { name, value } = event.target
+    if (error[name] === true) {
+      setError((prev) => ({ ...prev, [name]: false }))
+    }
+    setFormData((prev) => ({ ...prev, [name]: value }))
   }
-  const handleSubmit = (e: any) => {
-    e.preventDefault()
-    console.log('submit :', inputValue)
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault()
+    const checkFillingInput = Object.entries(formaData).reduce((acc, [key, value]) => {
+      return !value ? { ...acc, [key]: true } : acc
+    }, {})
+    if (Object.values(checkFillingInput).length) {
+      return setError({ ...checkFillingInput })
+    } else {
+      setError({})
+    }
+    dispatch(Actions.requestAddBook(formaData))
   }
 
   return (
     <div className="addbook">
       <div className="container">
-        <form className="addbook__form" onSubmit={handleSubmit}>
-          <div className="addbook__title">Введите название книги</div>
-          <TextArea
-            value={inputValue['name']}
-            name='name'
-            onChange={handleChange}
-            placeholder="название книги"
-            autoSize={{ minRows: 1, maxRows: 1 }}
-            style={{ width: '500px' }}
-          />
-          <div className="addbook__title">Введите  И. Ф. автора</div>
-          <TextArea
-            value={inputValue['author']}
-            name='author'
-            onChange={handleChange}
-            placeholder="И Ф автора"
-            autoSize={{ minRows: 1, maxRows: 1 }}
-            style={{ width: '500px' }}
-          />
-          <div className="addbook__title">Описяние</div>
-          <TextArea
-            value={inputValue['description']}
-            name='description'
-            onChange={handleChange}
-            placeholder="Описяние"
-            autoSize={{ minRows: 3, maxRows: 7 }}
-            style={{ width: '500px' }}
-          />
-          <div className='addbook__bnt'>
-            <Button type='primary' htmlType='submit'>Добавить</Button>
-          </div>
-        </form>
+        <div className="addbook-wrap">
+          <form className="addbook__form" onSubmit={handleSubmit}>
+            <TextArea
+              name='name'
+              value={formaData}
+              onChange={handleChange}
+              label='Введите название книги'
+              placeholder='название книги'
+              error={error}
+              styleProp={{ width: '500px' }}
+            />
+            <TextArea
+              name='author'
+              value={formaData}
+              onChange={handleChange}
+              label='Введите  И. Ф. автора'
+              placeholder='И Ф автора'
+              error={error}
+              styleProp={{ width: '500px' }}
+            />
+            <TextArea
+              name='description'
+              value={formaData}
+              onChange={handleChange}
+              label='Описяние'
+              placeholder='И Ф автора'
+              error={error}
+              minRows={3}
+              maxRows={7}
+              styleProp={{ width: '500px' }}
+            />
+            <div className='addbook__btn'>
+              <Button type='primary' htmlType='submit'>Добавить</Button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   )

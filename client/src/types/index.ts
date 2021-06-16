@@ -24,3 +24,9 @@ export type RegistrationFormType = {
   password: string
   password_2: string
 }
+
+export type AddBookType = {
+  name: string,
+  author: string,
+  description: string,
+}

@@ -1,9 +1,9 @@
-import { getBookComment, setBookComment } from "api/book"
+import { getBookComment, setBookComment } from 'api/book'
 import { openNotification } from 'helpers/openNotification'
 import { Actions as ActionsBooks } from 'redux/action/books'
-import { call, put, select, takeEvery } from "@redux-saga/core/effects"
-import { getAuth, getCommentsCount } from "redux/selectors"
-import { Actions } from "redux/action/comments"
+import { call, put, select, takeEvery } from '@redux-saga/core/effects'
+import { getAuth, getCommentsCount } from 'redux/selectors'
+import { Actions } from 'redux/action/comments'
 
 function* sagaWorkerComment(action: { type: string, payload: string }) {
   const isAuth: boolean = yield select(getAuth)

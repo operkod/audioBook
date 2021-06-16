@@ -14,34 +14,33 @@ const Profile = () => {
   const userName = useSelector(getUserName)
   const dispatch = useDispatch()
 
-
   const onChange = (e: any) => {
     dispatch(ActionsUser.updateAvatar(e.target.files[0]))
   }
 
-  return <>
+  return <div className='profile'>
     <div className='container'>
       <Card >
-        <div style={{ display: 'flex' }}>
+        <div className='profile__header'>
           <div>
             <Image
               width={200}
               src={avatar}
             />
             <Title level={2} >Изменить аватар</Title>
-            <input style={{ display: 'block' }} type="file" onChange={onChange} />
+            <input className='profile__header-field' type="file" onChange={onChange} />
           </div>
           <Title level={1}><span style={{ fontSize: '20px' }}>Имя: </span>{userName}</Title>
         </div>
       </Card>
       <Card>
         <Title level={3}>Выбраные киниги:</Title>
-        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+        <div className='profile__list'>
           {books.map((book) => <CardBook key={book._id} {...book} />)}
         </div>
       </Card>
     </div>
-  </>
+  </div>
 }
 
 export default Profile

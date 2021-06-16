@@ -1,5 +1,5 @@
 import { InferActionsTypes } from 'redux/reducer'
-import { BookType } from 'types'
+import { AddBookType, BookType } from 'types'
 
 export type ActionsTypes = InferActionsTypes<typeof Actions>
 
@@ -29,9 +29,17 @@ export const Actions = {
     payload
   } as const),
   requestBook: (payload: { page?: number, search?: string }) => ({
-    type: "BOOKS@REQUEST_BOOK",
+    type: 'BOOKS@REQUEST_BOOK',
     payload
-  } as const)
+  } as const),
+  requestAddBook: (payload: AddBookType) => ({
+    type: 'BOOKS@REQUEST_ADD_BOOK',
+    payload
+  } as const),
+  responseAddBook: (payload: AddBookType) => ({
+    type: 'BOOKS@RESPONSE_ADD_BOOK',
+    payload
+  } as const),
 }
 
 

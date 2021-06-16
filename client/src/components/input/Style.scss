@@ -1,0 +1,12 @@
+.input__label {
+  display: block;
+  font-size: 20px;
+  padding-top: 20px;
+  color: #aca6a6;
+  &-error {
+    color: #e85858;
+    & + textarea {
+      border-color: #e85858 !important;
+    }
+  }
+}
