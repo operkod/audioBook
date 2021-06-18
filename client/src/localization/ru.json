@@ -1,0 +1,72 @@
+{
+  "global": {
+    "hi": "hi",
+    "delete": "Удалить",
+    "deleted": "Удалень",
+    "save": "Сохранить",
+    "sync": "Синхронизировать",
+    "enabled": "Включено",
+    "cancel": "Отменить",
+    "confirm": "Подтвердить",
+    "updated": "Обновлен",
+    "created": "Создан",
+    "active": "Активный",
+    "element": "Элемент",
+    "clarification": "Вы уверены, что хотите удалить этот элемент?",
+    "back": "Назад",
+    "close": "Закрыть"
+  },
+  "auth": {
+    "input": {
+      "username": "Логин",
+      "password": "Пароль",
+      "fullName": "Ф.И.О.",
+      "email": "Эл. адрес"
+    },
+    "headerAuthentication": {
+      "title": "Войти в аккаунт",
+      "subtitle": "Пожалуйста, войдите в свой аккаунт"
+    },
+    "headerRegistration": {
+      "title": "Регистрация",
+      "subtitle": "Вам нужно зарегистрироваться"
+    },
+    "button": {
+      "signIn": "Войти в аккаунт",
+      "registration": "Зарегистрироваться"
+    }
+  },
+  "search": "Название книги или автора",
+  "menu": {
+    "addBook": "Добавить книгу",
+    "profile": "Профаил",
+    "logout": "Выйти"
+  },
+  "alert": {
+    "admin": "Админ",
+    "user": "Пользователь",
+    "company": "Компания",
+    "systemSettings": "системные настройки",
+    "fileUploaded": "Файл загружен",
+    "fileImported": "Файл импортирован"
+  },
+  "article": {
+    "play": "Воспроизвести",
+    "comment": {
+      "yes": "коментария",
+      "no": "нет коментариев"
+    }
+  },
+  "file": {
+    "dropFileText": "Перетащите файл для загрузки или щелкните, чтобы выбрать его.",
+    "relatedFilesRequired": "Связанные файлы *",
+    "relatedFilesMaxSize": "Связанные файлы (не более 50 МБ)",
+    "sizeError": "Максимальный размер не должен превышать 50MB"
+  },
+  "errors": {
+    "error": "Ошибка",
+    "required": "Требуется ввод",
+    "emailNotValid": "Email введен некорректно",
+    "phoneNotValid": "Номер телефона введен некорректно"
+  }
+}

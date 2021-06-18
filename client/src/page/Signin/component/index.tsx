@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { FormField } from 'components'
 import { FormikProps } from 'formik'
 import { LoginFormType } from 'types'
+import { useTranslation } from 'react-i18next'
 
 const LoginForm = (props: FormikProps<LoginFormType>) => {
   const {
@@ -17,18 +18,20 @@ const LoginForm = (props: FormikProps<LoginFormType>) => {
     isValid,
     isSubmitting
   } = props
+  const { t } = useTranslation()
+  console.log(t('global.clarification'))
   return (
     <section className="auth">
       <div className="auth__content">
         <div className="auth__top">
-          <h2>Войти в аккаунт</h2>
-          <p>Пожалуйста, войдите в свой аккаунт</p>
+          <h2>{t('auth.headerAuthentication.title')}</h2>
+          <p>{t('auth.headerAuthentication.subtitle')}</p>
         </div>
         <div>
           <form onSubmit={handleSubmit} className="login-form">
             <FormField
               name="email"
-              placeholder="E-Mail"
+              placeholder={t('auth.input.email')}
               handleChange={handleChange}
               handleBlur={handleBlur}
               touched={touched}
@@ -38,7 +41,7 @@ const LoginForm = (props: FormikProps<LoginFormType>) => {
             <FormField
               name="password"
               type="password"
-              placeholder="Пароль"
+              placeholder={t('auth.input.password')}
               handleChange={handleChange}
               handleBlur={handleBlur}
               touched={touched}
@@ -55,11 +58,11 @@ const LoginForm = (props: FormikProps<LoginFormType>) => {
                 type="primary"
                 size="large"
               >
-                Войти в аккаунт
+                {t('auth.button.signIn')}
               </Button>
             </Form.Item>
             <Link className="auth__register-link" to="/signup">
-              Зарегистрироваться
+              {t('auth.button.registration')}
             </Link>
           </form>
         </div>

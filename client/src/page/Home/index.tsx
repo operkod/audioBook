@@ -1,7 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Pagination, BackTop } from 'antd'
-import { Header } from 'components'
 import { Article } from 'components'
 import { Actions } from 'redux/action/books'
 import { getBooks, getSearchValue, getTotalBooks } from 'redux/selectors'
@@ -19,7 +18,7 @@ const Home = () => {
   }
   React.useEffect(() => {
     dispatch(Actions.requestBook({ page: page, search: searchValue }))
-  }, [page, getSearchValue])
+  }, [page, searchValue])
 
   return (
     <>
@@ -29,7 +28,6 @@ const Home = () => {
             ? books.map((book: any, index: number) => <Article key={book._id} {...book} index={index} />)
             : <div style={{ height: '100%', textAlign: 'center', fontSize: '30px', fontWeight: 'bold' }}>Нечего не наедено</div>
           }
-
           {total > 5 ? (
             <Pagination
               style={{ textAlign: 'center' }}

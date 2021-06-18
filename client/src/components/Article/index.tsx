@@ -1,30 +1,19 @@
 import './Article.scss'
 import React from 'react'
-import { connect } from 'react-redux'
-import { Actions as ActionsAudio } from 'redux/action/audioPlayer'
-import { Actions as ActionsComments } from 'redux/action/comments'
+import { useDispatch, useSelector } from 'react-redux'
+import { Actions } from 'redux/action/comments'
 import { AuthorBlock, ButtonPlay } from 'components'
 import { openNotification } from 'helpers/openNotification'
 import { getAuth } from 'redux/selectors'
-import commentIcon from 'assets/img/comment.svg'
 import { Statistic } from 'antd'
+import { useTranslation } from 'react-i18next'
 
+import commentIcon from 'assets/img/comment.svg'
 import logo from 'assets/img/logo.svg'
 import like from 'assets/img/like-up.svg'
 import likeUp from 'assets/img/like.svg'
-import { StateType } from 'redux/reducer'
 
-type mapStateToPropsTypes = {
-  isAuth: boolean
-}
-type mapDispatchToPropsTypes = {
-  isPlay: (v: boolean) => void
-  fetchComments: (v: string) => void
-}
-
-type Props = mapStateToPropsTypes & mapDispatchToPropsTypes & OwnProps
-
-type OwnProps = {
+type Props = {
   _id: string
   name?: string
   author?: string
@@ -42,14 +31,14 @@ const Article: React.FC<Props> = (props) => {
     imgUrl,
     description,
     comments,
-    isAuth,
-    fetchComments,
   } = props
-
+  const dispatch = useDispatch()
+  const isAuth = useSelector(getAuth)
+  const { t } = useTranslation()
   const [activeLike, setLike] = React.useState(false)
   const [countLike, setCountLike] = React.useState<number>(0)
 
-  const handleClick = () => fetchComments(_id)
+  const handleClick = () => dispatch(Actions.fetchComments(_id))
 
   const handleLike = () => {
     if (!isAuth) {
@@ -87,7 +76,7 @@ const Article: React.FC<Props> = (props) => {
           <ButtonPlay bookId={_id} />
           <AuthorBlock
             className="center"
-            name={!!comments.length ? `${comments.length} коментария` : 'нет коментариев'}
+            name={!!comments.length ? `${comments.length} ${t('article.comment.yes')}` : t('article.comment.no')}
             icon={commentIcon}
             onClick={handleClick}
           />
@@ -97,15 +86,4 @@ const Article: React.FC<Props> = (props) => {
   )
 }
 
-const mapStateToProps = (state: StateType): mapStateToPropsTypes => ({
-  isAuth: getAuth(state),
-})
-
-const mapDispatchToProps: mapDispatchToPropsTypes = {
-  fetchComments: ActionsComments.fetchComments,
-  isPlay: ActionsAudio.isPlay,
-}
-
-
-export default connect<mapStateToPropsTypes, mapDispatchToPropsTypes, OwnProps, StateType>(mapStateToProps, mapDispatchToProps)(Article)
-
+export default Article

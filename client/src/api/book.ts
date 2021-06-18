@@ -13,7 +13,17 @@ export type ResComment = {
   text: string
 }
 
-const getBook = ({ page = 1, search = '' }): Promise<AxiosResponse<ResBooks>> => axios.get(`/book?page=${page}&search=${search}`)
+const getBook = ({ page = 1, search = '' }): Promise<AxiosResponse<ResBooks>> => {
+  let host = '/book?'
+  if (page) {
+    host = host + `page=${page}`
+  }
+  if (search) {
+    host = host + `&search=${search}`
+  }
+  return axios.get(host)
+}
+
 
 const setBook = (book: any): Promise<AxiosResponse<ResBooks>> => axios.post(`/book/add`, book, {
   headers: {

@@ -8,10 +8,12 @@ import { Actions } from 'redux/action/books'
 
 import logoIcon from 'assets/img/logo.svg'
 import routers from 'const/routers'
+import { useTranslation } from 'react-i18next'
 
 const { Search } = Input
 
 const Header = () => {
+  const { t } = useTranslation()
   const history = useHistory()
   const value = useSelector(getSearchValue)
   const dispatch = useDispatch()
@@ -28,7 +30,7 @@ const Header = () => {
           </div>
           <div className="search">
             <Search
-              placeholder="Название книги или афтора"
+              placeholder={t('search')}
               onSearch={handleSearch}
               defaultValue={value}
               enterButton

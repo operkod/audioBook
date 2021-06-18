@@ -4,6 +4,7 @@ import { Link } from "react-router-dom"
 import { FormikProps } from "formik"
 import { FormField } from "components"
 import { RegistrationFormType } from 'types'
+import { useTranslation } from 'react-i18next'
 
 const RegisterForm = (props: FormikProps<RegistrationFormType>) => {
   const {
@@ -16,18 +17,19 @@ const RegisterForm = (props: FormikProps<RegistrationFormType>) => {
     isValid,
     isSubmitting
   } = props
+  const { t } = useTranslation()
   return (
     <section className="auth">
       <div className="auth__content">
         <div className="auth__top">
-          <h2>Регистрация</h2>
-          <p>Вам нужно зарегистрироваться</p>
+          <h2>{t('auth.headerRegistration.title')}</h2>
+          <p>{t('auth.headerRegistration.subtitle')}</p>
         </div>
         <div>
           <form onSubmit={handleSubmit} className="login-form">
             <FormField
               name="email"
-              placeholder="E-Mail"
+              placeholder={t('auth.input.email')}
               handleChange={handleChange}
               handleBlur={handleBlur}
               touched={touched}
@@ -37,7 +39,7 @@ const RegisterForm = (props: FormikProps<RegistrationFormType>) => {
 
             <FormField
               name="fullname"
-              placeholder="Ваше имя"
+              placeholder={t('auth.input.fullName')}
               handleChange={handleChange}
               handleBlur={handleBlur}
               touched={touched}
@@ -47,7 +49,7 @@ const RegisterForm = (props: FormikProps<RegistrationFormType>) => {
 
             <FormField
               name="password"
-              placeholder="Пароль"
+              placeholder={t('auth.input.password')}
               type="password"
               handleChange={handleChange}
               handleBlur={handleBlur}
@@ -55,10 +57,9 @@ const RegisterForm = (props: FormikProps<RegistrationFormType>) => {
               errors={errors}
               values={values}
             />
-
             <FormField
               name="password_2"
-              placeholder="Повторите пароль"
+              placeholder={t('auth.input.password')}
               type="password"
               handleChange={handleChange}
               handleBlur={handleBlur}
@@ -77,11 +78,11 @@ const RegisterForm = (props: FormikProps<RegistrationFormType>) => {
                 onSubmit={handleSubmit}
                 size="large"
               >
-                Зарегистрироваться
+                {t('auth.button.registration')}
               </Button>
             </Form.Item>
             <Link className="auth__register-link" to="/signin">
-              Войти в аккаунт
+              {t('auth.button.signIn')}
             </Link>
           </form>
         </div>

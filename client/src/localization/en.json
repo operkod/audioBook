@@ -1,0 +1,72 @@
+{
+  "global": {
+    "hi": "hi",
+    "delete": "delete",
+    "deleted": "deleted",
+    "save": "save",
+    "sync": "Sync",
+    "enabled": "Enabled",
+    "cancel": "cancel",
+    "confirm": "confirm",
+    "updated": "updated",
+    "created": "created",
+    "active": "Active",
+    "element": "element",
+    "clarification": "Are you sure you want to delete this item?",
+    "back": "Back",
+    "close": "close"
+  },
+  "auth": {
+    "input": {
+      "username": "Username",
+      "password": "Password",
+      "fullName": "Full Name",
+      "email": "Email"
+    },
+    "headerAuthentication": {
+      "title": "Sign in to your account",
+      "subtitle": "Please login to your account"
+    },
+    "headerRegistration": {
+      "title": "Registration",
+      "subtitle": "You need to register"
+    },
+    "button": {
+      "signIn": "Sign In",
+      "registration": "Registration"
+    }
+  },
+  "search": "Title of the book or author",
+  "menu": {
+    "addBook": "Add book",
+    "profile": "Profile",
+    "logout": "Logout"
+  },
+  "alert": {
+    "admin": "Admin",
+    "user": "User",
+    "company": "Company",
+    "systemSettings": "systemSettings",
+    "fileUploaded": "file uploaded",
+    "fileImported": "file imported"
+  },
+  "article": {
+    "play": "Play",
+    "comment": {
+      "yes": "comments",
+      "no": "no comments yet"
+    }
+  },
+  "file": {
+    "dropFileText": "Drop a file to upload, or click to select it.",
+    "relatedFilesRequired": "Related files *",
+    "relatedFilesMaxSize": "Related files(max 50MB)",
+    "sizeError": "The maximum size should not exceed 50MB"
+  },
+  "errors": {
+    "error": "Error",
+    "required": "Required",
+    "emailNotValid": "Email is not valid",
+    "phoneNotValid": "Phone is not valid"
+  }
+}

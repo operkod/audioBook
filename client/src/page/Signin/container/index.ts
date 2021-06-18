@@ -4,6 +4,8 @@ import validateForm from 'helpers/validate'
 import Actions from 'redux/action/user'
 import { connect } from 'react-redux'
 
+//TODO Убрать формик
+
 const LoginFormWithFormik = withFormik({
   enableReinitialize: true,
   mapPropsToValues: () => ({

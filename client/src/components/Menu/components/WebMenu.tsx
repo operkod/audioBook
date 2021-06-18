@@ -7,30 +7,32 @@ import { MenuProps } from 'components/Menu'
 import routers from 'const/routers'
 
 import userIcon from 'assets/img/user.svg'
+import { useTranslation } from 'react-i18next'
 
 export const WebMenu: React.FC<MenuProps> = ({ isAuth, avatar }) => {
   const dispatch = useDispatch()
+  const { t } = useTranslation()
   return (
     <>
       {!isAuth
         ? <>
           <Link to={routers.getSignin()}>
-            <Button type="primary">Войти</Button>
+            <Button type="primary">{t('auth.button.signIn')}</Button>
           </Link>
           <Link to={routers.getSignup}>
-            <Button type="primary">Зарегестрироватся</Button>
+            <Button type="primary">{t('auth.button.registration')}</Button>
           </Link>
         </>
         : <Dropdown overlay={
           <MenuAntd>
             <MenuAntd.Item>
-              <Link className="nav-link" to={routers.getAddBook()}>Добавить книгу</Link>
+              <Link className="nav-link" to={routers.getAddBook()}>{t('menu.addBook')}</Link>
             </MenuAntd.Item>
             <MenuAntd.Item>
-              <Link to={routers.getProfile()}>Profile</Link>
+              <Link to={routers.getProfile()}>{t('menu.profile')}</Link>
             </MenuAntd.Item>
             <MenuAntd.Item onClick={() => dispatch(Actions.logOut())} danger>
-              Выйти
+              {t('menu.logout')}
             </MenuAntd.Item>
           </MenuAntd>
         } placement="bottomRight">
