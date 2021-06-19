@@ -35,6 +35,7 @@ const Article: React.FC<Props> = (props) => {
   const dispatch = useDispatch()
   const isAuth = useSelector(getAuth)
   const { t } = useTranslation()
+
   const [activeLike, setLike] = React.useState(false)
   const [countLike, setCountLike] = React.useState<number>(0)
 

@@ -5,10 +5,12 @@ import { Typography } from 'antd'
 import ActionsUser from 'redux/action/user'
 import { getAvatar, getBooks, getUserName } from 'redux/selectors'
 import CardBook from './CardBook'
+import { useTranslation } from 'react-i18next'
 
 const { Title } = Typography
 
 const Profile = () => {
+  const { t } = useTranslation()
   const books = useSelector(getBooks)
   const avatar = useSelector(getAvatar)
   const userName = useSelector(getUserName)
@@ -27,14 +29,14 @@ const Profile = () => {
               width={200}
               src={avatar}
             />
-            <Title level={2} >Изменить аватар</Title>
-            <input className='profile__header-field' type="file" onChange={onChange} />
+            <Title level={2}>{t('profile.avatar.change')}:</Title>
+            <input className='profile__header-field' type="file" placeholder='asdsad' onChange={onChange} />
           </div>
-          <Title level={1}><span style={{ fontSize: '20px' }}>Имя: </span>{userName}</Title>
+          <Title level={1}><span style={{ fontSize: '20px' }}>{t('profile.name')}: </span>{userName}</Title>
         </div>
       </Card>
       <Card>
-        <Title level={3}>Выбраные киниги:</Title>
+        <Title level={3}>{t('profile.select')}</Title>
         <div className='profile__list'>
           {books.map((book) => <CardBook key={book._id} {...book} />)}
         </div>

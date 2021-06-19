@@ -2,40 +2,64 @@ import './AddBook.scss'
 import React from 'react'
 import { Button } from 'antd'
 import TextArea from 'components/input/TextArea'
-import { AddBookType } from 'types'
 import { useDispatch } from 'react-redux'
 import { Actions } from 'redux/action/books'
+import { useTranslation } from 'react-i18next'
 
-const initValue = {
-  name: '',
-  author: '',
-  description: '',
+type FormDataErrorType = {
+  [key: string]: { status: boolean, text: string }
 }
 
-const AddBook = () => {
-  const dispatch = useDispatch()
-  const [formaData, setFormData] = React.useState<AddBookType>(initValue)
-  const [error, setError] = React.useState<{ [key: string]: boolean }>({})
+const initFormData = { name: '', author: '', description: '' }
 
-  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+const AddBook = () => {
+  const { t } = useTranslation()
+  const dispatch = useDispatch()
+  const [buttonDisabled, setButtonDisabled] = React.useState(false);
+  const [formaData, setFormData] = React.useState(initFormData)
+  const [error, setError] = React.useState<FormDataErrorType>({
+    name: { status: false, text: '' },
+    author: { status: false, text: '' },
+    description: { status: false, text: '' }
+  })
+
+  const handleChange = React.useCallback((event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = event.target
-    if (error[name] === true) {
-      setError((prev) => ({ ...prev, [name]: false }))
+    if (error[name].status === true) {
+      setError((prev) => ({ ...prev, [name]: { status: false, text: '' } }))
     }
     setFormData((prev) => ({ ...prev, [name]: value }))
-  }
-  const handleSubmit = (event: React.FormEvent) => {
+  }, [error])
+
+  const handleBlur = React.useCallback((event: React.FocusEvent<HTMLTextAreaElement>) => {
+    const { name, value } = event.target
+    setError((prev) => ({ ...prev, [name]: { status: !value, text: !value ? t('errors.required') : '' } }))
+  }, [])
+
+  const handleSubmit = React.useCallback((event: React.FormEvent) => {
     event.preventDefault()
     const checkFillingInput = Object.entries(formaData).reduce((acc, [key, value]) => {
-      return !value ? { ...acc, [key]: true } : acc
-    }, {})
-    if (Object.values(checkFillingInput).length) {
-      return setError({ ...checkFillingInput })
-    } else {
-      setError({})
+      if (!value) {
+        setError((prev) => ({ ...prev, [key]: { status: true, text: t('errors.required') } }))
+        return acc = true
+      }
+      return acc
+    }, false)
+    if (checkFillingInput) {
+      return
     }
     dispatch(Actions.requestAddBook(formaData))
-  }
+    setButtonDisabled(true)
+    setTimeout(() => {
+      setButtonDisabled(false)
+      setFormData(initFormData)
+    }, 2000)
+  }, [formaData, dispatch])
+
+  const isButtonDisabled = React.useMemo(() => Object.values(error).some((item) => item.status === true) || buttonDisabled, [
+    error,
+    buttonDisabled,
+  ])
 
   return (
     <div className="addbook">
@@ -46,8 +70,9 @@ const AddBook = () => {
               name='name'
               value={formaData}
               onChange={handleChange}
-              label='Введите название книги'
-              placeholder='название книги'
+              onBlur={handleBlur}
+              label={t('book.input.name')}
+              placeholder={t('book.input.name')}
               error={error}
               styleProp={{ width: '500px' }}
             />
@@ -55,8 +80,9 @@ const AddBook = () => {
               name='author'
               value={formaData}
               onChange={handleChange}
-              label='Введите  И. Ф. автора'
-              placeholder='И Ф автора'
+              onBlur={handleBlur}
+              label={t('book.input.author')}
+              placeholder={t('book.input.author')}
               error={error}
               styleProp={{ width: '500px' }}
             />
@@ -64,15 +90,20 @@ const AddBook = () => {
               name='description'
               value={formaData}
               onChange={handleChange}
-              label='Описяние'
-              placeholder='И Ф автора'
+              onBlur={handleBlur}
+              label={t('book.input.description')}
+              placeholder={t('book.input.description')}
               error={error}
               minRows={3}
               maxRows={7}
               styleProp={{ width: '500px' }}
             />
             <div className='addbook__btn'>
-              <Button type='primary' htmlType='submit'>Добавить</Button>
+              <Button
+                type='primary'
+                htmlType='submit'
+                disabled={isButtonDisabled}
+              >{t('global.save')}</Button>
             </div>
           </form>
         </div>

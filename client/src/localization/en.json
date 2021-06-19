@@ -1,6 +1,5 @@
 {
   "global": {
-    "hi": "hi",
     "delete": "delete",
     "deleted": "deleted",
     "save": "save",
@@ -57,11 +56,19 @@
       "no": "no comments yet"
     }
   },
-  "file": {
-    "dropFileText": "Drop a file to upload, or click to select it.",
-    "relatedFilesRequired": "Related files *",
-    "relatedFilesMaxSize": "Related files(max 50MB)",
-    "sizeError": "The maximum size should not exceed 50MB"
+  "profile": {
+    "name": "Name",
+    "avatar": {
+      "change": "Change avatar"
+    },
+    "select": "Selected books"
+  },
+  "book": {
+    "input": {
+      "name": "Enter the title of the book",
+      "author": "Enter the I.F. of the author",
+      "description": "Description"
+    }
   },
   "errors": {
     "error": "Error",
