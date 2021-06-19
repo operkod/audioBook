@@ -7,7 +7,6 @@ import { getAuth } from 'redux/selectors'
 interface IPublicRoute {
   component: () => ReactElement
   exact?: boolean
-  computedMatch?: object
   path: string
   url?: string
 }

@@ -30,3 +30,7 @@ export type AddBookType = {
   author: string,
   description: string,
 }
+
+export type FormDataErrorType = {
+  [key: string]: { status: boolean, text: string }
+}

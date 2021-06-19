@@ -1,6 +1,5 @@
 export { default as Header } from './Header'
 export { default as Article } from './Article'
-export { default as FormField } from './FormField'
 export { default as AuthorBlock } from './AuthorBlock'
 export { default as Menu } from './Menu'
 export { default as AudioPlayer } from './AudioPlayer'

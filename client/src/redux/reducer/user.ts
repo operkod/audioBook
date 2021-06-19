@@ -12,7 +12,7 @@ export type ProfileTypes = {
 const initialState = {
   isAuth: !!getToken(),
   data: initialUser as ProfileTypes,
-  isLoader: false
+  isLoading: false
 }
 
 export const user = (state = initialState, action: ActionsTypes): initialStateType => {
@@ -28,7 +28,7 @@ export const user = (state = initialState, action: ActionsTypes): initialStateTy
         draft.data = initialUser
         break
       case 'USER@LOADER':
-        draft.isLoader = action.payload
+        draft.isLoading = action.payload
         break
       default:
     }

@@ -42,6 +42,7 @@ const Article: React.FC<Props> = (props) => {
   const handleClick = () => dispatch(Actions.fetchComments(_id))
 
   const handleLike = () => {
+    // TODO реlезовать на серевере лайки и вынести все это в saga
     if (!isAuth) {
       return openNotification({
         type: 'warning',

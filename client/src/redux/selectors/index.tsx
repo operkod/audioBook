@@ -1,6 +1,7 @@
 import { StateType } from 'redux/reducer'
 
 const getAuth = (state: StateType) => state.user.isAuth
+const getAuthLoading = (state: StateType) => state.user.isLoading
 
 const getAvatar = (state: StateType) => state.user.data?.avatar
 const getUserName = (state: StateType) => state.user.data?.fullname
@@ -20,6 +21,7 @@ const getSearchValue = (state: StateType) => state.books.searchValue
 
 export {
   getAuth,
+  getAuthLoading,
   getAudioId,
   getPlay,
   getAudioSrc,

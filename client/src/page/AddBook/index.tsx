@@ -5,17 +5,16 @@ import TextArea from 'components/input/TextArea'
 import { useDispatch } from 'react-redux'
 import { Actions } from 'redux/action/books'
 import { useTranslation } from 'react-i18next'
+import { FormDataErrorType } from 'types'
 
-type FormDataErrorType = {
-  [key: string]: { status: boolean, text: string }
-}
+
 
 const initFormData = { name: '', author: '', description: '' }
 
 const AddBook = () => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
-  const [buttonDisabled, setButtonDisabled] = React.useState(false);
+  const [buttonDisabled, setButtonDisabled] = React.useState(false)
   const [formaData, setFormData] = React.useState(initFormData)
   const [error, setError] = React.useState<FormDataErrorType>({
     name: { status: false, text: '' },
@@ -34,7 +33,7 @@ const AddBook = () => {
   const handleBlur = React.useCallback((event: React.FocusEvent<HTMLTextAreaElement>) => {
     const { name, value } = event.target
     setError((prev) => ({ ...prev, [name]: { status: !value, text: !value ? t('errors.required') : '' } }))
-  }, [])
+  }, [t])
 
   const handleSubmit = React.useCallback((event: React.FormEvent) => {
     event.preventDefault()
@@ -54,7 +53,7 @@ const AddBook = () => {
       setButtonDisabled(false)
       setFormData(initFormData)
     }, 2000)
-  }, [formaData, dispatch])
+  }, [formaData, dispatch, t])
 
   const isButtonDisabled = React.useMemo(() => Object.values(error).some((item) => item.status === true) || buttonDisabled, [
     error,
