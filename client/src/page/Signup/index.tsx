@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getAuthLoading } from 'redux/selectors'
 import { emailValidator } from 'helpers/validators'
 import Actions from 'redux/action/user'
+import routers from 'const/routers'
 
 const RegisterForm = () => {
   const { t } = useTranslation()
@@ -43,10 +44,16 @@ const RegisterForm = () => {
       setError((prev) => ({ ...prev, [name]: { status: isValidEmail, text: isValidEmail ? t('errors.emailNotValid') : '' } }))
     } else if (name === 'password_2' && value) {
       const passwordEquality = formaData.password !== value
-      setError((prev) => ({ ...prev, [name]: { status: passwordEquality, text: passwordEquality ? 'password not equality' : '' } }))
+      setError((prev) => ({ ...prev, [name]: { status: passwordEquality, text: passwordEquality ? t('errors.passwordsEquality') : '' } }))
     } else if (name === 'password' && formaData.password_2 && value) {
       const passwordEquality = formaData.password !== formaData.password_2
-      setError((prev) => ({ ...prev, ['password_2']: { status: passwordEquality, text: passwordEquality ? 'password not equality' : '' } }))
+      setError((prev) => ({
+        ...prev,
+        'password_2': {
+          status: passwordEquality,
+          text: passwordEquality ? t('errors.passwordsEquality') : ''
+        }
+      }))
     } else {
       setError((prev) => ({ ...prev, [name]: { status: !value, text: !value ? t('errors.required') : '' } }))
     }
@@ -131,7 +138,7 @@ const RegisterForm = () => {
                 {t('auth.button.registration')}
               </Button>
             </Form.Item>
-            <Link className="auth__register-link" to="/signin">
+            <Link className="auth__register-link" to={routers.getSignin()}>
               {t('auth.button.signIn')}
             </Link>
           </form>

@@ -74,6 +74,7 @@
     "error": "Error",
     "required": "Required",
     "emailNotValid": "Email is not valid",
-    "phoneNotValid": "Phone is not valid"
+    "phoneNotValid": "Phone is not valid",
+    "passwordsEquality": "Password not equality"
   }
 }

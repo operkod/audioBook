@@ -75,6 +75,6 @@
     "required": "Требуется ввод",
     "emailNotValid": "Email введен некорректно",
     "phoneNotValid": "Номер телефона введен некорректно",
-    "comment": ""
+    "passwordsEquality": "Пароли не совпадают"
   }
 }

@@ -19,6 +19,8 @@ const getBooks = (state: StateType) => state.books.items
 const getTotalBooks = (state: StateType) => state.books.total
 const getSearchValue = (state: StateType) => state.books.searchValue
 
+const getLanguage = (state: StateType) => state.app.language
+
 export {
   getAuth,
   getAuthLoading,
@@ -34,4 +36,5 @@ export {
   getSearchValue,
   getUserName,
   getCommentsCount,
+  getLanguage,
 }

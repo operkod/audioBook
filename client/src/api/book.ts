@@ -13,7 +13,7 @@ export type ResComment = {
   text: string
 }
 
-const getBook = ({ page = 1, search = '' }): Promise<AxiosResponse<ResBooks>> => {
+const getBook = ({ page, search }: { page?: number, search?: string }): Promise<AxiosResponse<ResBooks>> => {
   let host = '/book?'
   if (page) {
     host = host + `page=${page}`
@@ -23,7 +23,6 @@ const getBook = ({ page = 1, search = '' }): Promise<AxiosResponse<ResBooks>> =>
   }
   return axios.get(host)
 }
-
 
 const setBook = (book: any): Promise<AxiosResponse<ResBooks>> => axios.post(`/book/add`, book, {
   headers: {

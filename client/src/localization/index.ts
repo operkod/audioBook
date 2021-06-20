@@ -1,4 +1,4 @@
-import { getTargetLanguage } from 'helpers/language'
+import { getLanguage } from 'helpers/token'
 import i18n from 'i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
 import backend from 'i18next-http-backend'
@@ -11,7 +11,7 @@ i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    lng: 'en',
+    lng: getLanguage() || 'ru',
     fallbackLng: ['en', 'ru'],
     debug: process.env.NODE_ENV !== 'production',
     resources: {

@@ -7,7 +7,7 @@ export type BookType = {
   name: string
 }
 export type CommentsType = {
-  _id?: string
+  _id: string
   author: string
   text: string
 }

@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux'
+import { app } from './app'
 import { audio } from './audio'
 import { user } from './user'
 import { comments } from './comments'
 import { books } from './books'
 
 const rootReducer = combineReducers({
+  app,
   user,
   audio,
   comments,

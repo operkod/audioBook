@@ -9,6 +9,7 @@ import { Actions } from 'redux/action/books'
 import logoIcon from 'assets/img/logo.svg'
 import routers from 'const/routers'
 import { useTranslation } from 'react-i18next'
+import Language from 'components/Language'
 
 const { Search } = Input
 
@@ -39,6 +40,7 @@ const Header = () => {
           <div className="nav">
             <Menu />
           </div>
+          <Language />
         </div>
       </div>
     </header>

@@ -3,21 +3,21 @@ import { Comment, Tooltip, Avatar } from 'antd'
 import { DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled } from '@ant-design/icons'
 import { CommentsType } from 'types'
 
-const CommentBase: React.FC<CommentsType> = ({text, author}) => {
-  const [likes, setLikes] = useState(0);
-  const [dislikes, setDislikes] = useState(0);
+const CommentBase: React.FC<CommentsType> = ({ text, author }) => {
+  const [likes, setLikes] = useState(0)
+  const [dislikes, setDislikes] = useState(0)
   const [action, setAction] = useState<null | string>(null)
 
   const like = () => {
-    setLikes(1);
-    setDislikes(0);
-    setAction('liked');
+    setLikes(1)
+    setDislikes(0)
+    setAction('liked')
   };
 
   const dislike = () => {
-    setLikes(0);
-    setDislikes(1);
-    setAction('disliked');
+    setLikes(0)
+    setDislikes(1)
+    setAction('disliked')
   };
 
   const actions = [
@@ -46,11 +46,10 @@ const CommentBase: React.FC<CommentsType> = ({text, author}) => {
       }
       content={
         <p>
-         {text}
+          {text}
         </p>
       }
-     
     />
-  );
+  )
 }
 export default CommentBase
