@@ -9,12 +9,14 @@ import PublicRoute from './PublicRoute'
 import { Signin, Signup, Profile, Home, AddBook } from 'page'
 import Modal from 'components/Modal'
 import Header from 'components/Header'
+import styled, { ThemeProps } from 'styled-components'
+import { ThemeType } from 'App'
 
 const AppRouters = () => {
   const isAudio = useSelector(getAudioId)
   const showModal = useSelector(getCommentsShow)
   return <Router>
-    <div className="wrapper">
+    <Wrapper>
       <Header />
       <Switch>
         <PublicRoute exact path={routers.getSignin()} component={Signin} />
@@ -28,8 +30,15 @@ const AppRouters = () => {
       </Switch>
       {!!isAudio && <AudioPlayer />}
       {showModal && <Modal />}
-    </div>
+    </Wrapper>
   </Router>
 }
 
 export default AppRouters
+
+const Wrapper = styled.div`
+  transition: background-color .3s ease;
+  background-color: ${(props: ThemeProps<ThemeType>) => props.theme.backgroundColor.secondary};
+  color: ${(props: ThemeProps<ThemeType>) => props.theme.color.primary}
+
+`

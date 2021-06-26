@@ -1,9 +1,4 @@
 .article {
-  display: flex;
-  padding: 20px 15px;
-  margin: 20px 0;
-  background-color: white;
-  border-radius: 10px;
   @media (max-width: 500px) {
     display: block;
   }
@@ -54,6 +49,7 @@
         cursor: pointer;
       }
       &-title {
+        color: inherit;
         display: inline;
         font-size: 26px;
         font-weight: 700;

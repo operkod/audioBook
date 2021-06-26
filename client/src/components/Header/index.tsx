@@ -10,6 +10,8 @@ import logoIcon from 'assets/img/logo.svg'
 import routers from 'const/routers'
 import { useTranslation } from 'react-i18next'
 import Language from 'components/Language'
+import styled, { ThemeProps } from 'styled-components'
+import { ThemeType } from 'App'
 
 const { Search } = Input
 
@@ -23,7 +25,7 @@ const Header = () => {
     history.push(routers.getBase())
   }
   return (
-    <header className="header">
+    <HeaderStyle className="header">
       <div className="container">
         <div className="header-content">
           <div className="header-content__logo">
@@ -43,7 +45,18 @@ const Header = () => {
           <Language />
         </div>
       </div>
-    </header>
+    </HeaderStyle>
   )
 }
 export default Header
+
+const HeaderStyle = styled.header`
+  transition: background-color .3s ease;
+  background-color: ${(props: ThemeProps<ThemeType>) => props.theme.backgroundColor.secondary};
+  color: ${(props: ThemeProps<ThemeType>) => props.theme.color.primary};
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-sizing: border-box;
+  border-bottom: 1px solid ${(props: ThemeProps<ThemeType>) => props.theme.backgroundColor.primary};
+`

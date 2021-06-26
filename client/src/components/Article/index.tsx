@@ -12,6 +12,8 @@ import commentIcon from 'assets/img/comment.svg'
 import logo from 'assets/img/logo.svg'
 import like from 'assets/img/like-up.svg'
 import likeUp from 'assets/img/like.svg'
+import styled, { ThemeProps } from 'styled-components'
+import { ThemeType } from 'App'
 
 type Props = {
   _id: string
@@ -55,7 +57,7 @@ const Article: React.FC<Props> = (props) => {
   }
 
   return (
-    <div className="article">
+    <ArticleStyle >
       <div className="article-left">
         <div className="article-img">
           <img src={imgUrl || logo} alt={name} />
@@ -84,8 +86,21 @@ const Article: React.FC<Props> = (props) => {
           />
         </div>
       </div>
-    </div>
+    </ArticleStyle>
   )
 }
 
 export default Article
+
+const ArticleStyle = styled.div`
+transition: background-color .3s ease;
+  background-color: ${(props: ThemeProps<ThemeType>) => props.theme.backgroundColor.primary};
+  color: ${(props: ThemeProps<ThemeType>) => props.theme.color.primary};
+  display: flex;
+  padding: 20px 15px;
+  margin: 20px 0;
+  border-radius: 10px;
+   @media (max-width: 500px) {
+    display: block;
+  }
+`
