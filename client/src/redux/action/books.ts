@@ -28,7 +28,7 @@ export const Actions = {
     type: 'BOOKS@ADD_COMMENT_ERROR',
     payload
   } as const),
-  requestBook: (payload: { page?: number, search?: string }) => ({
+  requestBook: (payload: { page?: number, search?: string } = {}) => ({
     type: 'BOOKS@REQUEST_BOOK',
     payload
   } as const),
@@ -41,5 +41,3 @@ export const Actions = {
     payload
   } as const),
 }
-
-

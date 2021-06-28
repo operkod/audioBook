@@ -6,9 +6,9 @@ const addBook: string = '/add'
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
-  getBase: () => base,
-  getProfile: () => profile,
-  getSignin: () => signin,
-  getSignup: () => signup,
-  getAddBook: () => addBook,
+	getBase: () => base,
+	getProfile: () => profile,
+	getSignin: () => signin,
+	getSignup: () => signup,
+	getAddBook: () => addBook
 }

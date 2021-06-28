@@ -1,4 +1,3 @@
-import { Dispatch } from "redux"
 import { InferActionsTypes } from "redux/reducer"
 
 
@@ -18,9 +17,9 @@ export const Actions = {
     payload
   } as const),
 }
-export const fetchAudio = (audioId: string) => (dispatch: Dispatch<ActionsTypes>) => {
+// export const fetchAudio = (audioId: string) => (dispatch: Dispatch<ActionsTypes>) => {
   // audioApi.getAudio(audioId).then(({ data }) => {
   //   dispatch(Actions.setAudio(data.audio))
   //   dispatch(Actions.setAudioLoader(false))
   // })
-}
+// }

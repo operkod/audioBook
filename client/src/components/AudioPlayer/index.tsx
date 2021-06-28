@@ -7,42 +7,41 @@ import { Actions } from 'redux/action/audioPlayer'
 import { getAudioSrc, getPlay } from 'redux/selectors'
 
 const AudioPlayer = () => {
-  const myPlayer = React.useRef<any>(null)
-  const dispatch = useDispatch()
-  const isPlay = useSelector(getPlay)
-  const audioSrc = useSelector(getAudioSrc)
+	const myPlayer = React.useRef<any>(null)
+	const dispatch = useDispatch()
+	const isPlay = useSelector(getPlay)
+	const audioSrc = useSelector(getAudioSrc)
 
-  React.useEffect(() => {
-    if (isPlay) {
-      myPlayer.current.audio.current.play()
-    } else if (!isPlay) {
-      myPlayer.current.audio.current.pause()
-    }
-  }, [isPlay])
+	React.useEffect(() => {
+		if (isPlay) {
+			myPlayer.current.audio.current.play()
+		} else if (!isPlay) {
+			myPlayer.current.audio.current.pause()
+		}
+	}, [isPlay])
 
-  const handleClick = ({ type }: any) => {
-    if (type === 'play') {
-      dispatch(Actions.isPlay(true))
-    } else if (type === 'pause') {
-      dispatch(Actions.isPlay(false))
-    }
+	const handleClick = ({ type }: any) => {
+		if (type === 'play') {
+			dispatch(Actions.isPlay(true))
+		} else if (type === 'pause') {
+			dispatch(Actions.isPlay(false))
+		}
+	}
 
-  }
-
-  return (
-    <div className="audio-player">
-      <div className="container">
-        <H5AudioPlayer
-          autoPlay={false}
-          ref={myPlayer}
-          src={audioSrc}
-          onPlay={handleClick}
-          onPause={handleClick}
-          autoPlayAfterSrcChange={true}
-        />
-      </div>
-    </div>
-  )
+	return (
+		<div className='audio-player'>
+			<div className='container'>
+				<H5AudioPlayer
+					autoPlay={false}
+					ref={myPlayer}
+					src={audioSrc}
+					onPlay={handleClick}
+					onPause={handleClick}
+					autoPlayAfterSrcChange={true}
+				/>
+			</div>
+		</div>
+	)
 }
 
 export default AudioPlayer

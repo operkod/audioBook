@@ -13,32 +13,34 @@ import styled, { ThemeProps } from 'styled-components'
 import { ThemeType } from 'App'
 
 const AppRouters = () => {
-  const isAudio = useSelector(getAudioId)
-  const showModal = useSelector(getCommentsShow)
-  return <Router>
-    <Wrapper>
-      <Header />
-      <Switch>
-        <PublicRoute exact path={routers.getSignin()} component={Signin} />
-        <PublicRoute exact path={routers.getSignup()} component={Signup} />
-        <PrivateRoute exact path={routers.getAddBook()} component={AddBook} />
-        <PrivateRoute exact path={routers.getProfile()} component={Profile} />
-        <Route path={routers.getBase()} component={Home} />
-        <Route path="*">
-          <Redirect to={routers.getBase()} />
-        </Route>
-      </Switch>
-      {!!isAudio && <AudioPlayer />}
-      {showModal && <Modal />}
-    </Wrapper>
-  </Router>
+	const isAudio = useSelector(getAudioId)
+	const showModal = useSelector(getCommentsShow)
+	return (
+		<Router>
+			<Wrapper>
+				<Header />
+				<Switch>
+					<PublicRoute exact path={routers.getSignin()} component={Signin} />
+					<PublicRoute exact path={routers.getSignup()} component={Signup} />
+					<PrivateRoute exact path={routers.getAddBook()} component={AddBook} />
+					<PrivateRoute exact path={routers.getProfile()} component={Profile} />
+					<Route path={routers.getBase()} component={Home} />
+					<Route path='*'>
+						<Redirect to={routers.getBase()} />
+					</Route>
+				</Switch>
+				{!!isAudio && <AudioPlayer />}
+				{showModal && <Modal />}
+			</Wrapper>
+		</Router>
+	)
 }
 
 export default AppRouters
 
 const Wrapper = styled.div`
-  transition: background-color .3s ease;
-  background-color: ${(props: ThemeProps<ThemeType>) => props.theme.backgroundColor.secondary};
-  color: ${(props: ThemeProps<ThemeType>) => props.theme.color.primary}
-
+	transition: background-color 0.3s ease;
+	background-color: ${(props: ThemeProps<ThemeType>) =>
+		props.theme.backgroundColor.secondary};
+	color: ${(props: ThemeProps<ThemeType>) => props.theme.color.primary};
 `

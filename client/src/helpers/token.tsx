@@ -15,13 +15,13 @@ const getLanguage = () => localStorage.getItem(LANGUAGE)
 const removeLanguage = () => localStorage.getItem(LANGUAGE)
 
 export {
-  setToken,
-  getToken,
-  removeToken,
-  setUserName,
-  getUserName,
-  removeUsername,
-  setLanguage,
-  getLanguage,
-  removeLanguage
+	setToken,
+	getToken,
+	removeToken,
+	setUserName,
+	getUserName,
+	removeUsername,
+	setLanguage,
+	getLanguage,
+	removeLanguage
 }

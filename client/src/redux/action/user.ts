@@ -1,5 +1,4 @@
 import { InferActionsTypes } from 'redux/reducer'
-import { ResponseAuth } from 'api/user'
 import { LoginFormType, RegistrationFormType } from 'types'
 import { ProfileTypes } from 'redux/reducer/user'
 
