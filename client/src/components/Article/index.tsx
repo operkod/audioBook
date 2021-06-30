@@ -13,7 +13,7 @@ import logo from 'assets/img/logo.svg'
 import like from 'assets/img/like-up.svg'
 import likeUp from 'assets/img/like.svg'
 import styled, { ThemeProps } from 'styled-components'
-import { ThemeType } from 'App'
+import { ThemeType } from 'components/Layout'
 
 type Props = {
 	_id: string

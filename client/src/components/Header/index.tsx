@@ -1,5 +1,5 @@
 import './Header.scss'
-import { Input } from 'antd'
+import { Input, Switch } from 'antd'
 import { Menu } from 'components'
 import { Link, useHistory } from 'react-router-dom'
 import { getSearchValue } from 'redux/selectors'
@@ -11,11 +11,16 @@ import routers from 'const/routers'
 import { useTranslation } from 'react-i18next'
 import Language from 'components/Language'
 import styled, { ThemeProps } from 'styled-components'
-import { ThemeType } from 'App'
+import { ThemeType } from 'components/Layout'
 
 const { Search } = Input
 
-const Header = () => {
+type Props = {
+	valueChecked: boolean
+	onChangeTheme: (v: boolean) => void
+}
+
+const Header = ({ valueChecked, onChangeTheme }: Props) => {
 	const { t } = useTranslation()
 	const history = useHistory()
 	const value = useSelector(getSearchValue)
@@ -45,6 +50,7 @@ const Header = () => {
 						<Menu />
 					</div>
 					<Language />
+					<Switch checked={valueChecked} onChange={onChangeTheme} />
 				</div>
 			</div>
 		</HeaderStyle>
