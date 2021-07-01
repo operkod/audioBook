@@ -5,7 +5,7 @@ import { Route, Redirect } from 'react-router-dom'
 import { getAuth } from 'redux/selectors'
 
 interface IPublicRoute {
-	component: () => ReactElement
+	component: () => any
 	exact?: boolean
 	path: string
 	url?: string

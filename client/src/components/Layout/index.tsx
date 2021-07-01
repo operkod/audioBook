@@ -31,7 +31,7 @@ const MyLayout = ({ children }: any) => {
 	const [theme, setTheme] = useState(false)
 	const isAudio = useSelector(getAudioId)
 	const showModal = useSelector(getCommentsShow)
-	const onChangeTheme = useCallback((value: any) => {
+	const onChangeTheme = useCallback((value: boolean) => {
 		setTheme(value)
 	}, [])
 
@@ -50,6 +50,7 @@ const MyLayout = ({ children }: any) => {
 export default MyLayout
 
 const Wrapper = styled.div`
+	min-height: 100vh;
 	transition: background-color 0.3s ease;
 	background-color: ${(props: ThemeProps<ThemeType>) =>
 		props.theme.backgroundColor.secondary};

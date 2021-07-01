@@ -5,7 +5,7 @@ import { getAuth } from 'redux/selectors'
 import { useSelector } from 'react-redux'
 
 type PrivateRouteType = {
-	component: () => ReactElement
+	component: () => any
 	exact?: boolean
 	path: string
 }
