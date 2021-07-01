@@ -13,7 +13,10 @@ export type ResComment = {
   text: string
 }
 
-const getBook = ({ page, search }: { page?: number, search?: string }): Promise<AxiosResponse<ResBooks>> => {
+
+// ===== TODO ======
+const memo = new Map()
+const getBook = async ({ page = 1, search }: { page?: number, search?: string }): Promise<{ data: ResBooks }> => {
   let host = '/book?'
   if (page) {
     host = host + `page=${page}`
@@ -21,7 +24,11 @@ const getBook = ({ page, search }: { page?: number, search?: string }): Promise<
   if (search) {
     host = host + `&search=${search}`
   }
-  return axios.get(host)
+  if (!memo.has(host)) {
+    const { data } = await axios.get(host)
+    memo.set(host, data)
+  }
+  return new Promise((resolve) => resolve({ data: memo.get(host) }))
 }
 
 const setBook = (book: any): Promise<AxiosResponse<ResBooks>> => axios.post(`/book/add`, book, {

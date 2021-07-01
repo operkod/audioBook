@@ -26,7 +26,7 @@ const Header = ({ valueChecked, onChangeTheme }: Props) => {
 	const value = useSelector(getSearchValue)
 	const dispatch = useDispatch()
 	const handleSearch = (value: string) => {
-		dispatch(Actions.requestBook({ search: value }))
+		dispatch(Actions.searchValue(value.trim()))
 		history.push(routers.getBase())
 	}
 	return (
@@ -42,7 +42,7 @@ const Header = ({ valueChecked, onChangeTheme }: Props) => {
 						<Search
 							placeholder={t('search')}
 							onSearch={handleSearch}
-							defaultValue={value}
+							defaultValue={value ? value : ''}
 							enterButton
 						/>
 					</div>

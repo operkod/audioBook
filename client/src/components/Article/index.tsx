@@ -14,18 +14,9 @@ import like from 'assets/img/like-up.svg'
 import likeUp from 'assets/img/like.svg'
 import styled, { ThemeProps } from 'styled-components'
 import { ThemeType } from 'components/Layout'
+import { BookType } from 'types'
 
-type Props = {
-	_id: string
-	name?: string
-	author?: string
-	imgUrl?: string
-	description?: string
-	audioId?: string
-	comments: []
-}
-
-const Article: React.FC<Props> = props => {
+const Article: React.FC<BookType> = props => {
 	const { _id, name, author, imgUrl, description, comments } = props
 	const dispatch = useDispatch()
 	const isAuth = useSelector(getAuth)

@@ -8,7 +8,8 @@ export type InitialStateType = typeof initialState
 const initialState = {
   items: [] as Array<BookType>,
   total: 0,
-  searchValue: "",
+  searchValue: null as null | string,
+  page: null as null | number,
   isLoader: false
 }
 
@@ -20,6 +21,9 @@ export const books = (state = initialState, action: ActionsTypes): InitialStateT
         break
       case "BOOKS@IS_LOADER":
         draft.isLoader = action.payload
+        break
+      case "BOOKS@SET_PAGE":
+        draft.page = action.payload
         break
       case "BOOKS@SET_TOTAL_NUMBER_BOOKS":
         draft.total = action.payload

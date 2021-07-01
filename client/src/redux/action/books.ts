@@ -16,6 +16,10 @@ export const Actions = {
     type: 'BOOKS@IS_LOADER',
     payload
   } as const),
+  setPage: (payload: number | null) => ({
+    type: 'BOOKS@SET_PAGE',
+    payload
+  } as const),
   searchValue: (payload: string) => ({
     type: 'BOOKS@SEARCH_VALUE',
     payload
@@ -28,7 +32,7 @@ export const Actions = {
     type: 'BOOKS@ADD_COMMENT_ERROR',
     payload
   } as const),
-  requestBook: (payload: { page?: number, search?: string } = {}) => ({
+  requestBook: (payload: { page?: number | null, search?: string | null } = {}) => ({
     type: 'BOOKS@REQUEST_BOOK',
     payload
   } as const),

@@ -10,12 +10,14 @@ function* workerRequestBook(action: any) {
     const { data } = yield call(getBook, action.payload)
     yield put(Actions.setBooks(data.books))
     yield put(Actions.setTotalNumberBooks(data.total))
-    yield put(Actions.setBooksLoader(false))
+
   } catch (e) {
     openNotification({
       type: 'error',
       text: 'Произошла ошибка попробуйте ещё'
     })
+  } finally {
+    yield put(Actions.setBooksLoader(false))
   }
 }
 

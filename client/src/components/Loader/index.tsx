@@ -3,7 +3,8 @@ import { Spin } from 'antd'
 const style = {
 	display: 'flex',
 	justifyContent: 'center',
-	alignItems: 'center'
+	alignItems: 'center',
+	height: '100%'
 }
 
 const Loader = () => (
