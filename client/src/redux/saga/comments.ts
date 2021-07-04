@@ -10,7 +10,7 @@ function* sagaWorkerComment(action: { type: string, payload: string }) {
   if (!isAuth) {
     openNotification({
       title: 'Ошибка',
-      text: 'Только овтаризованые пользователи могут оставлять коментарии',
+      text: 'Только авторизованные пользователи могут оставлять коментарии',
       type: 'warning'
     })
     const countMessage: number = yield select(getCommentsCount)

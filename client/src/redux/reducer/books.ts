@@ -40,6 +40,18 @@ export const books = (state = initialState, action: ActionsTypes): InitialStateT
         const index = draft.items.findIndex(el => el._id === action.payload)
         draft.items[index].comments.pop()
         break
+      case "BOOKS@SET_LIKE": {
+        const { bookId, status } = action.payload
+        const index = draft.items.findIndex(el => el._id === bookId)
+        const count = draft.items[index].likes.count
+        if (status) {
+          draft.items[index].likes.count = count + 1
+        } else {
+          draft.items[index].likes.count = count - 1
+        }
+        draft.items[index].likes.status = status
+        break
+      }
       default:
     }
   })
