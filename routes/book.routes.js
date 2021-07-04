@@ -1,13 +1,38 @@
 const { Router } = require('express')
 const Book = require('../models/Book')
 const Comment = require('../models/Comment')
-const User = require('../models/User')
 const auth = require('../middleware/auth')
 const router = Router()
+const jwt = require('jsonwebtoken')
+const config = require('config')
+
+const getCheckedLike = (data, userId = null) => {
+	return data.reduce((acc, next) => {
+		let book = { ...next._doc }
+		if (book.likes.includes(userId)) {
+			book = { ...book, likes: { count: next.likes.length, status: true } }
+		} else {
+			book = {
+				...book,
+				likes: { count: next.likes.length, status: false }
+			}
+		}
+		acc.push(book)
+		return acc
+	}, [])
+}
 
 router.get('/', async (req, res) => {
 	try {
+<<<<<<< HEAD
 		const aasdsada = 'asds'
+=======
+		let userId = null
+		const token = req.headers.authorization.split(' ')[1]
+		if (token && token !== 'null') {
+			userId = jwt.verify(token, config.get('jwtSecret')).userId
+		}
+>>>>>>> branch
 		const { page, search } = req.query
 		if (search) {
 			const total = await Book.find({
@@ -20,6 +45,7 @@ router.get('/', async (req, res) => {
 				.sort({ score: { $meta: 'textScore' } })
 				.skip(5 * page)
 				.limit(5)
+<<<<<<< HEAD
 			return res.status(200).json({ books, total })
 		}
 		const totalBooks = await Book.find().countDocuments()
@@ -27,6 +53,18 @@ router.get('/', async (req, res) => {
 			.skip(5 * page)
 			.limit(5)
 		res.status(200).json({ books: collectionBooks, total: totalBooks })
+=======
+			return res
+				.status(200)
+				.json({ books: getCheckedLike(books, userId), total })
+		}
+		const total = await Book.find().countDocuments()
+		const books = await Book.find()
+			.skip(5 * page)
+			.limit(5)
+
+		res.status(200).json({ books: getCheckedLike(books, userId), total })
+>>>>>>> branch
 	} catch (e) {
 		console.log(e.message)
 		res.status(500).json({ message: 'Что-то пошло не так попробуйте сново' })
@@ -76,6 +114,31 @@ router.post('/add', async (req, res) => {
 	} catch (e) {
 		res.status(500).json({ message: 'Что-то пошло не так попробуйте сново' })
 	}
+<<<<<<< HEAD
+=======
+})
+router.post('/like', auth, async (req, res) => {
+	try {
+		const { id: bookId } = req.body
+		const { userId } = req.user
+		const book = await Book.findOne({ _id: bookId })
+		if (!book) {
+			return res
+				.status(406)
+				.json({ message: 'Что-то пошло не так попробуйте сново' })
+		}
+		const { _id, likes } = book
+		if (likes.includes(userId)) {
+			await Book.updateOne({ _id: bookId }, { $pull: { likes: userId } })
+			return res.status(201).json({ bookId: _id, status: false })
+		}
+		await Book.updateOne({ _id: bookId }, { $addToSet: { likes: userId } })
+		res.status(201).json({ bookId: _id, status: true })
+	} catch (e) {
+		console.log('message', e.message)
+		res.status(500).json({ message: 'Что-то пошло не так попробуйте сново' })
+	}
+>>>>>>> branch
 })
 
 module.exports = router

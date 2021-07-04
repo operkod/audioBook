@@ -5,6 +5,7 @@ export type BookType = {
   description: string
   imgUrl: string
   name: string
+  likes: { count: number, status: boolean }
 }
 export type CommentsType = {
   _id: string

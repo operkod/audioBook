@@ -3,6 +3,11 @@ import axios from './'
 import { BookType } from "types"
 import { getToken } from 'helpers/token'
 
+const _getHeadersToken = () => ({
+  headers: {
+    authorization: `Bearer ${getToken()}`
+  }
+})
 export type ResBooks = {
   books: Array<BookType>
   total: number
@@ -13,29 +18,21 @@ export type ResComment = {
   text: string
 }
 
-
 // ===== TODO ======
-const memo = new Map()
-const getBook = async ({ page = 1, search }: { page?: number, search?: string }): Promise<{ data: ResBooks }> => {
-  let host = '/book?'
-  if (page) {
-    host = host + `page=${page}`
-  }
+const cacheRequests = new Map()
+const getBook = async ({ page = 1, search }: { page?: number, search?: string }): Promise<AxiosResponse<ResBooks>> => {
+  let host = `/book?page=${page}`
   if (search) {
     host = host + `&search=${search}`
   }
-  if (!memo.has(host)) {
-    const { data } = await axios.get(host)
-    memo.set(host, data)
+  if (!cacheRequests.has(host)) {
+    const response = await axios.get(host, _getHeadersToken())
+    cacheRequests.set(host, response)
   }
-  return new Promise((resolve) => resolve({ data: memo.get(host) }))
+  return new Promise((resolve) => resolve(cacheRequests.get(host)))
 }
 
-const setBook = (book: any): Promise<AxiosResponse<ResBooks>> => axios.post(`/book/add`, book, {
-  headers: {
-    authorization: `Bearer ${getToken()}`
-  }
-})
+const setBook = (book: any): Promise<AxiosResponse<ResBooks>> => axios.post(`/book/add`, book, _getHeadersToken())
 
 const setBookComment = (postData: any): Promise<AxiosResponse<any>> => axios.post(`/book/addcomment`, postData, {
   headers: {
@@ -43,10 +40,7 @@ const setBookComment = (postData: any): Promise<AxiosResponse<any>> => axios.pos
   }
 })
 
-const getBookComment = (id: string): Promise<AxiosResponse<Array<ResComment>>> => axios.post(`/book/comment`, { id }, {
-  headers: {
-    authorization: `Bearer ${getToken()}`
-  }
-})
+const getBookComment = (id: string): Promise<AxiosResponse<Array<ResComment>>> => axios.post(`/book/comment`, { id }, _getHeadersToken())
+const setLike = (id: string): Promise<AxiosResponse<{ bookId: string, status: boolean }>> => axios.post(`/book/like`, { id }, _getHeadersToken())
 
-export { getBook, setBook, setBookComment, getBookComment }
+export { getBook, setBook, setBookComment, getBookComment, setLike }

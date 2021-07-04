@@ -1,9 +1,9 @@
 import './Article.scss'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Actions } from 'redux/action/comments'
+import { Actions as ActionsComment } from 'redux/action/comments'
+import { Actions as ActionsBook } from 'redux/action/books'
 import { AuthorBlock, ButtonPlay } from 'components'
-import { openNotification } from 'helpers/openNotification'
 import { getAuth } from 'redux/selectors'
 import { Statistic } from 'antd'
 import { useTranslation } from 'react-i18next'
@@ -17,27 +17,15 @@ import { ThemeType } from 'components/Layout'
 import { BookType } from 'types'
 
 const Article: React.FC<BookType> = props => {
-	const { _id, name, author, imgUrl, description, comments } = props
+	const { _id, name, author, imgUrl, description, comments, likes } = props
 	const dispatch = useDispatch()
 	const isAuth = useSelector(getAuth)
 	const { t } = useTranslation()
 
-	const [activeLike, setLike] = React.useState(false)
-	const [countLike, setCountLike] = React.useState<number>(0)
-
-	const handleClick = () => dispatch(Actions.fetchComments(_id))
+	const handleClick = () => dispatch(ActionsComment.fetchComments(_id))
 
 	const handleLike = () => {
-		// TODO реlезовать на серевере лайки и вынести все это в saga
-		if (!isAuth) {
-			return openNotification({
-				type: 'warning',
-				text: 'Зарегистрируйтесь, чтобы оставить лайк'
-			})
-		}
-		setLike(!activeLike)
-		if (activeLike) setCountLike(countLike - 1)
-		else setCountLike(countLike + 1)
+		dispatch(ActionsBook.requestAddLike(_id))
 	}
 
 	return (
@@ -53,12 +41,12 @@ const Article: React.FC<BookType> = props => {
 						<h2 className='article-description__body-title'>{name}</h2>
 						<Statistic
 							valueStyle={{ fontSize: '20px', whiteSpace: 'nowrap' }}
-							value={countLike}
+							value={likes.count}
 							prefix={
 								<img
 									className='article-description__body-like'
 									onClick={handleLike}
-									src={activeLike ? like : likeUp}
+									src={likes.status ? like : likeUp}
 									alt='like'
 								/>
 							}
