@@ -24,15 +24,12 @@ const getCheckedLike = (data, userId = null) => {
 
 router.get('/', async (req, res) => {
 	try {
-<<<<<<< HEAD
-		const aasdsada = 'asds'
-=======
+
 		let userId = null
 		const token = req.headers.authorization.split(' ')[1]
 		if (token && token !== 'null') {
 			userId = jwt.verify(token, config.get('jwtSecret')).userId
 		}
->>>>>>> branch
 		const { page, search } = req.query
 		if (search) {
 			const total = await Book.find({
@@ -45,15 +42,7 @@ router.get('/', async (req, res) => {
 				.sort({ score: { $meta: 'textScore' } })
 				.skip(5 * page)
 				.limit(5)
-<<<<<<< HEAD
-			return res.status(200).json({ books, total })
-		}
-		const totalBooks = await Book.find().countDocuments()
-		const collectionBooks = await Book.find()
-			.skip(5 * page)
-			.limit(5)
-		res.status(200).json({ books: collectionBooks, total: totalBooks })
-=======
+
 			return res
 				.status(200)
 				.json({ books: getCheckedLike(books, userId), total })
@@ -64,7 +53,6 @@ router.get('/', async (req, res) => {
 			.limit(5)
 
 		res.status(200).json({ books: getCheckedLike(books, userId), total })
->>>>>>> branch
 	} catch (e) {
 		console.log(e.message)
 		res.status(500).json({ message: 'Что-то пошло не так попробуйте сново' })
