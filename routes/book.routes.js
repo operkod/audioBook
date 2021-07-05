@@ -24,7 +24,6 @@ const getCheckedLike = (data, userId = null) => {
 
 router.get('/', async (req, res) => {
 	try {
-
 		let userId = null
 		const token = req.headers.authorization.split(' ')[1]
 		if (token && token !== 'null') {
@@ -102,8 +101,6 @@ router.post('/add', async (req, res) => {
 	} catch (e) {
 		res.status(500).json({ message: 'Что-то пошло не так попробуйте сново' })
 	}
-<<<<<<< HEAD
-=======
 })
 router.post('/like', auth, async (req, res) => {
 	try {
@@ -126,7 +123,6 @@ router.post('/like', auth, async (req, res) => {
 		console.log('message', e.message)
 		res.status(500).json({ message: 'Что-то пошло не так попробуйте сново' })
 	}
->>>>>>> branch
 })
 
 module.exports = router
