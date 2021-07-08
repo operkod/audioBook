@@ -50,7 +50,7 @@ const Header = ({ valueChecked, onChangeTheme }: Props) => {
 						<Menu />
 					</div>
 					<Language />
-					<Switch checked={valueChecked} onChange={onChangeTheme} />
+					{/* <Switch checked={valueChecked} onChange={onChangeTheme} /> */}
 				</div>
 			</div>
 		</HeaderStyle>

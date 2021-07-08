@@ -28,7 +28,7 @@ const themeBlack = {
 }
 
 const MyLayout = ({ children }: any) => {
-	const [theme, setTheme] = useState(false)
+	const [theme, setTheme] = useState(true)
 	const isAudio = useSelector(getAudioId)
 	const showModal = useSelector(getCommentsShow)
 	const onChangeTheme = useCallback((value: boolean) => {
