@@ -1,6 +1,5 @@
 import { InferActionsTypes } from "redux/reducer"
 
-
 export type ActionsTypes = InferActionsTypes<typeof Actions>
 
 export const Actions = {

@@ -3,6 +3,9 @@ import { StateType } from 'redux/reducer'
 const getAuth = (state: StateType) => state.user.isAuth
 const getAuthLoading = (state: StateType) => state.user.isLoading
 
+// export const primitiveSelector = (state: object, resultKey: string, initialValue?: any) =>
+//   getEntities(state)[resultKey] ?? initialValue;
+
 const getAvatar = (state: StateType) => state.user.data?.avatar
 const getUserName = (state: StateType) => state.user.data?.fullname
 
@@ -21,7 +24,11 @@ const getBooksPage = (state: StateType) => state.books.page
 const getSearchValue = (state: StateType) => state.books.searchValue
 const getBooksIsLoader = (state: StateType) => state.books.isLoader
 
-const getLanguage = (state: StateType) => state.app.language
+// screen
+const getScreenWidth = (state: StateType) => state.settings.width
+const getScreenHeight = (state: StateType) => state.settings.height
+
+// const getLanguage = (state: StateType) => state.settings.
 
 export {
 	getAuth,
@@ -38,7 +45,9 @@ export {
 	getSearchValue,
 	getUserName,
 	getCommentsCount,
-	getLanguage,
+	// getLanguage,
 	getBooksIsLoader,
-	getBooksPage
+	getBooksPage,
+	getScreenWidth,
+	getScreenHeight
 }

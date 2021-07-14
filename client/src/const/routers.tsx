@@ -1,14 +1,14 @@
-const base: string = '/'
-const profile: string = '/profile'
-const signin: string = '/signin'
-const signup: string = '/signup'
-const addBook: string = '/add'
+const base = '/'
+const profile = '/profile'
+const signin = '/signin'
+const signup = '/signup'
+const addBook = '/add'
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
-	getBase: () => base,
-	getProfile: () => profile,
-	getSignin: () => signin,
-	getSignup: () => signup,
-	getAddBook: () => addBook
+	getBase: (): string => base,
+	getProfile: (): string => profile,
+	getSignin: (): string => signin,
+	getSignup: (): string => signup,
+	getAddBook: (): string => addBook
 }

@@ -25,7 +25,7 @@ const Profile = () => {
 			<div className='container'>
 				<Card>
 					<div className='profile__header'>
-						<div>
+						<div className='profile__header-avatar'>
 							<Image width={200} src={avatar} />
 							<Title level={2}>{t('profile.avatar.change')}:</Title>
 							<input
@@ -35,7 +35,7 @@ const Profile = () => {
 								onChange={onChange}
 							/>
 						</div>
-						<Title level={1}>
+						<Title level={1} className='profile__header-title'>
 							<span style={{ fontSize: '20px' }}>{t('profile.name')}: </span>
 							{userName}
 						</Title>

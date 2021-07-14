@@ -72,7 +72,7 @@
   },
   "errors": {
     "error": "Ошибка",
-    "required": "Требуется ввод",
+    "required": "Оязательное поле",
     "emailNotValid": "Email введен некорректно",
     "phoneNotValid": "Номер телефона введен некорректно",
     "passwordsEquality": "Пароли не совпадают"

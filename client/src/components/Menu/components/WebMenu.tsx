@@ -1,3 +1,4 @@
+import React from 'react'
 import { Menu as MenuAntd, Dropdown, Avatar, Button } from 'antd'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
@@ -8,7 +9,7 @@ import routers from 'const/routers'
 import userIcon from 'assets/img/user.svg'
 import { useTranslation } from 'react-i18next'
 
-export const WebMenu: React.FC<MenuProps> = ({ isAuth, avatar }) => {
+const WebMenu: React.FC<MenuProps> = ({ isAuth, avatar }) => {
 	const dispatch = useDispatch()
 	const { t } = useTranslation()
 	return (
@@ -50,3 +51,5 @@ export const WebMenu: React.FC<MenuProps> = ({ isAuth, avatar }) => {
 		</>
 	)
 }
+
+export default React.memo(WebMenu)

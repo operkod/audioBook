@@ -5,6 +5,7 @@ import AppRouters from 'components/AppRouter'
 import Actions from 'redux/action/user'
 
 import 'localization'
+import StalerScreen from 'settings'
 
 // TODO когда добавишь на сервере сохранение в профиле книг удалить dispatch
 // store.dispatch(ActionsBooks.requestBook())
@@ -13,7 +14,9 @@ store.dispatch(Actions.userProfile())
 const App = () => {
 	return (
 		<Provider store={store}>
-			<AppRouters />
+			<StalerScreen>
+				<AppRouters />
+			</StalerScreen>
 		</Provider>
 	)
 }
