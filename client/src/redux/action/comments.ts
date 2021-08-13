@@ -1,7 +1,8 @@
-import { InferActionsTypes } from "redux/reducer"
-import { CommentsType } from "types"
+/*eslint-disable */
+import { InferActionsTypes } from "redux/reducer";
+import { CommentsType } from "types";
 
-export type ActionsTypes = InferActionsTypes<typeof Actions>
+export type ActionsTypes = InferActionsTypes<typeof Actions>;
 
 export const Actions = {
   isShowComments: (payload: boolean) => ({

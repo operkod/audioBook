@@ -1,3 +1,4 @@
+/*eslint-disable */
 import produce from "immer"
 import { ActionsTypes } from "redux/action/comments"
 import { CommentsType } from "types"

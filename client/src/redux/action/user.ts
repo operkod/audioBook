@@ -1,11 +1,13 @@
-import { InferActionsTypes } from 'redux/reducer'
-import { LoginFormType, RegistrationFormType } from 'types'
-import { ProfileTypes } from 'redux/reducer/user'
+/*eslint-disable */
+import { InferActionsTypes } from 'redux/reducer';
+import { LoginFormType, RegistrationFormType } from 'types';
+import { ProfileTypes } from 'redux/reducer/user';
 
-export type ActionsTypes = InferActionsTypes<typeof Actions>
+export type ActionsTypes = InferActionsTypes<typeof Actions>;
 
 const Actions = {
-  isLoader: (payload: boolean) => ({
+  isLoader: (payload: boolean) =>
+  ({
     type: 'USER@LOADER',
     payload
   } as const),

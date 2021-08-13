@@ -1,3 +1,4 @@
+/*eslint-disable */
 import produce from "immer"
 import { ActionsTypes } from "redux/action/books"
 import { BookType } from "types"

@@ -1,5 +1,4 @@
-
-
+/*eslint-disable */
 type initialStateType = typeof initialState
 const initialState = {
   width: 1200,

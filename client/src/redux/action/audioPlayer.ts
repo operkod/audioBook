@@ -1,6 +1,7 @@
-import { InferActionsTypes } from "redux/reducer"
+/*eslint-disable */
+import { InferActionsTypes } from "redux/reducer";
 
-export type ActionsTypes = InferActionsTypes<typeof Actions>
+export type ActionsTypes = InferActionsTypes<typeof Actions>;
 
 export const Actions = {
   setAudio: (payload: string) => ({
@@ -15,7 +16,7 @@ export const Actions = {
     type: 'AUDIO@IS_PLAY',
     payload
   } as const),
-}
+};
 // export const fetchAudio = (audioId: string) => (dispatch: Dispatch<ActionsTypes>) => {
   // audioApi.getAudio(audioId).then(({ data }) => {
   //   dispatch(Actions.setAudio(data.audio))

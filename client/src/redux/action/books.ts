@@ -1,3 +1,4 @@
+/*eslint-disable */
 import { InferActionsTypes } from 'redux/reducer'
 import { AddBookType, BookType } from 'types'
 

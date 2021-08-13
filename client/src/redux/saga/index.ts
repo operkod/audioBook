@@ -1,8 +1,8 @@
-import { all } from '@redux-saga/core/effects'
-import { sagaWatcherBook } from './books'
-import { sagaWatcherComment } from './comments'
-import { watcherUser } from './user'
+import { all } from 'redux-saga/effects';
+import { sagaWatcherBook } from './books';
+import { sagaWatcherComment } from './comments';
+import { watcherUser } from './user';
 
 export function* rootWatcher() {
-  yield all([sagaWatcherBook(), sagaWatcherComment(), watcherUser()])
+  yield all([sagaWatcherBook(), sagaWatcherComment(), watcherUser()]);
 }

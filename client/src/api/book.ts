@@ -1,46 +1,47 @@
-import { AxiosResponse } from 'axios'
-import axios from './'
-import { BookType } from "types"
-import { getToken } from 'helpers/token'
+/* eslint-disable */
+import { AxiosResponse } from 'axios';
+import { BookType } from "types";
+import { getToken } from 'helpers/token';
+import axios from './';
 
-const _getHeadersToken = () => ({
+const getHeadersToken = () => ({
   headers: {
-    authorization: `Bearer ${getToken()}`
-  }
-})
+    authorization: `Bearer ${getToken()}`,
+  },
+});
 export type ResBooks = {
-  books: Array<BookType>
-  total: number
-}
+  books: Array<BookType>;
+  total: number;
+};
 export type ResComment = {
-  _id: string
-  author: string
-  text: string
-}
+  _id: string;
+  author: string;
+  text: string;
+};
 
 // ===== TODO ======
-const cacheRequests = new Map()
-const getBook = async ({ page = 1, search }: { page?: number, search?: string }): Promise<AxiosResponse<ResBooks>> => {
-  let host = `/book?page=${page}`
+const cacheRequests = new Map();
+const getBook = async ({ page = 1, search }: { page?: number; search?: string }): Promise<AxiosResponse<ResBooks>> => {
+  let host = `/book?page=${page}`;
   if (search) {
-    host = host + `&search=${search}`
+    host = host + `&search=${search}`;
   }
   if (!cacheRequests.has(host)) {
-    const response = await axios.get(host, _getHeadersToken())
-    cacheRequests.set(host, response)
+    const response = await axios.get(host, getHeadersToken());
+    cacheRequests.set(host, response);
   }
-  return new Promise((resolve) => resolve(cacheRequests.get(host)))
+  return new Promise((resolve) => resolve(cacheRequests.get(host)));
 }
 
-const setBook = (book: any): Promise<AxiosResponse<ResBooks>> => axios.post(`/book/add`, book, _getHeadersToken())
+const setBook = (book: any): Promise<AxiosResponse<ResBooks>> => axios.post(`/book/add`, book, getHeadersToken());
 
 const setBookComment = (postData: any): Promise<AxiosResponse<any>> => axios.post(`/book/addcomment`, postData, {
   headers: {
     authorization: `Bearer ${getToken()}`
   }
-})
+});
 
-const getBookComment = (id: string): Promise<AxiosResponse<Array<ResComment>>> => axios.post(`/book/comment`, { id }, _getHeadersToken())
-const setLike = (id: string): Promise<AxiosResponse<{ bookId: string, status: boolean }>> => axios.post(`/book/like`, { id }, _getHeadersToken())
+const getBookComment = (id: string): Promise<AxiosResponse<Array<ResComment>>> => axios.post(`/book/comment`, { id }, getHeadersToken());
+const setLike = (id: string): Promise<AxiosResponse<{ bookId: string, status: boolean }>> => axios.post(`/book/like`, { id }, getHeadersToken());
 
-export { getBook, setBook, setBookComment, getBookComment, setLike }
+export { getBook, setBook, setBookComment, getBookComment, setLike };
