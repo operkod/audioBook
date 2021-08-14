@@ -17,7 +17,7 @@ const AuthorBlock: React.FC<props> = (props) => {
   return (
     <div className={classNames('author', { [`${className}`]: !!className })} onClick={onClick} style={style}>
       <div className="author-img">
-        <img src={icon || authorIcon} alt={name} />
+        <img src={icon || authorIcon} alt={name} width="100%" />
       </div>
       <div className="author-name">{name}</div>
     </div>

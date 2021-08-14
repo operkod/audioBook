@@ -28,17 +28,19 @@ const Header = ({ valueChecked, onChangeTheme }: Props) => {
   const history = useHistory();
   const value = useSelector(getSearchValue);
   const dispatch = useDispatch();
+
   const handleSearch = (value: string) => {
     dispatch(Actions.searchValue(value.trim()));
     history.push(routers.getBase());
   };
+
   return (
     <HeaderStyle className="header">
       <div className="container">
         <div className="header-content">
           <div className="header-content__logo">
             <Link to={routers.getBase()}>
-              <img src={logoIcon} alt="Books" />
+              <img src={logoIcon} alt="Books" width="100%" />
             </Link>
           </div>
           <div className="search">
