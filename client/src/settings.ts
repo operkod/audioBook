@@ -7,7 +7,7 @@ const StalerScreen = ({ children }: any) => {
   const changeScreen = useCallback(
     ({ target }: any) => {
       const { innerHeight, innerWidth } = target;
-      dispatch({ type: 'SETTINGS_SET_DATA', payload: { width: innerWidth, height: innerHeight } });
+      dispatch({ type: 'SETTINGS@SET_DATA', payload: { width: innerWidth, height: innerHeight } });
     },
     [dispatch],
   );
@@ -22,8 +22,9 @@ const StalerScreen = ({ children }: any) => {
   React.useEffect(() => {
     const width = document.body.clientWidth;
     const height = document.body.clientHeight;
-    dispatch({ type: 'SETTINGS_SET_DATA', payload: { width, height } });
+    dispatch({ type: 'SETTINGS@SET_DATA', payload: { width, height } });
   }, [dispatch]);
+
   return children;
 };
 

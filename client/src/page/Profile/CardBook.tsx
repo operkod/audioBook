@@ -1,5 +1,6 @@
 import React from 'react';
-import { AuthorBlock, ButtonPlay } from 'components';
+import { AuthorBlock } from 'components';
+import { ButtonPlay } from 'components/button';
 import { BookType } from 'types';
 
 const CardBook: React.FC<BookType> = ({ _id, imgUrl, name }) => (

@@ -42,6 +42,8 @@ module.exports = {
     'react/jsx-props-no-spreading': 'off',
     'no-unused-vars': 'off',
     '@typescript-eslint/no-unused-vars': 'error',
+    'no-param-reassign': ['error', { props: false }],
+    // 'immer/rule-name': 2,
     // 'react-hooks/exhaustive-deps': 'off',
   },
 };

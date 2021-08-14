@@ -6,6 +6,5 @@ export { default as AudioPlayer } from './AudioPlayer';
 export { default as Modal } from './Modal';
 export { default as Loader } from './Loader';
 export { default as Comment } from './Comment';
-export { default as ButtonPlay } from './ButtonPlay';
 export { default as Language } from './Language';
 export { default as Layout } from './Layout';

@@ -3,7 +3,8 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Actions as ActionsComment } from 'redux/action/comments';
 import { Actions as ActionsBook } from 'redux/action/books';
-import { AuthorBlock, ButtonPlay } from 'components';
+import { AuthorBlock } from 'components';
+import { ButtonPlay } from 'components/button';
 import { Statistic } from 'antd';
 import { useTranslation } from 'react-i18next';
 

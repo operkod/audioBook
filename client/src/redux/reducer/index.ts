@@ -1,17 +1,17 @@
 /*eslint-disable */
 import { combineReducers } from 'redux';
-import { audio } from './audio';
-import { user } from './user';
-import { comments } from './comments';
-import { books } from './books';
+import { audioReducer } from './audio';
+import { userReducer } from './user';
+import { commentsReducer } from './comments';
+import { booksReducer } from './books';
 import { settingsReducer } from './settings';
 
 const rootReducer = combineReducers({
   settings: settingsReducer,
-  user,
-  audio,
-  comments,
-  books,
+  user: userReducer,
+  audio: audioReducer,
+  comments: commentsReducer,
+  books: booksReducer,
 });
 
 export type StateType = ReturnType<typeof rootReducer>;

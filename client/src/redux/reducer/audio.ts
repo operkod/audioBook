@@ -1,30 +1,28 @@
-/*eslint-disable */
-import produce from "immer"
-import { ActionsTypes } from "redux/action/audioPlayer"
+import produce from 'immer';
+import { ActionsTypes } from 'redux/action/audioPlayer';
 
-type InitialStateType = typeof initialState
-
+type InitialStateType = typeof initialState;
 
 const initialState = {
   id: '',
-  item: "",
-  isPlay: false
-}
+  item: '',
+  isPlay: false,
+};
 
-export const audio = (state = initialState, action: ActionsTypes): InitialStateType => {
-  return produce(state, draft => {
+const audioReducer = (state = initialState, action: ActionsTypes): InitialStateType =>
+  produce(state, (draft) => {
     switch (action.type) {
-      case "AUDIO@SET_ID":
-        draft.id = action.payload
-        break
-      case "AUDIO@SET_ITEM":
-        draft.item = action.payload
-        break
-      case "AUDIO@IS_PLAY":
-        draft.isPlay = action.payload
-        break
+      case 'AUDIO@SET_ID':
+        draft.id = action.payload;
+        break;
+      case 'AUDIO@SET_ITEM':
+        draft.item = action.payload;
+        break;
+      case 'AUDIO@IS_PLAY':
+        draft.isPlay = action.payload;
+        break;
       default:
-        return state
     }
-  })
-}
+  });
+
+export { audioReducer };

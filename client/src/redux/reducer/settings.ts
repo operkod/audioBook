@@ -1,17 +1,16 @@
-/*eslint-disable */
-type initialStateType = typeof initialState
+type initialStateType = typeof initialState;
 const initialState = {
-  width: 1200,
-  height: 500
-
-}
+  width: 0,
+  height: 0,
+};
 
 const settingsReducer = (state = initialState, action: any): initialStateType => {
   switch (action.type) {
-    case "SETTINGS_SET_DATA":
-      return { ...state, ...action.payload }
-    default: return state
+    case 'SETTINGS@SET_DATA':
+      return { ...state, ...action.payload };
+    default:
+      return state;
   }
-}
+};
 
-export { settingsReducer }
+export { settingsReducer };

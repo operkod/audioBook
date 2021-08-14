@@ -1,6 +1,5 @@
-/*eslint-disable */
-import { getToken } from 'helpers/token';
 import produce from 'immer';
+import { getToken } from 'helpers/token';
 import { ActionsTypes } from 'redux/action/user';
 
 type initialStateType = typeof initialState;
@@ -16,8 +15,8 @@ const initialState = {
   isLoading: false,
 };
 
-export const user = (state = initialState, action: ActionsTypes): initialStateType => {
-  return produce(state, draft => {
+const userReducer = (state = initialState, action: ActionsTypes): initialStateType =>
+  produce(state, (draft) => {
     switch (action.type) {
       case 'USER@IS_AUTH':
         draft.isAuth = action.payload;
@@ -34,4 +33,5 @@ export const user = (state = initialState, action: ActionsTypes): initialStateTy
       default:
     }
   });
-}
+
+export { userReducer };

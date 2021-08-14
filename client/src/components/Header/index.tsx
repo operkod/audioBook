@@ -1,5 +1,4 @@
-/*eslint-disable */
-
+// /* eslint-disable @typescript-eslint/no-shadow */
 // TODO Настроить Eslint для области видимости
 import './Header.scss';
 import React from 'react';
@@ -44,7 +43,7 @@ const Header = ({ valueChecked, onChangeTheme }: Props) => {
             </Link>
           </div>
           <div className="search">
-            <Search placeholder={t('search')} onSearch={handleSearch} defaultValue={value ? value : ''} enterButton />
+            <Search placeholder={t('search')} onSearch={handleSearch} defaultValue={value || ''} enterButton />
           </div>
           <div className="nav">
             <Menu />

@@ -64,9 +64,6 @@
     "lint": "yarn eslint . --fix"
   },
   "proxy": "http://localhost:5000",
-  "eslintConfig": {
-    "extends": "react-app"
-  },
   "browserslist": {
     "production": [
       ">0.2%",
