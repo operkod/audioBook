@@ -1,9 +1,10 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
+import { throttle } from 'lodash';
 
 const StalerScreen = ({ children }: any) => {
   const dispatch = useDispatch();
-  const handleResize = useCallback(
+  const changeScreen = useCallback(
     ({ target }: any) => {
       const { innerHeight, innerWidth } = target;
       dispatch({ type: 'SETTINGS_SET_DATA', payload: { width: innerWidth, height: innerHeight } });
@@ -11,11 +12,12 @@ const StalerScreen = ({ children }: any) => {
     [dispatch],
   );
 
-  // Зделать оптимизацию "debounce"
+  const throttleResizeHandler = useMemo(() => throttle(changeScreen, 300), [changeScreen]);
+
   React.useEffect(() => {
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, [handleResize]);
+    window.addEventListener('resize', throttleResizeHandler);
+    return () => window.removeEventListener('resize', throttleResizeHandler);
+  }, [throttleResizeHandler]);
 
   React.useEffect(() => {
     const width = document.body.clientWidth;
