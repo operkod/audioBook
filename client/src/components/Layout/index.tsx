@@ -1,56 +1,34 @@
-import React, { useCallback, useState } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
-import styled, { ThemeProps, ThemeProvider } from 'styled-components';
 import { Header, AudioPlayer, Modal } from 'components';
-import { getAudioId, getCommentsShow } from 'redux/selectors';
-
-export type ThemeType = typeof themeWhite;
-const themeWhite = {
-  color: {
-    primary: '#000',
-    secondary: 'green',
-  },
-  backgroundColor: {
-    primary: '#fff',
-    secondary: '#eef0f1',
-  },
-};
-const themeBlack = {
-  color: {
-    primary: '#fff',
-    secondary: 'green',
-  },
-  backgroundColor: {
-    primary: '#353333',
-    secondary: '#5e5a5a',
-  },
-};
+import { getAudioId, getCommentsShow, getScreenWidth } from 'redux/selectors';
+import Sidebar, { WIDTH_SIDEBAR } from 'components/Sidebar';
+import { createUseStyles } from 'react-jss';
 
 const MyLayout = ({ children }: any) => {
-  const [theme, setTheme] = useState(true);
   const isAudio = useSelector(getAudioId);
   const showModal = useSelector(getCommentsShow);
-  const onChangeTheme = useCallback((value: boolean) => {
-    setTheme(value);
-  }, []);
+  const width = useSelector(getScreenWidth);
+  const styles = useStyles();
+  const widthPercent = React.useMemo(() => ((width - WIDTH_SIDEBAR) * 100) / width, [width]);
 
   return (
-    <ThemeProvider theme={theme ? themeWhite : themeBlack}>
-      <Wrapper>
-        <Header onChangeTheme={onChangeTheme} valueChecked={theme} />
-        {children}
+    <>
+      <Header />
+      <div className={styles.wrapper}>
+        <div style={{ width: `${width > 1200 ? widthPercent : 100}%` }}>{children}</div>
         {!!isAudio && <AudioPlayer />}
         {showModal && <Modal />}
-      </Wrapper>
-    </ThemeProvider>
+        <Sidebar />
+      </div>
+    </>
   );
 };
 
 export default MyLayout;
 
-const Wrapper = styled.div`
-  min-height: 100vh;
-  transition: background-color 0.3s ease;
-  background-color: ${(props: ThemeProps<ThemeType>) => props.theme.backgroundColor.secondary};
-  color: ${(props: ThemeProps<ThemeType>) => props.theme.color.primary};
-`;
+const useStyles = createUseStyles({
+  wrapper: {
+    display: 'flex',
+  },
+});

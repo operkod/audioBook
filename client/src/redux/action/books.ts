@@ -45,7 +45,7 @@ export const Actions = {
     type: 'BOOKS@RESPONSE_ADD_BOOK',
     payload
   } as const),
-  requestAddLike: (payload: string) => ({
+  requestAddLike: (payload: any) => ({
     type: 'BOOKS@REQUEST_ADD_LIKE',
     payload
   } as const),

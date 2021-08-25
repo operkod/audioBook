@@ -46,7 +46,7 @@ const Home = () => {
 
   return (
     <>
-      <div className="container">
+      <div>
         <div className="articles" style={{ height: isLoader ? 'calc(100vh - 61px)' : '100%' }}>
           {isLoader ? (
             <Loader />

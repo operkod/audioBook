@@ -1,7 +1,23 @@
 @import "../../style/variables.scss";
 
+
+
+.audio {
+  margin: 5px 0px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
+  img {
+    padding-right: 5px;
+    width: 30px;
+  }
+}
+
+
 .audio-player {
-  position: sticky;
+  position: fixed;
   bottom: 0;
   left: 0;
   right: 0;

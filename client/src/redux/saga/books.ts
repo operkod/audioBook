@@ -34,7 +34,7 @@ function* workerRequestAddBook(action: { type: string; payload: AddBookType }) {
     console.log('workerRequestAddBook :', e.message);
   }
 }
-function* workerRequestAddLike(action: { type: string; payload: string }) {
+function* workerRequestAddLike(action: { type: string; payload: any }) {
   const isAuth: boolean = yield select(getAuth);
   if (!isAuth) {
     return openNotification({
@@ -44,7 +44,8 @@ function* workerRequestAddLike(action: { type: string; payload: string }) {
     });
   }
   try {
-    const { data } = yield call(setLike, action.payload);
+    const { data } = yield call(setLike, action.payload.id);
+    debugger
     yield put(Actions.setLike(data));
   } catch (e) {
     openNotification({

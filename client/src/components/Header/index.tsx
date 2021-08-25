@@ -1,5 +1,5 @@
-// /* eslint-disable @typescript-eslint/no-shadow */
-// TODO Настроить Eslint для области видимости
+/* eslint-disable @typescript-eslint/no-shadow */
+// TODO: Настроить Eslint для области видимости
 import './Header.scss';
 import React from 'react';
 import { Input } from 'antd';
@@ -11,18 +11,12 @@ import { Actions } from 'redux/action/books';
 import routers from 'const/routers';
 import { useTranslation } from 'react-i18next';
 import Language from 'components/Language';
-import styled, { ThemeProps } from 'styled-components';
 import logoIcon from 'assets/img/logo.svg';
-import { ThemeType } from 'components/Layout';
+// import { createUseStyles } from 'react-jss';
 
 const { Search } = Input;
 
-type Props = {
-  valueChecked: boolean;
-  onChangeTheme: (v: boolean) => void;
-};
-
-const Header = ({ valueChecked, onChangeTheme }: Props) => {
+const Header = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const value = useSelector(getSearchValue);
@@ -34,7 +28,7 @@ const Header = ({ valueChecked, onChangeTheme }: Props) => {
   };
 
   return (
-    <HeaderStyle className="header">
+    <div className="header">
       <div className="container">
         <div className="header-content">
           <div className="header-content__logo">
@@ -52,18 +46,7 @@ const Header = ({ valueChecked, onChangeTheme }: Props) => {
           {/* <Switch checked={valueChecked} onChange={onChangeTheme} /> */}
         </div>
       </div>
-    </HeaderStyle>
+    </div>
   );
 };
 export default Header;
-
-const HeaderStyle = styled.header`
-  transition: background-color 0.3s ease;
-  background-color: ${(props: ThemeProps<ThemeType>) => props.theme.backgroundColor.secondary};
-  color: ${(props: ThemeProps<ThemeType>) => props.theme.color.primary};
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  box-sizing: border-box;
-  border-bottom: 1px solid ${(props: ThemeProps<ThemeType>) => props.theme.backgroundColor.primary};
-`;
