@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-shadow */
-// TODO: Настроить Eslint для области видимости
 import React from 'react';
 import { Input } from 'antd';
 import { createUseStyles } from 'react-jss';
@@ -7,25 +5,25 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useGlobalStyles } from 'App';
 import { Menu } from 'components';
 import { Link, useHistory } from 'react-router-dom';
-import { getSearchValue } from 'redux/selectors';
 import { Actions } from 'redux/action/books';
 import routers from 'const/routers';
 import { useTranslation } from 'react-i18next';
 import Language from 'components/Language';
 import logoIcon from 'assets/img/logo.svg';
+import { getBooksParams } from 'redux/selectors';
 
 const { Search } = Input;
 
 const Header = () => {
   const { t } = useTranslation();
   const history = useHistory();
-  const value = useSelector(getSearchValue);
   const dispatch = useDispatch();
   const styles = useStyles();
   const globalStyles = useGlobalStyles();
+  const { search } = useSelector(getBooksParams);
 
   const handleSearch = (value: string) => {
-    dispatch(Actions.searchValue(value.trim()));
+    dispatch(Actions.setParams({ search: value.trim(), page: 0, totalPage: 0 }));
     history.push(routers.getBase());
   };
 
@@ -39,7 +37,7 @@ const Header = () => {
             </Link>
           </div>
           <div className={styles.search}>
-            <Search placeholder={t('search')} onSearch={handleSearch} defaultValue={value || ''} enterButton />
+            <Search placeholder={t('search')} onSearch={handleSearch} defaultValue={search} enterButton />
           </div>
           <div className={styles.nav}>
             <Menu />
@@ -54,7 +52,7 @@ const Header = () => {
 
 const useStyles = createUseStyles({
   header: {
-    position: 'fixed',
+    position: 'sticky',
     top: 0,
     left: 0,
     right: 0,

@@ -30,6 +30,7 @@ router.get('/', async (req, res) => {
 			userId = jwt.verify(token, config.get('jwtSecret')).userId
 		}
 		const { page, search } = req.query
+		console.log('query: ', req.query)
 		if (search) {
 			const total = await Book.find({
 				$text: { $search: search }

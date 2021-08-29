@@ -24,15 +24,15 @@ if (process.env.NODE_ENV === 'production') {
 		res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
 	})
 }
-io.on('connection', socket => {
-	console.log('a user connected')
-	socket.on('event', event => {
-		console.log(event)
-	}),
-		socket.on('disconnect', () => {
-			console.log('user disconnect')
-		})
-})
+// io.on('connection', socket => {
+// 	console.log('a user connected')
+// 	socket.on('event', event => {
+// 		console.log(event)
+// 	}),
+// 		socket.on('disconnect', () => {
+// 			console.log('user disconnect')
+// 		})
+// })
 const PORT = process.env.PORT || 5000
 
 async function start() {
