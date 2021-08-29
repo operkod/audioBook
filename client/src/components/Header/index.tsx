@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Input } from 'antd';
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
@@ -21,12 +21,21 @@ const Header = () => {
   const styles = useStyles();
   const globalStyles = useGlobalStyles();
   const { search } = useSelector(getBooksParams);
+  const [valueForm, setValueForm] = useState('');
 
-  const handleSearch = (value: string) => {
+  const searchHandler = (value: string) => {
     dispatch(Actions.setParams({ search: value.trim(), page: 0, totalPage: 0 }));
     history.push(routers.getBase());
   };
+  useEffect(() => {
+    if (search === valueForm) return;
+    setValueForm(search);
+  }, [search]);
 
+  const changeHandler = (event: any) => {
+    const { value } = event.target;
+    setValueForm(value);
+  };
   return (
     <div className={styles.header}>
       <div className={globalStyles.container}>
@@ -37,7 +46,14 @@ const Header = () => {
             </Link>
           </div>
           <div className={styles.search}>
-            <Search placeholder={t('search')} onSearch={handleSearch} defaultValue={search} enterButton />
+            <Search
+              placeholder={t('search')}
+              onSearch={searchHandler}
+              defaultValue={search}
+              value={valueForm}
+              onChange={changeHandler}
+              enterButton
+            />
           </div>
           <div className={styles.nav}>
             <Menu />

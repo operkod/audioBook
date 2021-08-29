@@ -1,28 +1,29 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { throttle } from 'lodash';
+import { SetSettings } from 'redux/action/settings';
 
 const StalerScreen = ({ children }: any) => {
   const dispatch = useDispatch();
-  const changeScreen = useCallback(
-    ({ target }: any) => {
-      const { innerHeight, innerWidth } = target;
-      dispatch({ type: 'SETTINGS@SET_DATA', payload: { width: innerWidth, height: innerHeight } });
-    },
-    [dispatch],
-  );
 
-  const throttleResizeHandler = useMemo(() => throttle(changeScreen, 300), [changeScreen]);
-
-  React.useEffect(() => {
-    window.addEventListener('resize', throttleResizeHandler);
-    return () => window.removeEventListener('resize', throttleResizeHandler);
-  }, [throttleResizeHandler]);
+  const resizeHandler = useCallback(() => {
+    const screenDimensions = {
+      width: window.innerWidth,
+      height: window.innerHeight,
+    };
+    dispatch(SetSettings(screenDimensions));
+  }, [dispatch]);
 
   React.useEffect(() => {
-    const width = document.body.clientWidth;
-    const height = document.body.clientHeight;
-    dispatch({ type: 'SETTINGS@SET_DATA', payload: { width, height } });
+    window.addEventListener('resize', resizeHandler);
+    return () => window.removeEventListener('resize', resizeHandler);
+  }, [resizeHandler]);
+
+  React.useEffect(() => {
+    const screenDimensions = {
+      width: window.innerWidth,
+      height: window.innerHeight,
+    };
+    dispatch(SetSettings(screenDimensions));
   }, [dispatch]);
 
   return children;
