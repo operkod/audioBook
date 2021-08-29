@@ -22,23 +22,23 @@ const Home = () => {
   const onChangePage = (valuePage: number) => {
     dispatch(Actions.setPage(valuePage));
   };
-  React.useEffect(() => {
-    const { search } = history.location;
-    const { page, search: value } = queryString.parse(search, {
-      parseNumbers: true,
-      parseBooleans: true,
-    });
-    if (page) dispatch(Actions.setPage(Number(page)));
-    if (value) dispatch(Actions.searchValue(String(value)));
-  }, [history.location, dispatch]);
+  // React.useEffect(() => {
+  //   const { search } = history.location;
+  //   const { page, search: value } = queryString.parse(search, {
+  //     parseNumbers: true,
+  //     parseBooleans: true,
+  //   });
+  //   if (page) dispatch(Actions.setPage(Number(page)));
+  //   if (value) dispatch(Actions.searchValue(String(value)));
+  // }, [history.location, dispatch]);
 
-  React.useEffect(() => {
-    const str = queryString.stringify({ page, search: searchValue }, { skipNull: true });
-    history.push({
-      hash: routers.getBase(),
-      search: `?${str}`,
-    });
-  }, [page, searchValue, history]);
+  // React.useEffect(() => {
+  //   const str = queryString.stringify({ page, search: searchValue }, { skipNull: true });
+  //   history.push({
+  //     hash: routers.getBase(),
+  //     search: `?${str}`,
+  //   });
+  // }, [page, searchValue, history]);
 
   React.useEffect(() => {
     dispatch(Actions.requestBook({ page, search: searchValue }));
@@ -47,7 +47,7 @@ const Home = () => {
   return (
     <>
       <div>
-        <div className="articles" style={{ height: isLoader ? 'calc(100vh - 61px)' : '100%' }}>
+        <div className="articles" style={{ height: isLoader ? '100vh' : '100%', marginTop: '102px' }}>
           {isLoader ? (
             <Loader />
           ) : books.length ? (
@@ -80,4 +80,5 @@ const Home = () => {
     </>
   );
 };
+
 export default Home;

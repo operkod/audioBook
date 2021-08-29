@@ -47,7 +47,11 @@ const Article: React.FC<BookType> = (props) => {
         <div>
           <div className={styles.body}>
             <h2 className={styles.title}>{name}</h2>
-            <Statistic valueStyle={{ fontSize: '20px', whiteSpace: 'nowrap' }} value={likes.count} prefix={likeImage} />
+            <Statistic
+              valueStyle={{ fontSize: '1.2rem', whiteSpace: 'nowrap' }}
+              value={likes.count}
+              prefix={likeImage}
+            />
           </div>
           <p className={styles.text}>{description}</p>
         </div>
@@ -141,11 +145,11 @@ const useStyles = createUseStyles({
   title: {
     color: 'inherit',
     display: 'inline',
-    fontSize: '26px',
+    fontSize: '2rem',
     fontWeight: '700',
   },
   text: {
-    fontSize: '16px',
+    fontSize: '1.1rem',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
   },

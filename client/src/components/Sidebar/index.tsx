@@ -17,7 +17,7 @@ const Sidebar = () => {
         height: ScreenHeight < 400 ? 400 : ScreenHeight - 60,
       }}
     >
-      asdasd
+      /
     </div>
   );
 };

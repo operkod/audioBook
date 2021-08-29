@@ -94,4 +94,12 @@ const useStyles = createUseStyles({
   },
 });
 
+export const useGlobalStyles = createUseStyles({
+  container: {
+    maxWidth: '1200px',
+    margin: '0 auto',
+    padding: '0 10px',
+  },
+});
+
 export default App;
