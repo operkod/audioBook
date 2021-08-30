@@ -17,10 +17,7 @@ const MyLayout = ({ children }: any) => {
   return (
     <>
       <Header />
-      <div className={styles.wrapper}>
-        <div style={{ width: '' }}>{children}</div>
-        {/* <Sidebar /> */}
-      </div>
+      <div className={styles.wrapper}>{children}</div>
       {!!isAudio && <AudioPlayer />}
       {showModal && <Modal />}
     </>

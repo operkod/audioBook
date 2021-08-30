@@ -8,6 +8,7 @@ import { Actions as ActionsBook } from 'redux/action/books';
 import { AuthorBlock } from 'components';
 import { ButtonPlay } from 'components/button';
 import { BookType } from 'types';
+import Block from 'components/Block';
 
 import commentIcon from 'assets/img/comment.svg';
 import logo from 'assets/img/logo.svg';
@@ -22,14 +23,7 @@ const Article: React.FC<BookType> = (props) => {
   const handleClick = () => dispatch(ActionsComment.fetchComments(_id));
 
   const likeHandler = () => {
-    dispatch(
-      ActionsBook.requestAddLike({
-        id: _id,
-        successCallback: (data) => {
-          console.log('DATA :', data);
-        },
-      }),
-    );
+    dispatch(ActionsBook.requestAddLike({ id: _id }));
   };
 
   const likeImage = (
@@ -37,7 +31,7 @@ const Article: React.FC<BookType> = (props) => {
   );
 
   return (
-    <div className={styles.article}>
+    <Block className={styles.article}>
       <div className={styles.articleLeft}>
         <div className={styles.articleImage}>
           <img src={imgUrl || logo} alt={name} />
@@ -66,18 +60,15 @@ const Article: React.FC<BookType> = (props) => {
           />
         </div>
       </div>
-    </div>
+    </Block>
   );
 };
 
 const useStyles = createUseStyles({
   article: {
     transition: 'background-color 0.3s ease',
-    backgroundColor: '#fff',
     color: '#000',
     display: 'flex',
-    padding: '20px 15px',
-    margin: '20px 0',
     borderRadius: '10px',
     '@media (max-width: 500px)': {
       display: 'block',

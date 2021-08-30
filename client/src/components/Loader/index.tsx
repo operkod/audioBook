@@ -1,16 +1,26 @@
-import { Spin } from 'antd';
 import React from 'react';
+import { Spin } from 'antd';
+import { createUseStyles } from 'react-jss';
 
-const style = {
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  height: '100%',
+type PropsTypes = {
+  className?: string;
+  style?: React.HTMLAttributes<HTMLDivElement>;
 };
 
-const Loader = () => (
-  <div className="loader" style={style}>
-    <Spin size="large" />
-  </div>
-);
+const Loader: React.FC<PropsTypes> = ({ className = '', style = {} }) => {
+  const styles = useStyles();
+  return (
+    <div className={`${className} ${styles.loader}`} style={style}>
+      <Spin size="large" />
+    </div>
+  );
+};
+const useStyles = createUseStyles({
+  loader: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+  },
+});
+
 export default Loader;

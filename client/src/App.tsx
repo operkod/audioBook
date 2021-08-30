@@ -3,22 +3,17 @@ import './style/App.scss';
 import { Provider } from 'react-redux';
 import AppRouters from 'components/AppRouter';
 import Actions from 'redux/action/user';
-import io from 'socket.io-client';
 import 'localization';
 import StalerScreen from 'settings';
 import { createUseStyles } from 'react-jss';
 import store from './redux/store';
 
-const socket = io();
 // TODO: когда добавишь на сервере сохранение в профиле книг удалить dispatch
 // store.dispatch(ActionsBooks.requestBook())
 store.dispatch(Actions.userProfile());
 
 const App = () => {
   useStyles();
-  React.useEffect(() => {
-    socket.emit('event', 'asdasdsa');
-  }, []);
   return (
     <Provider store={store}>
       <StalerScreen>
@@ -35,10 +30,23 @@ const useStyles = createUseStyles({
       margin: 0,
       padding: 0,
     },
+
     body: {
       minHeight: '100vh',
       fontFamily: 'LatoRegular, sans-serif',
       fontSize: '13px',
+      '&::-webkit-scrollbar': {
+        width: '10px',
+      },
+      '&::-webkit-scrollbar-track': {
+        boxShadow: '5px 5px 5px -5px rgba(34, 60, 80, 0.2) inset',
+        backgroundColor: '#f9f9fd',
+        borderRadius: '10px',
+      },
+      '&::-webkit-scrollbar-thumb': {
+        borderRadius: '10px',
+        background: 'linear-gradient(180deg, #00c6fb, #005bea)',
+      },
     },
     h1: {
       margin: '15px 0',

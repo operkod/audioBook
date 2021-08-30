@@ -19,7 +19,7 @@ const MobileMenu: React.FC<MenuProps> = ({ isAuth, avatar }) => {
         <>
           <Dropdown
             overlay={
-              <>
+              <MenuAntd>
                 <MenuAntd.Item>
                   <Link to={routers.getSignin()}>
                     <Button block type="primary">
@@ -32,7 +32,7 @@ const MobileMenu: React.FC<MenuProps> = ({ isAuth, avatar }) => {
                     <Button type="primary">{t('auth.button.registration')}</Button>
                   </Link>
                 </MenuAntd.Item>
-              </>
+              </MenuAntd>
             }
             placement="bottomRight"
           >

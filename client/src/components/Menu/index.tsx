@@ -18,7 +18,6 @@ const Menu = () => {
   const isAuth = useSelector(getAuth);
   const avatar = useSelector(getAvatar);
 
-  // :>)
   const isShowMenuMobile = useMemo(() => mobileWidth > width, [width]);
 
   return (
