@@ -15,8 +15,8 @@ const FormField = (props: PropsType) => {
   const { name, placeholder, type, handleChange, handleBlur, errors, values } = props;
   return (
     <Form.Item
-      validateStatus={errors[name].status ? 'error' : undefined}
-      help={errors[name].status ? errors[name].text : undefined}
+      validateStatus={errors[name].isValid ? 'error' : undefined}
+      help={errors[name].isValid ? errors[name].text : undefined}
       hasFeedback
     >
       <Input

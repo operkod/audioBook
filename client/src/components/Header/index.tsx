@@ -1,45 +1,61 @@
-/* eslint-disable @typescript-eslint/no-shadow */
-// TODO: Настроить Eslint для области видимости
-import './Header.scss';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Input } from 'antd';
+import { createUseStyles } from 'react-jss';
+import { useDispatch, useSelector } from 'react-redux';
+import { useGlobalStyles } from 'App';
 import { Menu } from 'components';
 import { Link, useHistory } from 'react-router-dom';
-import { getSearchValue } from 'redux/selectors';
-import { useDispatch, useSelector } from 'react-redux';
 import { Actions } from 'redux/action/books';
 import routers from 'const/routers';
 import { useTranslation } from 'react-i18next';
 import Language from 'components/Language';
 import logoIcon from 'assets/img/logo.svg';
-// import { createUseStyles } from 'react-jss';
+import { getBooksParams } from 'redux/selectors';
 
 const { Search } = Input;
 
 const Header = () => {
   const { t } = useTranslation();
   const history = useHistory();
-  const value = useSelector(getSearchValue);
   const dispatch = useDispatch();
+  const styles = useStyles();
+  const globalStyles = useGlobalStyles();
+  const { search } = useSelector(getBooksParams);
+  const [valueForm, setValueForm] = useState('');
 
-  const handleSearch = (value: string) => {
-    dispatch(Actions.searchValue(value.trim()));
+  const searchHandler = (value: string) => {
+    dispatch(Actions.setParams({ search: value.trim(), page: 0, totalPage: 0 }));
     history.push(routers.getBase());
   };
+  useEffect(() => {
+    if (search === valueForm) return;
+    setValueForm(search);
+  }, [search]);
 
+  const changeHandler = (event: any) => {
+    const { value } = event.target;
+    setValueForm(value);
+  };
   return (
-    <div className="header">
-      <div className="container">
-        <div className="header-content">
-          <div className="header-content__logo">
+    <div className={styles.header}>
+      <div className={globalStyles.container}>
+        <div className={styles.content}>
+          <div className={styles.logo}>
             <Link to={routers.getBase()}>
               <img src={logoIcon} alt="Books" width="100%" />
             </Link>
           </div>
-          <div className="search">
-            <Search placeholder={t('search')} onSearch={handleSearch} defaultValue={value || ''} enterButton />
+          <div className={styles.search}>
+            <Search
+              placeholder={t('search')}
+              onSearch={searchHandler}
+              defaultValue={search}
+              value={valueForm}
+              onChange={changeHandler}
+              enterButton
+            />
           </div>
-          <div className="nav">
+          <div className={styles.nav}>
             <Menu />
           </div>
           <Language />
@@ -49,4 +65,34 @@ const Header = () => {
     </div>
   );
 };
+
+const useStyles = createUseStyles({
+  header: {
+    position: 'sticky',
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 1000,
+    backgroundColor: '#eef0f1',
+    boxShadow: '0px 0px 20px 0px #c2bfbf',
+  },
+  content: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: '1rem 0',
+  },
+  logo: {
+    width: '50px',
+  },
+  nav: {
+    '& a': {
+      marginLeft: '2rem',
+    },
+  },
+  search: {
+    marginLeft: 'auto',
+    width: '300px',
+  },
+});
+
 export default Header;

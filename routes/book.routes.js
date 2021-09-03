@@ -5,6 +5,7 @@ const auth = require('../middleware/auth')
 const router = Router()
 const jwt = require('jsonwebtoken')
 const config = require('config')
+const Chat = require('../models/Chat')
 
 const getCheckedLike = (data, userId = null) => {
 	return data.reduce((acc, next) => {
@@ -121,6 +122,17 @@ router.post('/like', auth, async (req, res) => {
 		res.status(201).json({ bookId: _id, status: true })
 	} catch (e) {
 		console.log('message', e.message)
+		res.status(500).json({ message: 'Что-то пошло не так попробуйте сново' })
+	}
+})
+router.get('/chat', async (req, res) => {
+	try {
+		const messages = await Chat.find({}, { sort: [['datefield', 'asc']] })
+
+		// .limit(5)
+		res.status(201).json({ messages })
+	} catch (e) {
+		console.log('message Chat', e.message)
 		res.status(500).json({ message: 'Что-то пошло не так попробуйте сново' })
 	}
 })

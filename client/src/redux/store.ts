@@ -1,34 +1,29 @@
-/*eslint-disable */
 import { createStore, applyMiddleware } from 'redux';
 import { queryMiddleware } from 'redux-query';
 import superagentInterface from 'redux-query-interface-superagent';
-import rootReducer, { getEntities, getQueries } from './reducer';
-// import createSagaMiddleware from 'redux-saga';
-// import { rootWatcher } from './saga';
 import logger from 'redux-logger';
-
-
+import requestSuccessMiddleware from 'middlewares/requestSuccessMiddleware';
+import requestFailureMiddleware from 'middlewares/requestFailureMiddleware';
+import requestStartMiddleware from 'middlewares/requestStartMiddleware';
+import authTokenMiddleware from 'middlewares/authTokenMiddleware';
+import rootReducer, { getEntities, getQueries } from './reducer';
 
 const configurationStore = () => {
   let customMiddlewares = [
-    // requestStartMiddleware,
-    // authTokenMiddleware,
-    // requestFailureMiddleware,
-    // requestSuccessMiddleware,
+    authTokenMiddleware,
+    requestStartMiddleware,
+    requestSuccessMiddleware,
+    requestFailureMiddleware,
     queryMiddleware(superagentInterface, getQueries, getEntities),
   ];
   if (process.env.NODE_ENV !== 'production') {
-    customMiddlewares = [...customMiddlewares, logger]
+    customMiddlewares = [...customMiddlewares, logger];
   }
-  const middlewares = applyMiddleware(...customMiddlewares)
+  const middlewares = applyMiddleware(...customMiddlewares);
 
-  return createStore(rootReducer, middlewares)
-}
+  return createStore(rootReducer, middlewares);
+};
 
-// const saga = createSagaMiddleware();
-// const middleware = [saga, logger];
 const rootStore: any = configurationStore();
-
-// saga.run(rootWatcher);
 
 export default rootStore;

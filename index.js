@@ -5,8 +5,8 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 const path = require('path')
 const server = require('http').Server(app)
-
 const { Server } = require('socket.io')
+const jwt = require('jsonwebtoken')
 const io = new Server(server)
 
 app.use(cors())
@@ -24,15 +24,23 @@ if (process.env.NODE_ENV === 'production') {
 		res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
 	})
 }
+
 io.on('connection', socket => {
-	console.log('a user connected')
-	socket.on('event', event => {
-		console.log(event)
+	socket.on('MESSAGE', ({ token, message }) => {
+		const obj = {
+			id: Math.random(),
+			author: 'Saha',
+			avatar: '',
+			message,
+			date: new Date()
+		}
+		io.emit('NEW_MESSAGE', obj)
 	}),
 		socket.on('disconnect', () => {
 			console.log('user disconnect')
 		})
 })
+
 const PORT = process.env.PORT || 5000
 
 async function start() {

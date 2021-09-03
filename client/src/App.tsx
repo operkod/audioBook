@@ -7,7 +7,9 @@ import { Provider as ReduxQueryProvider } from 'redux-query-react';
 import 'localization';
 import StalerScreen from 'settings';
 import { createUseStyles } from 'react-jss';
-import store from './redux/store';
+import store from 'redux/store';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const getQueries = (state: any) => state.queries;
 
@@ -21,6 +23,7 @@ const App = () => {
     <Provider store={store}>
       <ReduxQueryProvider queriesSelector={getQueries}>
         <StalerScreen>
+          <ToastContainer />
           <AppRouters />
         </StalerScreen>
       </ReduxQueryProvider>
@@ -35,10 +38,23 @@ const useStyles = createUseStyles({
       margin: 0,
       padding: 0,
     },
+
     body: {
       minHeight: '100vh',
       fontFamily: 'LatoRegular, sans-serif',
       fontSize: '13px',
+      '&::-webkit-scrollbar': {
+        width: '10px',
+      },
+      '&::-webkit-scrollbar-track': {
+        boxShadow: '5px 5px 5px -5px rgba(34, 60, 80, 0.2) inset',
+        backgroundColor: '#f9f9fd',
+        borderRadius: '10px',
+      },
+      '&::-webkit-scrollbar-thumb': {
+        borderRadius: '10px',
+        background: 'linear-gradient(180deg, #00c6fb, #005bea)',
+      },
     },
     h1: {
       margin: '15px 0',
@@ -91,6 +107,14 @@ const useStyles = createUseStyles({
         outline: 'none',
       },
     },
+  },
+});
+
+export const useGlobalStyles = createUseStyles({
+  container: {
+    maxWidth: '1200px',
+    margin: '0 auto',
+    padding: '0 10px',
   },
 });
 

@@ -27,11 +27,11 @@ export type RegistrationFormType = {
 }
 
 export type AddBookType = {
-  name: string,
-  author: string,
-  description: string,
-}
+  name: string;
+  author: string;
+  description: string;
+};
 
 export type FormDataErrorType = {
-  [key: string]: { status: boolean, text: string }
-}
+  [key: string]: { isValid: boolean; text: string }
+};

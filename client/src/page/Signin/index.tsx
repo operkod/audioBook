@@ -1,34 +1,33 @@
 import './Auth.scss';
 import React from 'react';
 import { Form, Button } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Input from 'components/input/FieldAuth';
 import { FormDataErrorType, LoginFormType } from 'types';
 import { useTranslation } from 'react-i18next';
 import routers from 'const/routers';
 import { emailValidator } from 'helpers/validators';
-import { useDispatch, useSelector } from 'react-redux';
-import { getAuthLoading } from 'redux/selectors';
-import Actions from 'redux/action/user';
+import useAuth from 'hooks/api/useAuth';
+import { setToken } from 'helpers/token';
 
 const LoginForm = () => {
-  const dispatch = useDispatch();
-  const isLoading = useSelector(getAuthLoading);
+  const history = useHistory();
+  const { getAuth, getAuthIsFetching } = useAuth();
   const { t } = useTranslation();
   const [formaData, setFormData] = React.useState<LoginFormType>({
     email: '',
     password: '',
   });
   const [error, setError] = React.useState<FormDataErrorType>({
-    email: { status: false, text: '' },
-    password: { status: false, text: '' },
+    email: { isValid: false, text: '' },
+    password: { isValid: false, text: '' },
   });
 
   const handleChange = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const { name, value } = event.target;
-      if (error[name].status === true) {
-        setError((prev) => ({ ...prev, [name]: { status: false, text: '' } }));
+      if (error[name].isValid === true) {
+        setError((prev) => ({ ...prev, [name]: { isValid: false, text: '' } }));
       }
       setFormData((prev) => ({ ...prev, [name]: value }));
     },
@@ -43,14 +42,14 @@ const LoginForm = () => {
         setError((prev) => ({
           ...prev,
           [name]: {
-            status: isValidEmail,
+            isValid: isValidEmail,
             text: isValidEmail ? t('errors.emailNotValid') : '',
           },
         }));
       } else {
         setError((prev) => ({
           ...prev,
-          [name]: { status: !value, text: !value ? t('errors.required') : '' },
+          [name]: { isValid: !value, text: !value ? t('errors.required') : '' },
         }));
       }
     },
@@ -58,8 +57,8 @@ const LoginForm = () => {
   );
 
   const isButtonDisabled = React.useMemo(
-    () => Object.values(error).some((item) => item.status === true) || isLoading,
-    [error, isLoading],
+    () => Object.values(error).some((item) => item.isValid === true) || getAuthIsFetching,
+    [error, getAuthIsFetching],
   );
 
   const handleSubmit = React.useCallback(
@@ -69,7 +68,7 @@ const LoginForm = () => {
         if (!value) {
           setError((prev) => ({
             ...prev,
-            [key]: { status: true, text: t('errors.required') },
+            [key]: { isValid: true, text: t('errors.required') },
           }));
           return true;
         }
@@ -78,9 +77,20 @@ const LoginForm = () => {
       if (checkFillingInput) {
         return;
       }
-      dispatch(Actions.fetchAuthorization(formaData));
+      getAuth({
+        email: formaData.email,
+        password: formaData.password,
+
+        successCallback: ({ token }: any) => {
+          setToken(token);
+          history.push(routers.getBase());
+        },
+        errorCallback: ({ message }: any) => {
+          setError((prev) => ({ ...prev, email: { isValid: true, text: message } }));
+        },
+      });
     },
-    [t, formaData, dispatch],
+    [t, formaData, getAuth, history],
   );
 
   return (

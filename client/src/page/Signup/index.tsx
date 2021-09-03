@@ -5,17 +5,13 @@ import { Link } from 'react-router-dom';
 import FormField from 'components/input/FieldAuth';
 import { FormDataErrorType, RegistrationFormType } from 'types';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
-import { getAuthLoading } from 'redux/selectors';
 import { emailValidator } from 'helpers/validators';
-import Actions from 'redux/action/user';
 import routers from 'const/routers';
+import useSignUp from 'hooks/api/useSignUp';
 
 const RegisterForm = () => {
   const { t } = useTranslation();
-
-  const dispatch = useDispatch();
-  const isLoading = useSelector(getAuthLoading);
+  const { getSignUp, getSignUpIsFetching } = useSignUp();
   const [formaData, setFormData] = React.useState<RegistrationFormType>({
     email: '',
     fullname: '',
@@ -23,17 +19,17 @@ const RegisterForm = () => {
     password_2: '',
   });
   const [error, setError] = React.useState<FormDataErrorType>({
-    email: { status: false, text: '' },
-    fullname: { status: false, text: '' },
-    password: { status: false, text: '' },
-    password_2: { status: false, text: '' },
+    email: { isValid: false, text: '' },
+    fullname: { isValid: false, text: '' },
+    password: { isValid: false, text: '' },
+    password_2: { isValid: false, text: '' },
   });
 
   const handleChange = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const { name, value } = event.target;
-      if (error[name].status === true) {
-        setError((prev) => ({ ...prev, [name]: { status: false, text: '' } }));
+      if (error[name].isValid === true) {
+        setError((prev) => ({ ...prev, [name]: { isValid: false, text: '' } }));
       }
       setFormData((prev) => ({ ...prev, [name]: value }));
     },
@@ -48,7 +44,7 @@ const RegisterForm = () => {
         setError((prev) => ({
           ...prev,
           [name]: {
-            status: isValidEmail,
+            isValid: isValidEmail,
             text: isValidEmail ? t('errors.emailNotValid') : '',
           },
         }));
@@ -57,7 +53,7 @@ const RegisterForm = () => {
         setError((prev) => ({
           ...prev,
           [name]: {
-            status: passwordEquality,
+            isValid: passwordEquality,
             text: passwordEquality ? t('errors.passwordsEquality') : '',
           },
         }));
@@ -66,14 +62,14 @@ const RegisterForm = () => {
         setError((prev) => ({
           ...prev,
           password_2: {
-            status: passwordEquality,
+            isValid: passwordEquality,
             text: passwordEquality ? t('errors.passwordsEquality') : '',
           },
         }));
       } else {
         setError((prev) => ({
           ...prev,
-          [name]: { status: !value, text: !value ? t('errors.required') : '' },
+          [name]: { isValid: !value, text: !value ? t('errors.required') : '' },
         }));
       }
     },
@@ -81,8 +77,8 @@ const RegisterForm = () => {
   );
 
   const isButtonDisabled = React.useMemo(
-    () => Object.values(error).some((item) => item.status === true) || isLoading,
-    [error, isLoading],
+    () => Object.values(error).some((item) => item.isValid === true) || getSignUpIsFetching,
+    [error, getSignUpIsFetching],
   );
 
   const handleSubmit = React.useCallback(
@@ -92,7 +88,7 @@ const RegisterForm = () => {
         if (!value) {
           setError((prev) => ({
             ...prev,
-            [key]: { status: true, text: t('errors.required') },
+            [key]: { isValid: true, text: t('errors.required') },
           }));
           return true;
         }
@@ -101,9 +97,17 @@ const RegisterForm = () => {
       if (checkFillingInput) {
         return;
       }
-      dispatch(Actions.fetchRegistration(formaData));
+      getSignUp({
+        ...formaData,
+        successCallback: () => {
+          console.log('SUCCESS');
+        },
+        errorCallback: (res) => {
+          console.log('ERROR', res);
+        },
+      });
     },
-    [t, formaData, dispatch],
+    [t, formaData, getSignUp],
   );
 
   return (

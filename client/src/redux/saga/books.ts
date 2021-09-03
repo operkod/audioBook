@@ -1,17 +1,19 @@
 /*eslint-disable */
 import { Actions } from 'redux/action/books';
-import { getBook, setLike } from 'api/book';
+import { fetchBooks, setLike } from 'api/book';
 import { openNotification } from 'helpers/openNotification';
 import { put, call, takeEvery, select } from 'redux-saga/effects';
 import { AddBookType } from 'types';
-import { getAuth } from 'redux/selectors';
+import { getAuth, getBooksParams } from 'redux/selectors';
+// import { isEqual } from 'lodash'
 
-function* workerRequestBook(action: any) {
+function* workerRequestBook() {
+  const params: object = yield select(getBooksParams);
   try {
     yield put(Actions.setBooksLoader(true));
-    const { data } = yield call(getBook, action.payload);
+    const { data } = yield call(fetchBooks, params);
     yield put(Actions.setBooks(data.books));
-    yield put(Actions.setTotalNumberBooks(data.total));
+    yield put(Actions.setParams({ totalPage: data.total }));
   } catch (e) {
     openNotification({
       type: 'error',

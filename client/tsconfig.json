@@ -12,7 +12,7 @@
     "importHelpers": true,
     "declaration": true,
     "rootDir": "src",
-    "noUnusedLocals": true,
+    "noUnusedLocals": false,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,

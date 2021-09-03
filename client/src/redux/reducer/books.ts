@@ -6,9 +6,11 @@ export type InitialStateType = typeof initialState;
 
 const initialState = {
   items: [] as Array<BookType>,
-  total: 0,
-  searchValue: null as null | string,
-  page: null as null | number,
+  params: {
+    page: 0,
+    search: '',
+    totalPage: 0,
+  },
   isLoader: false,
 };
 
@@ -21,14 +23,8 @@ const booksReducer = (state = initialState, action: ActionsTypes): InitialStateT
       case 'BOOKS@IS_LOADER':
         draft.isLoader = action.payload;
         break;
-      case 'BOOKS@SET_PAGE':
-        draft.page = action.payload;
-        break;
-      case 'BOOKS@SET_TOTAL_NUMBER_BOOKS':
-        draft.total = action.payload;
-        break;
-      case 'BOOKS@SEARCH_VALUE':
-        draft.searchValue = action.payload;
+      case 'BOOKS@PARAMS':
+        draft.params = { ...state.params, ...action.payload };
         break;
       case 'BOOKS@ADD_COMMENT': {
         // eslint-disable-next-line no-underscore-dangle
