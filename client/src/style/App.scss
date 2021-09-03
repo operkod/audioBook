@@ -1,5 +1,4 @@
 @import '~normalize.css';
-@import './variables.scss';
 @import './fonts.scss';
 @import 'antd/dist/antd.css';
 
@@ -42,9 +41,9 @@ a {
 }
 
 .ant-back-top-icon {
-  background-color: $color-primary;
+  background-color: #1890ff;
   transition: all 0.2s;
   &:hover {
-    background-color: $color-secondary;
+    background-color: #40a9ff;
   }
 }

@@ -5,8 +5,14 @@ import { userReducer } from './user';
 import { commentsReducer } from './comments';
 import { booksReducer } from './books';
 import { settingsReducer } from './settings';
+import { entitiesReducer, queriesReducer, QueriesState } from 'redux-query';
+
+export const getQueries = (state: StateType) => state.queries
+export const getEntities = (state: StateType) => state.entities
 
 const rootReducer = combineReducers({
+  entities: entitiesReducer,
+  queries: queriesReducer,
   settings: settingsReducer,
   user: userReducer,
   audio: audioReducer,

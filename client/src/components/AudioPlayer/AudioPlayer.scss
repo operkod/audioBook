@@ -1,6 +1,3 @@
-@import "../../style/variables.scss";
-
-
 
 .audio {
   margin: 5px 0px;
@@ -27,61 +24,61 @@
 .rhap_main-controls-button {
   svg {
     path {
-      fill: $color-primary;
+      fill: #1890ff;
       transition: all 0.2s ease-out;
       &:hover {
-        fill: $color-secondary;
+        fill: #40a9ff;
       }
     }
   }
 }
 // Цвет ползунка
 .rhap_progress-indicator {
-  background-color: $color-primary;
+  background-color: #1890ff;
   transition: background-color 0.2s ease-out;
   &:hover {
-    background-color: $color-secondary;
+    background-color: #40a9ff;
   }
 }
 //  индикатора выполнения
 .rhap_progress-bar {
-  background-color: rgba($color-secondary, 0.2);
+  background-color: rgba(#40a9ff, 0.2);
 }
 .rhap_volume-button {
   svg {
     path {
-      fill: $color-primary;
+      fill: #1890ff;
       transition: all 0.2s ease-out;
       &:hover {
-        fill: $color-secondary;
+        fill: #40a9ff;
       }
     }
   }
 }
 .rhap_volume-bar {
-  background-color: rgba($color-secondary, 0.2);
+  background-color: rgba(#40a9ff, 0.2);
 }
 .rhap_volume-indicator {
-  background-color: $color-primary;
+  background-color: #1890ff;
   transition: all 0.2s ease-out;
   &:hover {
-    background-color: $color-secondary;
+    background-color: #40a9ff;
   }
 }
 .rhap_progress-filled {
-  background-color: $color-secondary;
+  background-color: #40a9ff;
 }
 .rhap_repeat-button {
   svg {
     path {
-      fill: $color-primary;
+      fill: #1890ff;
       transition: all 0.2s ease-out;
       &:hover {
-        fill: $color-secondary;
+        fill: #40a9ff;
       }
     }
   }
 }
 .rhap_time {
-  color: $color-primary;
+  color: #1890ff;
 }

@@ -3,27 +3,27 @@ import './style/App.scss';
 import { Provider } from 'react-redux';
 import AppRouters from 'components/AppRouter';
 import Actions from 'redux/action/user';
-import io from 'socket.io-client';
+import { Provider as ReduxQueryProvider } from 'redux-query-react';
 import 'localization';
 import StalerScreen from 'settings';
 import { createUseStyles } from 'react-jss';
 import store from './redux/store';
 
-const socket = io();
+export const getQueries = (state: any) => state.queries;
+
 // TODO: когда добавишь на сервере сохранение в профиле книг удалить dispatch
 // store.dispatch(ActionsBooks.requestBook())
 store.dispatch(Actions.userProfile());
 
 const App = () => {
   useStyles();
-  React.useEffect(() => {
-    socket.emit('event', 'asdasdsa');
-  }, []);
   return (
     <Provider store={store}>
-      <StalerScreen>
-        <AppRouters />
-      </StalerScreen>
+      <ReduxQueryProvider queriesSelector={getQueries}>
+        <StalerScreen>
+          <AppRouters />
+        </StalerScreen>
+      </ReduxQueryProvider>
     </Provider>
   );
 };
