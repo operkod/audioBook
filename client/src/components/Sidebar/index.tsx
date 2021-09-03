@@ -76,6 +76,7 @@ const useStyles = createUseStyles({
     position: 'fixed',
     right: '0',
     minWidth: '350px',
+    maxWidth: '350px',
     height: 'calc(100vh - 122px)', // minus header = 82 i margin block top=20 bottom=20 = "122px"
     marginLeft: '0 !important',
   },
