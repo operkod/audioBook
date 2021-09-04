@@ -1,40 +1,45 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useCallback } from 'react';
 import { createUseStyles } from 'react-jss';
 import { Statistic } from 'antd';
 import { useTranslation } from 'react-i18next';
-import { Actions as ActionsComment } from 'redux/action/comments';
-import { Actions as ActionsBook } from 'redux/action/books';
 import { AuthorBlock } from 'components';
 import { ButtonPlay } from 'components/button';
 import { BookType } from 'types';
 import Block from 'components/Block';
-
+import useBooks from 'hooks/api/useBooks';
 import commentIcon from 'assets/img/comment.svg';
-import logo from 'assets/img/logo.svg';
-import like from 'assets/img/like-up.svg';
-import likeUp from 'assets/img/like.svg';
+import logoIcon from 'assets/img/logo.svg';
+import likeIcon from 'assets/img/like-up.svg';
+import likeUpIcon from 'assets/img/like.svg';
+import { formatStringEllipsis } from 'helpers/format';
 
 const Article: React.FC<BookType> = (props) => {
   const { _id, name, author, imgUrl, description, comments, likes } = props;
-  const dispatch = useDispatch();
+  const [like, setLike] = useState(likes);
   const { t } = useTranslation();
   const styles = useStyles();
-  const handleClick = () => dispatch(ActionsComment.fetchComments(_id));
+  const { getBookLike } = useBooks();
+  // const handleClick = () => dispatch(ActionsComment.fetchComments(_id));
 
-  const likeHandler = () => {
-    dispatch(ActionsBook.requestAddLike({ id: _id }));
-  };
+  const likeHandler = useCallback(() => {
+    getBookLike({
+      id: _id,
+      checked: !like,
+      successCallback: (res: { count: number; status: boolean }) => {
+        setLike(res);
+      },
+    });
+  }, [like, getBookLike, _id]);
 
   const likeImage = (
-    <img className={styles.likeImage} onClick={likeHandler} src={likes.status ? like : likeUp} alt="like" />
+    <img className={styles.likeImage} onClick={likeHandler} src={like.status ? likeIcon : likeUpIcon} alt="like" />
   );
 
   return (
     <Block className={styles.article}>
       <div className={styles.articleLeft}>
         <div className={styles.articleImage}>
-          <img src={imgUrl || logo} alt={name} />
+          <img src={imgUrl || logoIcon} alt={name} />
         </div>
       </div>
       <div className={styles.description}>
@@ -43,11 +48,11 @@ const Article: React.FC<BookType> = (props) => {
             <h2 className={styles.title}>{name}</h2>
             <Statistic
               valueStyle={{ fontSize: '1.2rem', whiteSpace: 'nowrap' }}
-              value={likes.count}
+              value={like.count}
               prefix={likeImage}
             />
           </div>
-          <p className={styles.text}>{description}</p>
+          <p className={styles.text}>{formatStringEllipsis(description, 300)}</p>
         </div>
         <AuthorBlock name={author} />
         <div className={styles.footer}>
@@ -56,7 +61,7 @@ const Article: React.FC<BookType> = (props) => {
             className={styles.center}
             name={comments.length ? `${comments.length} ${t('article.comment.yes')}` : t('article.comment.no')}
             icon={commentIcon}
-            onClick={handleClick}
+            onClick={() => console.log('Coments')}
           />
         </div>
       </div>

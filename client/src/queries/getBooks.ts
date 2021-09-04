@@ -1,37 +1,26 @@
 import endpoints from 'const/endpoints';
 import { requestAsync } from 'redux-query';
 
-export interface IGetAuthParams {
-  email: string;
-  password: string;
+export interface IGetBooksParams {
+  params: object;
   resultKey?: string;
   successCallback: Function;
   errorCallback: Function;
 }
 
-const getAuth = ({
-  email = '',
-  password = '',
-  resultKey = 'authData',
-  successCallback,
-  errorCallback,
-}: IGetAuthParams) =>
+const getBooks = ({ params, resultKey = 'booksData', successCallback, errorCallback }: IGetBooksParams) =>
   requestAsync({
-    url: endpoints.getAuthUrl(),
+    url: endpoints.getBooksUrl(params),
     transform: (response) => ({
       [resultKey]: response,
     }),
-    queryKey: endpoints.getAuthUrl(),
-    body: {
-      email,
-      password,
-    },
+    queryKey: endpoints.getBooksUrl(params),
     meta: {
+      authToken: true,
       successCallback,
       errorCallback,
     },
     options: {
-      method: 'POST',
       headers: {
         Accept: 'application/json',
       },
@@ -41,4 +30,4 @@ const getAuth = ({
     },
   });
 
-export default getAuth;
+export default getBooks;

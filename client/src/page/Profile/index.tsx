@@ -3,22 +3,21 @@ import './Profile.scss';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Card, Image, Typography } from 'antd';
-import ActionsUser from 'redux/action/user';
-import { getAvatar, getBooks, getUserName } from 'redux/selectors';
+import { getAvatar, getUserName } from 'redux/selectors';
 import { useTranslation } from 'react-i18next';
 import CardBook from './CardBook';
+import useAuth from 'hooks/api/useAuth';
 
 const { Title } = Typography;
 
 const Profile = () => {
   const { t } = useTranslation();
-  const books = useSelector(getBooks);
   const avatar = useSelector(getAvatar);
   const userName = useSelector(getUserName);
   const dispatch = useDispatch();
 
   const onChange = (e: any) => {
-    dispatch(ActionsUser.updateAvatar(e.target.files[0]));
+    // dispatch(ActionsUser.updateAvatar(e.target.files[0]));
   };
 
   return (
@@ -40,9 +39,9 @@ const Profile = () => {
         <Card>
           <Title level={3}>{t('profile.select')}</Title>
           <div className="profile__list">
-            {books.map((book) => (
+            {/* {books.map((book) => (
               <CardBook key={book._id} {...book} />
-            ))}
+            ))} */}
           </div>
         </Card>
       </div>

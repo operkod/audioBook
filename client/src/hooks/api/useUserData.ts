@@ -1,13 +1,15 @@
 import { useCallback, useMemo } from 'react';
+import { updateEntities } from 'redux-query';
 import { useDispatch, useSelector } from 'react-redux';
-import getAuth from 'queries/getAuth';
+import getUserData from 'queries/getUserData';
+import { bindActionCreators } from 'redux';
 import useActionsWithFetchingState from '../useActionsWithFetchingState';
 import { objectSelector } from './selectors';
 
-const useAuth = () => {
+const useUserData = () => {
   const selector = useCallback(
     (state) => ({
-      authData: objectSelector(state, 'authData'),
+      userData: objectSelector(state, 'userData'),
     }),
     [],
   );
@@ -17,9 +19,23 @@ const useAuth = () => {
 
   const actionCreators = useMemo(
     () => ({
-      getAuth,
+      getUserData,
     }),
     [],
+  );
+
+  const actionWithoutIsFetching = useMemo(
+    () =>
+      bindActionCreators(
+        {
+          logout: () =>
+            updateEntities({
+              userData: () => ({}),
+            }),
+        },
+        dispatch,
+      ),
+    [dispatch],
   );
 
   const [actions, isFetchingState] = useActionsWithFetchingState(actionCreators, dispatch);
@@ -27,7 +43,8 @@ const useAuth = () => {
     ...data,
     ...actions,
     ...isFetchingState,
+    ...actionWithoutIsFetching,
   };
 };
 
-export default useAuth;
+export default useUserData;

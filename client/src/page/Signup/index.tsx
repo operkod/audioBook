@@ -8,10 +8,15 @@ import { useTranslation } from 'react-i18next';
 import { emailValidator } from 'helpers/validators';
 import routers from 'const/routers';
 import useSignUp from 'hooks/api/useSignUp';
+import useUserData from 'hooks/api/useUserData';
+import { setToken } from 'helpers/token';
+import { useHistory } from 'react-router';
 
 const RegisterForm = () => {
   const { t } = useTranslation();
+  const history = useHistory();
   const { getSignUp, getSignUpIsFetching } = useSignUp();
+  const { getUserData, getUserDataIsFetching } = useUserData();
   const [formaData, setFormData] = React.useState<RegistrationFormType>({
     email: '',
     fullname: '',
@@ -77,8 +82,8 @@ const RegisterForm = () => {
   );
 
   const isButtonDisabled = React.useMemo(
-    () => Object.values(error).some((item) => item.isValid === true) || getSignUpIsFetching,
-    [error, getSignUpIsFetching],
+    () => Object.values(error).some((item) => item.isValid === true) || getSignUpIsFetching || getUserDataIsFetching,
+    [error, getSignUpIsFetching, getUserDataIsFetching],
   );
 
   const handleSubmit = React.useCallback(
@@ -99,15 +104,17 @@ const RegisterForm = () => {
       }
       getSignUp({
         ...formaData,
-        successCallback: () => {
-          console.log('SUCCESS');
-        },
-        errorCallback: (res) => {
-          console.log('ERROR', res);
+        successCallback: ({ jwtToken }: any) => {
+          setToken(jwtToken);
+          getUserData({
+            successCallback: () => {
+              history.push(routers.getBase());
+            },
+          });
         },
       });
     },
-    [t, formaData, getSignUp],
+    [t, formaData, getSignUp, getUserData, history],
   );
 
   return (

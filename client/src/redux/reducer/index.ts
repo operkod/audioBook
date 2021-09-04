@@ -1,23 +1,21 @@
 /*eslint-disable */
 import { combineReducers } from 'redux';
 import { audioReducer } from './audio';
-import { userReducer } from './user';
 import { commentsReducer } from './comments';
-import { booksReducer } from './books';
 import { settingsReducer } from './settings';
-import { entitiesReducer, queriesReducer, QueriesState } from 'redux-query';
+import queryParams from './queryParams';
+import { entitiesReducer, queriesReducer, QueriesSelector, EntitiesSelector, EntitiesState } from 'redux-query';
 
-export const getQueries = (state: StateType) => state.queries
-export const getEntities = (state: StateType) => state.entities
+export const getQueries: QueriesSelector<StateType> = (state: StateType) => state.queries
+export const getEntities: EntitiesSelector<EntitiesState, StateType> = (state: StateType) => state.entities
 
 const rootReducer = combineReducers({
   entities: entitiesReducer,
   queries: queriesReducer,
   settings: settingsReducer,
-  user: userReducer,
   audio: audioReducer,
   comments: commentsReducer,
-  books: booksReducer,
+  queryParams
 });
 
 export type StateType = ReturnType<typeof rootReducer>;

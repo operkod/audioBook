@@ -18,10 +18,6 @@ const getCommentsShow = (state: StateType) => state.comments.isShow;
 const getCommentsLoader = (state: StateType) => state.comments.isLoader;
 const getCommentsCount = (state: StateType) => state.comments.items.length;
 
-const getBooks = (state: StateType) => state.books.items;
-const getBooksParams = (state: StateType) => state.books.params;
-const getBooksIsLoader = (state: StateType) => state.books.isLoader;
-
 // screen
 const getScreenWidth = (state: StateType) => state.settings.width;
 const getScreenHeight = (state: StateType) => state.settings.height;
@@ -38,11 +34,8 @@ export {
   getComments,
   getCommentsShow,
   getCommentsLoader,
-  getBooks,
-  getBooksParams,
   getUserName,
   getCommentsCount,
-  getBooksIsLoader,
   getScreenWidth,
   getScreenHeight,
 };

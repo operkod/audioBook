@@ -1,16 +1,16 @@
-/* eslint-disable no-underscore-dangle */
 /* eslint-disable @typescript-eslint/no-shadow */
-import React, { useEffect, FC } from 'react';
+import React, { useEffect, FC, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Pagination, BackTop } from 'antd';
 import { createUseStyles } from 'react-jss';
 import { Article, Loader } from 'components';
-import { Actions } from 'redux/action/books';
-import { getBooks, getBooksIsLoader, getBooksParams } from 'redux/selectors';
 import { BookType } from 'types';
 import { useHistory } from 'react-router-dom';
 import queryString from 'query-string';
 import getParams from 'helpers/getParams';
+import { StateType } from 'redux/reducer';
+import { setParamsQueryBooks } from 'Actions';
+import useBooks from 'hooks/api/useBooks';
 
 type PropsTypes = {
   className?: string;
@@ -19,10 +19,9 @@ type PropsTypes = {
 const BooksScreen: FC<PropsTypes> = ({ className = '' }) => {
   const dispatch = useDispatch();
   const styles = useStyles();
-  const books = useSelector(getBooks);
-  const { page, search, totalPage } = useSelector(getBooksParams);
-  const isLoader = useSelector(getBooksIsLoader);
   const history = useHistory();
+  const { page, search } = useSelector((state: StateType) => state.queryParams);
+  const { getBooks, booksData, getBooksIsFetching } = useBooks();
 
   useEffect(() => {
     const { search } = history.location;
@@ -30,7 +29,7 @@ const BooksScreen: FC<PropsTypes> = ({ className = '' }) => {
       parseNumbers: true,
       parseBooleans: true,
     });
-    dispatch(Actions.setParams(params));
+    dispatch(setParamsQueryBooks(params));
   }, [history.location, dispatch]);
 
   useEffect(() => {
@@ -42,12 +41,15 @@ const BooksScreen: FC<PropsTypes> = ({ className = '' }) => {
   }, [page, search, history]);
 
   useEffect(() => {
-    dispatch(Actions.requestBook());
-  }, [page, search, dispatch]);
+    getBooks({ params: { page, search } });
+  }, [page, search, getBooks]);
 
-  const onChangePage = (valuePage: number) => {
-    dispatch(Actions.setParams({ page: valuePage }));
-  };
+  const onChangePage = useCallback(
+    (valuePage: number) => {
+      dispatch(setParamsQueryBooks({ page: valuePage }));
+    },
+    [dispatch],
+  );
 
   return (
     <div
@@ -58,21 +60,22 @@ const BooksScreen: FC<PropsTypes> = ({ className = '' }) => {
         width: '100%',
       }}
     >
-      {isLoader ? (
+      {getBooksIsFetching ? (
         <Loader className={styles.loader} />
-      ) : books.length ? (
+      ) : booksData.books?.length ? (
         <>
-          {books.map((book: BookType) => (
+          {booksData.books?.map((book: BookType) => (
+            // eslint-disable-next-line no-underscore-dangle
             <Article key={book._id} {...book} />
           ))}
           ;
-          {totalPage > 5 && (
+          {booksData.total > 5 && (
             <Pagination
               style={{ textAlign: 'center', padding: '30px 0' }}
               current={page || 1}
               defaultCurrent={1}
               defaultPageSize={5}
-              total={totalPage}
+              total={booksData.total}
               onChange={onChangePage}
             />
           )}

@@ -1,32 +1,23 @@
 import endpoints from 'const/endpoints';
 import { requestAsync } from 'redux-query';
 
-export interface IGetAuthParams {
-  email: string;
-  password: string;
+export interface IGetBookLikeParams {
+  id: string;
+  checked: boolean;
   resultKey?: string;
   successCallback: Function;
   errorCallback: Function;
 }
 
-const getAuth = ({
-  email = '',
-  password = '',
-  resultKey = 'authData',
-  successCallback,
-  errorCallback,
-}: IGetAuthParams) =>
+const getBookLike = ({ id, checked, resultKey = 'bookLike', successCallback, errorCallback }: IGetBookLikeParams) =>
   requestAsync({
-    url: endpoints.getAuthUrl(),
+    url: endpoints.getBookLikeUrl(),
     transform: (response) => ({
       [resultKey]: response,
     }),
-    queryKey: endpoints.getAuthUrl(),
-    body: {
-      email,
-      password,
-    },
+    queryKey: endpoints.getBookLikeUrl(),
     meta: {
+      authToken: true,
       successCallback,
       errorCallback,
     },
@@ -36,9 +27,10 @@ const getAuth = ({
         Accept: 'application/json',
       },
     },
+    body: { id, checked },
     update: {
       [resultKey]: (_prevEntities: any, newEntities: any) => newEntities,
     },
   });
 
-export default getAuth;
+export default getBookLike;

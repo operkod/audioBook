@@ -3,7 +3,6 @@ import React from 'react';
 import { Button } from 'antd';
 import TextArea from 'components/input/TextArea';
 import { useDispatch } from 'react-redux';
-import { Actions } from 'redux/action/books';
 import { useTranslation } from 'react-i18next';
 import { FormDataErrorType } from 'types';
 
@@ -15,16 +14,16 @@ const AddBook = () => {
   const [buttonDisabled, setButtonDisabled] = React.useState(false);
   const [formaData, setFormData] = React.useState(initFormData);
   const [error, setError] = React.useState<FormDataErrorType>({
-    name: { status: false, text: '' },
-    author: { status: false, text: '' },
-    description: { status: false, text: '' },
+    name: { isValid: false, text: '' },
+    author: { isValid: false, text: '' },
+    description: { isValid: false, text: '' },
   });
 
   const handleChange = React.useCallback(
     (event: React.ChangeEvent<HTMLTextAreaElement>) => {
       const { name, value } = event.target;
-      if (error[name].status === true) {
-        setError((prev) => ({ ...prev, [name]: { status: false, text: '' } }));
+      if (error[name].isValid === true) {
+        setError((prev) => ({ ...prev, [name]: { isValid: false, text: '' } }));
       }
       setFormData((prev) => ({ ...prev, [name]: value }));
     },
@@ -36,7 +35,7 @@ const AddBook = () => {
       const { name, value } = event.target;
       setError((prev) => ({
         ...prev,
-        [name]: { status: !value, text: !value ? t('errors.required') : '' },
+        [name]: { isValid: !value, text: !value ? t('errors.required') : '' },
       }));
     },
     [t],
@@ -49,7 +48,7 @@ const AddBook = () => {
         if (!value) {
           setError((prev) => ({
             ...prev,
-            [key]: { status: true, text: t('errors.required') },
+            [key]: { isValid: true, text: t('errors.required') },
           }));
           return true;
         }
@@ -58,18 +57,18 @@ const AddBook = () => {
       if (checkFillingInput) {
         return;
       }
-      dispatch(Actions.requestAddBook(formaData));
-      setButtonDisabled(true);
-      setTimeout(() => {
-        setButtonDisabled(false);
-        setFormData(initFormData);
-      }, 2000);
+      // dispatch(Actions.requestAddBook(formaData));
+      // setButtonDisabled(true);
+      // setTimeout(() => {
+      setButtonDisabled(false);
+      //   setFormData(initFormData);
+      // }, 2000);
     },
     [formaData, dispatch, t],
   );
 
   const isButtonDisabled = React.useMemo(
-    () => Object.values(error).some((item) => item.status === true) || buttonDisabled,
+    () => Object.values(error).some((item) => item.isValid === true) || buttonDisabled,
     [error, buttonDisabled],
   );
 

@@ -1,18 +1,20 @@
 /*eslint-disable */
 import React from 'react';
 import { Menu as MenuAntd, Dropdown, Avatar, Button } from 'antd';
-import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import Actions from 'redux/action/user';
 import { MenuProps } from 'components/Menu';
 import routers from 'const/routers';
 
 import userIcon from 'assets/img/user.svg';
 import { useTranslation } from 'react-i18next';
+import { removeToken } from 'helpers/token';
 
-const WebMenu: React.FC<MenuProps> = ({ isAuth, avatar }) => {
-  const dispatch = useDispatch();
+const WebMenu: React.FC<MenuProps> = ({ isAuth, avatar, logout }) => {
   const { t } = useTranslation();
+  const logOut = React.useCallback(() => {
+    removeToken();
+    logout();
+  }, [logout]);
   return (
     <>
       {!isAuth ? (
@@ -36,7 +38,7 @@ const WebMenu: React.FC<MenuProps> = ({ isAuth, avatar }) => {
               <MenuAntd.Item>
                 <Link to={routers.getProfile()}>{t('menu.profile')}</Link>
               </MenuAntd.Item>
-              <MenuAntd.Item onClick={() => dispatch(Actions.logOut())} danger>
+              <MenuAntd.Item onClick={logOut} danger>
                 {t('menu.logout')}
               </MenuAntd.Item>
             </MenuAntd>

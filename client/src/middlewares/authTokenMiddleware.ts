@@ -2,11 +2,8 @@ import _ from 'lodash';
 import { actionTypes } from 'redux-query';
 import { getToken } from 'helpers/token';
 
-/**
- * Add Authorization header to api action
- *
- * @return {void}
- */
+// Добавить заголовок авторизации в действие api
+
 export default () => (next: any) => (action: any) => {
   if (
     (_.isEqual(action.type, actionTypes.REQUEST_ASYNC) || _.isEqual(action.type, actionTypes.MUTATE_ASYNC)) &&

@@ -33,7 +33,7 @@ const useSocketChat = () => {
   useEffect(() => {
     (async () => {
       const { data } = await axios.get('/book/chat');
-      console.log('DATA AXIOS :', data);
+      console.log('DATA  :', data);
     })();
   }, []);
 

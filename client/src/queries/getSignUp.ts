@@ -1,3 +1,4 @@
+import endpoints from 'const/endpoints';
 import { requestAsync } from 'redux-query';
 
 export interface IGetSignUpParams {
@@ -20,14 +21,14 @@ const getSingUp = ({
   errorCallback,
 }: IGetSignUpParams) =>
   requestAsync({
-    url: `${process.env.REACT_APP_BASE_URL}/user/signup`,
+    url: endpoints.getSingUpUrl(),
     transform: ({ token, useData, ...response }) => ({
       [resultKey]: {
         token,
         ...response,
       },
     }),
-    queryKey: `${process.env.REACT_APP_BASE_URL}/user/signup`,
+    queryKey: endpoints.getSingUpUrl(),
     body: {
       email,
       fullname,

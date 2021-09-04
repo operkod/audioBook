@@ -24,9 +24,10 @@ const getCheckedLike = (data, userId = null) => {
 }
 
 router.get('/', async (req, res) => {
+	console.log('pfghjc')
 	try {
 		let userId = null
-		const token = req.headers.authorization.split(' ')[1]
+		const token = req.headers.authorization?.split(' ')[1]
 		if (token && token !== 'null') {
 			userId = jwt.verify(token, config.get('jwtSecret')).userId
 		}
@@ -116,10 +117,15 @@ router.post('/like', auth, async (req, res) => {
 		const { _id, likes } = book
 		if (likes.includes(userId)) {
 			await Book.updateOne({ _id: bookId }, { $pull: { likes: userId } })
-			return res.status(201).json({ bookId: _id, status: false })
+			return res
+				.status(201)
+				.json({
+					count: likes.length > 1 ? (likes.length -= 1) : 0,
+					status: false
+				})
 		}
 		await Book.updateOne({ _id: bookId }, { $addToSet: { likes: userId } })
-		res.status(201).json({ bookId: _id, status: true })
+		res.status(201).json({ count: (likes.length += 1), status: true })
 	} catch (e) {
 		console.log('message', e.message)
 		res.status(500).json({ message: 'Что-то пошло не так попробуйте сново' })

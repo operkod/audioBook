@@ -1,16 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import { Input } from 'antd';
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
 import { useGlobalStyles } from 'App';
 import { Menu } from 'components';
 import { Link, useHistory } from 'react-router-dom';
-import { Actions } from 'redux/action/books';
+// import { Actions } from 'redux/action/books';
 import routers from 'const/routers';
 import { useTranslation } from 'react-i18next';
 import Language from 'components/Language';
 import logoIcon from 'assets/img/logo.svg';
-import { getBooksParams } from 'redux/selectors';
+import { setParamsQueryBooks } from 'Actions';
+import { StateType } from 'redux/reducer';
 
 const { Search } = Input;
 
@@ -20,19 +21,15 @@ const Header = () => {
   const dispatch = useDispatch();
   const styles = useStyles();
   const globalStyles = useGlobalStyles();
-  const { search } = useSelector(getBooksParams);
-  const [valueForm, setValueForm] = useState('');
+  const search = useSelector((state: StateType) => state.queryParams.search);
+  const [valueForm, setValueForm] = useState(search);
 
   const searchHandler = (value: string) => {
-    dispatch(Actions.setParams({ search: value.trim(), page: 0, totalPage: 0 }));
+    dispatch(setParamsQueryBooks({ search: value.trim(), page: 0 }));
     history.push(routers.getBase());
   };
-  useEffect(() => {
-    if (search === valueForm) return;
-    setValueForm(search);
-  }, [search]);
 
-  const changeHandler = (event: any) => {
+  const changeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
     setValueForm(value);
   };

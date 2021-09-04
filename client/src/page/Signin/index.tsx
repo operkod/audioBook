@@ -9,16 +9,18 @@ import routers from 'const/routers';
 import { emailValidator } from 'helpers/validators';
 import useAuth from 'hooks/api/useAuth';
 import { setToken } from 'helpers/token';
+import useUserData from 'hooks/api/useUserData';
 
 const LoginForm = () => {
   const history = useHistory();
   const { getAuth, getAuthIsFetching } = useAuth();
+  const { getUserData, getUserDataIsFetching } = useUserData();
   const { t } = useTranslation();
   const [formaData, setFormData] = React.useState<LoginFormType>({
     email: '',
     password: '',
   });
-  const [error, setError] = React.useState<FormDataErrorType>({
+  const [errors, setErrors] = React.useState<FormDataErrorType>({
     email: { isValid: false, text: '' },
     password: { isValid: false, text: '' },
   });
@@ -26,12 +28,12 @@ const LoginForm = () => {
   const handleChange = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const { name, value } = event.target;
-      if (error[name].isValid === true) {
-        setError((prev) => ({ ...prev, [name]: { isValid: false, text: '' } }));
+      if (errors[name].isValid === true) {
+        setErrors((prev) => ({ ...prev, [name]: { isValid: false, text: '' } }));
       }
       setFormData((prev) => ({ ...prev, [name]: value }));
     },
-    [error],
+    [errors],
   );
 
   const handleBlur = React.useCallback(
@@ -39,7 +41,7 @@ const LoginForm = () => {
       const { name, value } = event.target;
       if (name === 'email' && value) {
         const isValidEmail = !emailValidator(value);
-        setError((prev) => ({
+        setErrors((prev) => ({
           ...prev,
           [name]: {
             isValid: isValidEmail,
@@ -47,7 +49,7 @@ const LoginForm = () => {
           },
         }));
       } else {
-        setError((prev) => ({
+        setErrors((prev) => ({
           ...prev,
           [name]: { isValid: !value, text: !value ? t('errors.required') : '' },
         }));
@@ -57,8 +59,8 @@ const LoginForm = () => {
   );
 
   const isButtonDisabled = React.useMemo(
-    () => Object.values(error).some((item) => item.isValid === true) || getAuthIsFetching,
-    [error, getAuthIsFetching],
+    () => Object.values(errors).some((item) => item.isValid === true) || getAuthIsFetching || getUserDataIsFetching,
+    [errors, getAuthIsFetching, getUserDataIsFetching],
   );
 
   const handleSubmit = React.useCallback(
@@ -66,7 +68,7 @@ const LoginForm = () => {
       event.preventDefault();
       const checkFillingInput = Object.entries(formaData).reduce((acc, [key, value]) => {
         if (!value) {
-          setError((prev) => ({
+          setErrors((prev) => ({
             ...prev,
             [key]: { isValid: true, text: t('errors.required') },
           }));
@@ -80,17 +82,17 @@ const LoginForm = () => {
       getAuth({
         email: formaData.email,
         password: formaData.password,
-
-        successCallback: ({ token }: any) => {
-          setToken(token);
-          history.push(routers.getBase());
-        },
-        errorCallback: ({ message }: any) => {
-          setError((prev) => ({ ...prev, email: { isValid: true, text: message } }));
+        successCallback: ({ jwtToken }: any) => {
+          setToken(jwtToken);
+          getUserData({
+            successCallback: () => {
+              history.push(routers.getBase());
+            },
+          });
         },
       });
     },
-    [t, formaData, getAuth, history],
+    [t, formaData, getAuth, history, getUserData],
   );
 
   return (
@@ -108,7 +110,7 @@ const LoginForm = () => {
               placeholder={t('auth.input.email')}
               handleChange={handleChange}
               handleBlur={handleBlur}
-              errors={error}
+              errors={errors}
               values={formaData}
             />
             <Input
@@ -117,7 +119,7 @@ const LoginForm = () => {
               placeholder={t('auth.input.password')}
               handleChange={handleChange}
               handleBlur={handleBlur}
-              errors={error}
+              errors={errors}
               values={formaData}
             />
             <Form.Item>

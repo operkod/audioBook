@@ -14,7 +14,7 @@ app.use(cors())
 app.use(express.json({ extended: true }))
 
 app.use('/uploads', express.static('uploads'))
-app.use('/user', require('./routes/auth.routes'))
+app.use('/auth', require('./routes/auth.routes'))
 app.use('/book', require('./routes/book.routes'))
 
 if (process.env.NODE_ENV === 'production') {

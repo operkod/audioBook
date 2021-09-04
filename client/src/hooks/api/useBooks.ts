@@ -1,13 +1,14 @@
 import { useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import getAuth from 'queries/getAuth';
+import getBooks from 'queries/getBooks';
+import getBookLike from 'queries/getBookLike';
 import useActionsWithFetchingState from '../useActionsWithFetchingState';
-import { objectSelector } from './selectors';
+import { arraySelector } from './selectors';
 
 const useAuth = () => {
   const selector = useCallback(
     (state) => ({
-      authData: objectSelector(state, 'authData'),
+      booksData: arraySelector(state, 'booksData'),
     }),
     [],
   );
@@ -17,7 +18,8 @@ const useAuth = () => {
 
   const actionCreators = useMemo(
     () => ({
-      getAuth,
+      getBooks,
+      getBookLike,
     }),
     [],
   );
