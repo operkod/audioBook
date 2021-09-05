@@ -117,12 +117,10 @@ router.post('/like', auth, async (req, res) => {
 		const { _id, likes } = book
 		if (likes.includes(userId)) {
 			await Book.updateOne({ _id: bookId }, { $pull: { likes: userId } })
-			return res
-				.status(201)
-				.json({
-					count: likes.length > 1 ? (likes.length -= 1) : 0,
-					status: false
-				})
+			return res.status(201).json({
+				count: likes.length > 1 ? (likes.length -= 1) : 0,
+				status: false
+			})
 		}
 		await Book.updateOne({ _id: bookId }, { $addToSet: { likes: userId } })
 		res.status(201).json({ count: (likes.length += 1), status: true })
@@ -133,10 +131,9 @@ router.post('/like', auth, async (req, res) => {
 })
 router.get('/chat', async (req, res) => {
 	try {
-		const messages = await Chat.find({}, { sort: [['datefield', 'asc']] })
+		const messages = await Chat.find().sort({ datefield: -1 })
 
-		// .limit(5)
-		res.status(201).json({ messages })
+		res.status(201).json(messages)
 	} catch (e) {
 		console.log('message Chat', e.message)
 		res.status(500).json({ message: 'Что-то пошло не так попробуйте сново' })

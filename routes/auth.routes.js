@@ -66,16 +66,11 @@ router.post('/signin', async (req, res) => {
 router.post('/photo', auth, upload.single('image'), async (req, res) => {
 	try {
 		const imageUrl = req.file.path
+		console.log(imageUrl)
 		const userId = req.user.userId
 		await User.findOneAndUpdate({ _id: userId }, { $set: { avatar: imageUrl } })
-		const userProfile = await User.findById(
-			{ _id: userId },
-			{ id: 1, avatar: 1, fullname: 1 }
-		)
-		const token = jwt.sign({ userId: userId }, config.get('jwtSecret'), {
-			expiresIn: '12h'
-		})
-		res.json({ user: userProfile, token })
+		const { avatar } = await User.findById({ _id: userId }, { avatar: 1 })
+		res.json({ avatar })
 		res.status(201).json(profile)
 	} catch (e) {
 		console.log(e.message)

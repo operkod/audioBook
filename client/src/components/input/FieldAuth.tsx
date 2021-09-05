@@ -1,30 +1,27 @@
 import { Form, Input } from 'antd';
-import React, { ChangeEvent, FocusEvent } from 'react';
+import React, { ChangeEvent, FC, FocusEvent } from 'react';
 
-type PropsType = {
+type PropsTypes = {
   name: string;
   placeholder: string;
   type: string;
   handleChange: (event: ChangeEvent<HTMLInputElement>) => void;
   handleBlur: (event: FocusEvent<HTMLInputElement>) => void;
-  errors: any;
-  values: any;
+  value: string;
+  validateStatus: boolean;
+  errorText: string;
 };
 
-const FormField = (props: PropsType) => {
-  const { name, placeholder, type, handleChange, handleBlur, errors, values } = props;
+const FieldAuth: FC<PropsTypes> = (props) => {
+  const { name, placeholder, type, handleChange, handleBlur, value, validateStatus, errorText } = props;
   return (
-    <Form.Item
-      validateStatus={errors[name].isValid ? 'error' : undefined}
-      help={errors[name].isValid ? errors[name].text : undefined}
-      hasFeedback
-    >
+    <Form.Item validateStatus={validateStatus ? 'error' : undefined} help={errorText || undefined} hasFeedback>
       <Input
         id={name}
         name={name}
         size="large"
         placeholder={placeholder}
-        value={values[name]}
+        value={value}
         onChange={handleChange}
         onBlur={handleBlur}
         type={type}
@@ -32,4 +29,5 @@ const FormField = (props: PropsType) => {
     </Form.Item>
   );
 };
-export default FormField;
+
+export default FieldAuth;

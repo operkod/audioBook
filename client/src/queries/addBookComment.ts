@@ -2,18 +2,22 @@ import endpoints from 'const/endpoints';
 import { requestAsync } from 'redux-query';
 import { IQueriesType } from './type';
 
-export interface IGetBookLikeParams extends IQueriesType {
-  id: string;
-  checked: boolean;
+export interface IGetBookCommentParams extends IQueriesType {
+  postData: { bookId: string; text: string };
 }
 
-const getBookLike = ({ id, checked, resultKey = 'bookLike', successCallback, errorCallback }: IGetBookLikeParams) =>
+const addBookComment = ({
+  postData,
+  resultKey = 'addBookComment',
+  successCallback,
+  errorCallback,
+}: IGetBookCommentParams) =>
   requestAsync({
-    url: endpoints.getBookLikeUrl(),
+    url: endpoints.getBookAddCommentUrl(),
     transform: (response) => ({
       [resultKey]: response,
     }),
-    queryKey: endpoints.getBookLikeUrl(),
+    queryKey: endpoints.getBookAddCommentUrl(),
     meta: {
       authToken: true,
       successCallback,
@@ -25,10 +29,10 @@ const getBookLike = ({ id, checked, resultKey = 'bookLike', successCallback, err
         Accept: 'application/json',
       },
     },
-    body: { id, checked },
+    body: postData,
     update: {
       [resultKey]: (_prevEntities: any, newEntities: any) => newEntities,
     },
   });
 
-export default getBookLike;
+export default addBookComment;

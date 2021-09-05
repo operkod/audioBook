@@ -6,7 +6,7 @@ import requestSuccessMiddleware from 'middlewares/requestSuccessMiddleware';
 import requestFailureMiddleware from 'middlewares/requestFailureMiddleware';
 import requestStartMiddleware from 'middlewares/requestStartMiddleware';
 import authTokenMiddleware from 'middlewares/authTokenMiddleware';
-import rootReducer, { getEntities, getQueries } from './reducer';
+import rootReducer, { getEntities, getQueries } from 'reducers';
 
 const configurationStore = () => {
   let customMiddlewares = [
@@ -24,6 +24,6 @@ const configurationStore = () => {
   return createStore(rootReducer, middlewares);
 };
 
-const rootStore: any = configurationStore();
+const store = configurationStore();
 
-export default rootStore;
+export default store;

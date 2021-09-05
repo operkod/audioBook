@@ -1,11 +1,9 @@
 import endpoints from 'const/endpoints';
 import { requestAsync } from 'redux-query';
+import { IQueriesType } from './type';
 
-export interface IGetBooksParams {
+export interface IGetBooksParams extends IQueriesType {
   params: object;
-  resultKey?: string;
-  successCallback: Function;
-  errorCallback: Function;
 }
 
 const getBooks = ({ params, resultKey = 'booksData', successCallback, errorCallback }: IGetBooksParams) =>

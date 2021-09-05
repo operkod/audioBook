@@ -1,54 +1,61 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-shadow */
 import React, { useEffect, FC, useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Pagination, BackTop } from 'antd';
 import { createUseStyles } from 'react-jss';
-import { Article, Loader } from 'components';
+import Article from 'components/Article';
+import Loader from 'components/Loader';
 import { BookType } from 'types';
 import { useHistory } from 'react-router-dom';
 import queryString from 'query-string';
 import getParams from 'helpers/getParams';
-import { StateType } from 'redux/reducer';
-import { setParamsQueryBooks } from 'Actions';
-import useBooks from 'hooks/api/useBooks';
+import useBooks, { RequestBookParamsType } from 'hooks/api/useBooks';
 
 type PropsTypes = {
   className?: string;
 };
 
 const BooksScreen: FC<PropsTypes> = ({ className = '' }) => {
-  const dispatch = useDispatch();
   const styles = useStyles();
   const history = useHistory();
-  const { page, search } = useSelector((state: StateType) => state.queryParams);
-  const { getBooks, booksData, getBooksIsFetching } = useBooks();
+  const { getBooks, booksData, getBooksIsFetching, setRequestBookParams, requestBookParams } = useBooks();
+  const { page, search } = requestBookParams;
 
   useEffect(() => {
-    const { search } = history.location;
-    const params = queryString.parse(search, {
+    const searchValue = history.location.search;
+    const parsString = queryString.parse(searchValue, {
       parseNumbers: true,
       parseBooleans: true,
     });
-    dispatch(setParamsQueryBooks(params));
-  }, [history.location, dispatch]);
+    // TODO:
+    const params = { page, search };
+    if (parsString.page) {
+      params.page = parsString.page;
+    } else if (parsString.search) {
+      params.search = parsString.search;
+    }
+    if (params.page !== page || params.search !== search) {
+      setRequestBookParams({ page: params.page, search: params.search });
+    }
+  }, [history.location.search]);
 
   useEffect(() => {
-    if (page !== 0 || search) {
+    if (page || search) {
       history.push({
         search: getParams({ page, search }),
       });
     }
-  }, [page, search, history]);
+  }, [history, page, search]);
 
   useEffect(() => {
-    getBooks({ params: { page, search } });
-  }, [page, search, getBooks]);
+    getBooks({ params: { ...requestBookParams } });
+  }, [requestBookParams, getBooks]);
 
   const onChangePage = useCallback(
     (valuePage: number) => {
-      dispatch(setParamsQueryBooks({ page: valuePage }));
+      setRequestBookParams({ page: valuePage });
     },
-    [dispatch],
+    [setRequestBookParams],
   );
 
   return (
@@ -72,7 +79,7 @@ const BooksScreen: FC<PropsTypes> = ({ className = '' }) => {
           {booksData.total > 5 && (
             <Pagination
               style={{ textAlign: 'center', padding: '30px 0' }}
-              current={page || 1}
+              current={requestBookParams?.page || 1}
               defaultCurrent={1}
               defaultPageSize={5}
               total={booksData.total}

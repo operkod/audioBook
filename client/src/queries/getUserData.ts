@@ -1,18 +1,13 @@
 import endpoints from 'const/endpoints';
 import { requestAsync } from 'redux-query';
+import { IQueriesType } from './type';
 
-export interface IGetUserDataParams {
-  resultKey?: string;
-  successCallback: Function;
-  errorCallback: Function;
-}
-
-const getUserData = ({ resultKey = 'userData', successCallback, errorCallback }: IGetUserDataParams) =>
+const getUserData = ({ resultKey = 'userData', successCallback, errorCallback }: IQueriesType) =>
   requestAsync({
     url: endpoints.getUserUrl(),
     transform: ({ user }) => ({
       // eslint-disable-next-line no-underscore-dangle
-      [resultKey]: { id: user._id, fullface: user.fullname, avatar: user.avatar },
+      [resultKey]: { id: user._id, name: user.fullname, avatar: user.avatar },
     }),
     queryKey: endpoints.getUserUrl(),
     meta: {

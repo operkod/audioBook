@@ -1,30 +1,25 @@
 import React from 'react';
-import './style/App.scss';
 import { Provider } from 'react-redux';
 import AppRouters from 'components/AppRouter';
-// import Actions from 'redux/action/user';
 import { Provider as ReduxQueryProvider } from 'redux-query-react';
-import 'localization';
-// import StalerScreen from 'settings';
+import StalerScreen from 'settings';
 import { createUseStyles } from 'react-jss';
-import store from 'redux/store';
+import store from 'configureStore';
 import { ToastContainer } from 'react-toastify';
+import { getQueries } from 'reducers';
 import 'react-toastify/dist/ReactToastify.css';
+import './style/App.scss';
+import 'localization';
 
-export const getQueries = (state: any) => state.queries;
-
-// TODO: когда добавишь на сервере сохранение в профиле книг удалить dispatch
-// store.dispatch(ActionsBooks.requestBook())
-// store.dispatch(Actions.userProfile());
 const App = () => {
   useStyles();
   return (
     <Provider store={store}>
       <ReduxQueryProvider queriesSelector={getQueries}>
-        {/* <StalerScreen> */}
-        <ToastContainer />
-        <AppRouters />
-        {/* </StalerScreen> */}
+        <StalerScreen>
+          <ToastContainer />
+          <AppRouters />
+        </StalerScreen>
       </ReduxQueryProvider>
     </Provider>
   );

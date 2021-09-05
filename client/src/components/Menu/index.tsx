@@ -1,12 +1,10 @@
 import './Avatar.scss';
 import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
-import { getScreenWidth } from 'redux/selectors';
+import useScreen from 'hooks/api/useScreen';
 import useUserData from 'hooks/api/useUserData';
 import WebMenu from './components/WebMenu';
 import MobileMenu from './components/MobileMenu';
 
-// const width: number = window.innerWidth
 const mobileWidth: number = 850;
 
 export type MenuProps = {
@@ -16,9 +14,9 @@ export type MenuProps = {
 };
 
 const Menu = () => {
-  const width = useSelector(getScreenWidth);
+  const { screenData } = useScreen();
   const { userData, logout } = useUserData();
-  const isShowMenuMobile = useMemo(() => mobileWidth > width, [width]);
+  const isShowMenuMobile = useMemo(() => mobileWidth > screenData.width, [screenData.width]);
 
   return (
     <>

@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import routers from 'const/routers';
-import { getAuth } from 'redux/selectors';
-import { useSelector } from 'react-redux';
+import useUserData from 'hooks/api/useUserData';
+import { getToken } from 'helpers/token';
 
 type PrivateRouteType = {
   component: () => any;
@@ -11,11 +11,11 @@ type PrivateRouteType = {
 };
 
 const PrivateRoute: FC<PrivateRouteType> = ({ component: Component, ...rest }) => {
-  const isAuth = useSelector(getAuth);
-  if (!isAuth) {
-    return <Redirect to={routers.getSignin()} />;
+  const { userData } = useUserData();
+  if (getToken() && !!userData.id) {
+    return <Route exact={rest.exact} path={rest.path} render={() => <Component />} />;
   }
-  return <Route exact={rest.exact} path={rest.path} render={() => <Component />} />;
+  return <Redirect to={routers.getSignin()} />;
 };
 
 export default PrivateRoute;

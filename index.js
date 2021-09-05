@@ -7,7 +7,9 @@ const path = require('path')
 const server = require('http').Server(app)
 const { Server } = require('socket.io')
 const jwt = require('jsonwebtoken')
+const User = require('./models/User')
 const io = new Server(server)
+const Chant = require('./models/Chat')
 
 app.use(cors())
 
@@ -26,14 +28,28 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 io.on('connection', socket => {
-	socket.on('MESSAGE', ({ token, message }) => {
+	socket.on('MESSAGE', async ({ token, message }) => {
+		const jwtToken = token.split(' ')[1]
+		if (!jwtToken) {
+		}
+
+		const { userId } = jwt.verify(token, config.get('jwtSecret'))
+
+		const user = await User.findById(
+			{ _id: userId },
+			{ id: 1, avatar: 1, fullname: 1 }
+		)
+
+		console.log('decoded', userId)
+
 		const obj = {
-			id: Math.random(),
-			author: 'Saha',
-			avatar: '',
+			author: user.fullname,
+			avatar: user.avatar,
 			message,
 			date: new Date()
 		}
+		const ChatMessage = new Chant(obj)
+		await ChatMessage.save()
 		io.emit('NEW_MESSAGE', obj)
 	}),
 		socket.on('disconnect', () => {

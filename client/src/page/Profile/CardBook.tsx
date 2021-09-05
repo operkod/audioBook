@@ -1,5 +1,5 @@
 import React from 'react';
-import { AuthorBlock } from 'components';
+import AuthorBlock from 'components/AuthorBlock';
 import { ButtonPlay } from 'components/button';
 import { BookType } from 'types';
 

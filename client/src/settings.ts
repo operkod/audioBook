@@ -1,17 +1,16 @@
-import React, { useCallback } from 'react';
-import { useDispatch } from 'react-redux';
-import { SetSettings } from 'redux/action/settings';
+import React from 'react';
+import useScreen from 'hooks/api/useScreen';
 
 const StalerScreen = ({ children }: any) => {
-  const dispatch = useDispatch();
+  const { setScreenData } = useScreen();
 
-  const resizeHandler = useCallback(() => {
+  const resizeHandler = React.useCallback(() => {
     const screenDimensions = {
       width: window.innerWidth,
       height: window.innerHeight,
     };
-    dispatch(SetSettings(screenDimensions));
-  }, [dispatch]);
+    setScreenData(screenDimensions);
+  }, [setScreenData]);
 
   React.useEffect(() => {
     window.addEventListener('resize', resizeHandler);
@@ -23,8 +22,8 @@ const StalerScreen = ({ children }: any) => {
       width: window.innerWidth,
       height: window.innerHeight,
     };
-    dispatch(SetSettings(screenDimensions));
-  }, [dispatch]);
+    setScreenData(screenDimensions);
+  }, [setScreenData]);
 
   return children;
 };

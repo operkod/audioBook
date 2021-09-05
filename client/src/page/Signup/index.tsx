@@ -132,8 +132,9 @@ const RegisterForm = () => {
               placeholder={t('auth.input.email')}
               handleChange={handleChange}
               handleBlur={handleBlur}
-              errors={error}
-              values={formaData}
+              value={formaData.email}
+              validateStatus={error.email.isValid}
+              errorText={error.email.text}
             />
             <FormField
               name="fullname"
@@ -141,8 +142,9 @@ const RegisterForm = () => {
               placeholder={t('auth.input.fullName')}
               handleChange={handleChange}
               handleBlur={handleBlur}
-              errors={error}
-              values={formaData}
+              value={formaData.fullname}
+              validateStatus={error.fullname.isValid}
+              errorText={error.fullname.text}
             />
 
             <FormField
@@ -151,8 +153,9 @@ const RegisterForm = () => {
               type="password"
               handleChange={handleChange}
               handleBlur={handleBlur}
-              errors={error}
-              values={formaData}
+              value={formaData.password}
+              validateStatus={error.password.isValid}
+              errorText={error.password.text}
             />
             <FormField
               name="password_2"
@@ -160,8 +163,9 @@ const RegisterForm = () => {
               type="password"
               handleChange={handleChange}
               handleBlur={handleBlur}
-              errors={error}
-              values={formaData}
+              value={formaData.password_2}
+              validateStatus={error.password_2.isValid}
+              errorText={error.password_2.text}
             />
             <Form.Item>
               <Button

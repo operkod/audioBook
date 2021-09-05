@@ -6,9 +6,10 @@ import cn from 'classnames';
 const { TextArea } = Input;
 
 type Props = {
-  name: string;
-  value?: any;
-  error?: any;
+  name?: string;
+  value?: string;
+  error?: boolean;
+  textError?: string;
   placeholder?: string;
   minRows?: number;
   maxRows?: number;
@@ -19,21 +20,33 @@ type Props = {
 };
 
 const InputText = (props: Props) => {
-  const { name, value, placeholder, error, minRows = 1, maxRows = 1, label, styleProp, onChange, onBlur } = props;
+  const {
+    name,
+    value,
+    placeholder,
+    error,
+    minRows = 1,
+    maxRows = 1,
+    label,
+    styleProp,
+    onChange,
+    onBlur,
+    textError,
+  } = props;
   return (
     <>
       <label
         id={name}
         className={cn('input__label', {
-          'input__label-error': error[name].status,
+          'input__label-error': error,
         })}
       >
-        {error[name].status ? error[name].text : label}
+        {error ? textError : label}
       </label>
       <TextArea
         id={name}
         name={name}
-        value={value[name]}
+        value={value}
         onChange={onChange}
         placeholder={placeholder}
         autoSize={{ minRows, maxRows }}

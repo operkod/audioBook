@@ -1,31 +1,28 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, ChangeEvent } from 'react';
 import { Input } from 'antd';
 import { createUseStyles } from 'react-jss';
-import { useDispatch, useSelector } from 'react-redux';
 import { useGlobalStyles } from 'App';
-import { Menu } from 'components';
+import Menu from 'components/Menu';
 import { Link, useHistory } from 'react-router-dom';
-// import { Actions } from 'redux/action/books';
 import routers from 'const/routers';
 import { useTranslation } from 'react-i18next';
 import Language from 'components/Language';
 import logoIcon from 'assets/img/logo.svg';
-import { setParamsQueryBooks } from 'Actions';
-import { StateType } from 'redux/reducer';
+import useBooks from 'hooks/api/useBooks';
 
 const { Search } = Input;
 
 const Header = () => {
   const { t } = useTranslation();
   const history = useHistory();
-  const dispatch = useDispatch();
   const styles = useStyles();
   const globalStyles = useGlobalStyles();
-  const search = useSelector((state: StateType) => state.queryParams.search);
-  const [valueForm, setValueForm] = useState(search);
+  const { requestBookParams, setRequestBookParams } = useBooks();
+  const [valueForm, setValueForm] = useState(requestBookParams.search);
 
   const searchHandler = (value: string) => {
-    dispatch(setParamsQueryBooks({ search: value.trim(), page: 0 }));
+    setRequestBookParams({ search: value.trim(), page: 0 });
     history.push(routers.getBase());
   };
 
@@ -46,7 +43,6 @@ const Header = () => {
             <Search
               placeholder={t('search')}
               onSearch={searchHandler}
-              defaultValue={search}
               value={valueForm}
               onChange={changeHandler}
               enterButton

@@ -1,13 +1,12 @@
-import { getEntities } from 'redux/reducer';
+import { getEntities, StateType, getUtils } from 'reducers';
 
-const getSimpleResult = (initialValue: any) => (state: any, resultKey: string) =>
+const getSimpleResult = (initialValue: object) => (state: StateType, resultKey: string) =>
   getEntities(state)[resultKey] ?? initialValue;
 
 export const objectSelector = getSimpleResult({});
 export const arraySelector = getSimpleResult([]);
 
-export const primitiveSelector = (state: any, resultKey: string, initialValue?: any) =>
-  getEntities(state)[resultKey] ?? initialValue;
+export const modalSelector = (state: StateType) => state.modal;
 
-// export const utilsSelector = (state: object, resultKey: string, initialValue?: any) =>
-//   getUtils(state)[resultKey] ?? initialValue;
+export const utilsSelector = (state: object, resultKey: string, initialValue?: any) =>
+  getUtils(state)[resultKey] ?? initialValue;

@@ -1,5 +1,4 @@
 import produce from 'immer';
-import { ActionsTypes } from 'redux/action/audioPlayer';
 
 type InitialStateType = typeof initialState;
 
@@ -9,7 +8,7 @@ const initialState = {
   isPlay: false,
 };
 
-const audioReducer = (state = initialState, action: ActionsTypes): InitialStateType =>
+export default (state = initialState, action: any): InitialStateType =>
   produce(state, (draft) => {
     switch (action.type) {
       case 'AUDIO@SET_ID':
@@ -24,5 +23,3 @@ const audioReducer = (state = initialState, action: ActionsTypes): InitialStateT
       default:
     }
   });
-
-export { audioReducer };

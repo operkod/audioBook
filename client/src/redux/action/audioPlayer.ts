@@ -1,7 +1,6 @@
 /*eslint-disable */
-import { InferActionsTypes } from "redux/reducer";
 
-export type ActionsTypes = InferActionsTypes<typeof Actions>;
+export type ActionsTypes = typeof Actions;
 
 export const Actions = {
   setAudio: (payload: string) => ({

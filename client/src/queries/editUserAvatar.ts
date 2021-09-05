@@ -2,18 +2,18 @@ import endpoints from 'const/endpoints';
 import { requestAsync } from 'redux-query';
 import { IQueriesType } from './type';
 
-export interface IGetBookLikeParams extends IQueriesType {
-  id: string;
-  checked: boolean;
+export interface IGetUserAvatarParams extends IQueriesType {
+  file: any;
 }
 
-const getBookLike = ({ id, checked, resultKey = 'bookLike', successCallback, errorCallback }: IGetBookLikeParams) =>
+const editUserAvatar = ({ file, resultKey = 'userAvatar', successCallback, errorCallback }: IGetUserAvatarParams) =>
   requestAsync({
-    url: endpoints.getBookLikeUrl(),
+    url: endpoints.getUserAvatarUrl(),
     transform: (response) => ({
       [resultKey]: response,
     }),
-    queryKey: endpoints.getBookLikeUrl(),
+    queryKey: endpoints.getUserAvatarUrl(),
+    body: file,
     meta: {
       authToken: true,
       successCallback,
@@ -22,13 +22,12 @@ const getBookLike = ({ id, checked, resultKey = 'bookLike', successCallback, err
     options: {
       method: 'POST',
       headers: {
-        Accept: 'application/json',
+        Accept: 'multipart/form-data',
       },
     },
-    body: { id, checked },
     update: {
       [resultKey]: (_prevEntities: any, newEntities: any) => newEntities,
     },
   });
 
-export default getBookLike;
+export default editUserAvatar;

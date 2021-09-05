@@ -79,32 +79,35 @@ const AddBook = () => {
           <form className="addbook__form" onSubmit={handleSubmit}>
             <TextArea
               name="name"
-              value={formaData}
+              value={formaData.name}
               onChange={handleChange}
               onBlur={handleBlur}
               label={t('book.input.name')}
               placeholder={t('book.input.name')}
-              error={error}
+              error={error.name.isValid}
+              textError={error.name.text}
               styleProp={{ width: '500px' }}
             />
             <TextArea
               name="author"
-              value={formaData}
+              value={formaData.author}
               onChange={handleChange}
               onBlur={handleBlur}
               label={t('book.input.author')}
               placeholder={t('book.input.author')}
-              error={error}
+              error={error.author.isValid}
+              textError={error.author.text}
               styleProp={{ width: '500px' }}
             />
             <TextArea
               name="description"
-              value={formaData}
+              value={formaData.description}
               onChange={handleChange}
               onBlur={handleBlur}
               label={t('book.input.description')}
               placeholder={t('book.input.description')}
-              error={error}
+              error={error.description.isValid}
+              textError={error.description.text}
               minRows={3}
               maxRows={7}
               styleProp={{ width: '500px' }}

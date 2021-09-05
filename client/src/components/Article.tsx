@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { createUseStyles } from 'react-jss';
 import { Statistic } from 'antd';
 import { useTranslation } from 'react-i18next';
-import { AuthorBlock } from 'components';
+import AuthorBlock from 'components/AuthorBlock';
 import { ButtonPlay } from 'components/button';
 import { BookType } from 'types';
 import Block from 'components/Block';
@@ -12,14 +12,28 @@ import logoIcon from 'assets/img/logo.svg';
 import likeIcon from 'assets/img/like-up.svg';
 import likeUpIcon from 'assets/img/like.svg';
 import { formatStringEllipsis } from 'helpers/format';
+import useModal from 'hooks/useModal';
 
 const Article: React.FC<BookType> = (props) => {
   const { _id, name, author, imgUrl, description, comments, likes } = props;
   const [like, setLike] = useState(likes);
   const { t } = useTranslation();
   const styles = useStyles();
-  const { getBookLike } = useBooks();
-  // const handleClick = () => dispatch(ActionsComment.fetchComments(_id));
+  const { getBookLike, getBookComment } = useBooks();
+  const { setModal } = useModal();
+
+  const clickHandler = () => {
+    setModal({ show: true, loader: true, id: _id });
+    getBookComment({
+      id: _id,
+      successCallback: () => {
+        setModal({ show: true, loader: false });
+      },
+      errorCallback: () => {
+        setModal({ show: false, loader: false });
+      },
+    });
+  };
 
   const likeHandler = useCallback(() => {
     getBookLike({
@@ -61,7 +75,7 @@ const Article: React.FC<BookType> = (props) => {
             className={styles.center}
             name={comments.length ? `${comments.length} ${t('article.comment.yes')}` : t('article.comment.no')}
             icon={commentIcon}
-            onClick={() => console.log('Coments')}
+            onClick={clickHandler}
           />
         </div>
       </div>

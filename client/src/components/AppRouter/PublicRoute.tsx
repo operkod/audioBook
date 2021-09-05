@@ -1,8 +1,8 @@
 import routers from 'const/routers';
+import { getToken } from 'helpers/token';
+import useUserData from 'hooks/api/useUserData';
 import React, { FC } from 'react';
-import { useSelector } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
-import { getAuth } from 'redux/selectors';
 
 interface IPublicRoute {
   component: () => any;
@@ -12,8 +12,8 @@ interface IPublicRoute {
 }
 
 const PublicRoute: FC<IPublicRoute> = ({ component: Component, ...rest }) => {
-  const isAuth = useSelector(getAuth);
-  if (!isAuth) {
+  const { userData } = useUserData();
+  if (!getToken() && !userData.id) {
     return <Route exact={rest.exact} path={rest.path} render={() => <Component />} />;
   }
   return <Redirect to={routers.getBase()} />;

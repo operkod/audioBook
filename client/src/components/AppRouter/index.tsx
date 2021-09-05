@@ -1,17 +1,16 @@
-import React, { lazy, Suspense } from 'react';
+import React, { Suspense } from 'react';
 import { Switch, Redirect, Route } from 'react-router';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { Layout } from 'components';
+import Layout from 'components/Layout';
 import Home from 'page/Home';
 import routers from 'const/routers';
 import Loader from 'components/Loader';
+import Signin from 'page/Signin';
+import Signup from 'page/Signup';
+import Profile from 'page/Profile';
+import AddBook from 'page/AddBook';
 import PublicRoute from './PublicRoute';
 import PrivateRoute from './PrivateRoute';
-
-const Signin = lazy(() => import('page/Signin'));
-const Signup = lazy(() => import('page/Signup'));
-const Profile = lazy(() => import('page/Profile'));
-const AddBook = lazy(() => import('page/AddBook'));
 
 const AppRouters = () => (
   <Router>

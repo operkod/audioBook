@@ -1,14 +1,12 @@
 import endpoints from 'const/endpoints';
 import { requestAsync } from 'redux-query';
+import { IQueriesType } from './type';
 
-export interface IGetSignUpParams {
+interface IGetSignUpParams extends IQueriesType {
   email: string;
   password: string;
   fullname: string;
   password_2: string;
-  resultKey?: string;
-  successCallback: Function;
-  errorCallback: Function;
 }
 
 const getSingUp = ({

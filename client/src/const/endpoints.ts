@@ -10,5 +10,8 @@ export default {
   getSingUpUrl: (): string => `${host}/${signUp}`,
   getUserUrl: (): string => `${host}/${user}`,
   getBooksUrl: (params: object): string => `${host}/book${getParams(params)}`,
+  getBookCommentUrl: (): string => `${host}/book/comment`,
+  getBookAddCommentUrl: (): string => `${host}/book/addcomment`,
   getBookLikeUrl: (): string => `${host}/book/like`,
+  getUserAvatarUrl: (): string => `${host}/auth/photo`,
 };

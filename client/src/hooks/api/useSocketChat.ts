@@ -1,4 +1,4 @@
-import axios from 'api';
+import axios from 'axios';
 import { getToken } from 'helpers/token';
 import { useCallback, useEffect, useState } from 'react';
 import io from 'socket.io-client';
@@ -6,15 +6,7 @@ import io from 'socket.io-client';
 const socket = io();
 
 const useSocketChat = () => {
-  const [messages, setMessages] = useState([
-    {
-      id: Math.random(),
-      author: 'Saha',
-      avatar: '',
-      message: 'hello brat',
-      date: new Date(),
-    },
-  ]);
+  const [messages, setMessages] = useState([]);
 
   const addMessage = useCallback((message) => {
     const obj = {
@@ -33,7 +25,7 @@ const useSocketChat = () => {
   useEffect(() => {
     (async () => {
       const { data } = await axios.get('/book/chat');
-      console.log('DATA  :', data);
+      setMessages(data);
     })();
   }, []);
 

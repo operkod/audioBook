@@ -110,8 +110,9 @@ const LoginForm = () => {
               placeholder={t('auth.input.email')}
               handleChange={handleChange}
               handleBlur={handleBlur}
-              errors={errors}
-              values={formaData}
+              validateStatus={errors.email.isValid}
+              errorText={errors.email.text}
+              value={formaData.email}
             />
             <Input
               name="password"
@@ -119,8 +120,9 @@ const LoginForm = () => {
               placeholder={t('auth.input.password')}
               handleChange={handleChange}
               handleBlur={handleBlur}
-              errors={errors}
-              values={formaData}
+              errorText={errors.password.text}
+              validateStatus={errors.password.isValid}
+              value={formaData.password}
             />
             <Form.Item>
               <Button disabled={isButtonDisabled} block htmlType="submit" type="primary" size="large">

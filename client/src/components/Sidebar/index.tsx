@@ -1,3 +1,5 @@
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable react/no-array-index-key */
 import React, { ChangeEvent, useCallback, useState, useRef, useEffect, FC } from 'react';
 import Block from 'components/Block';
 import { createUseStyles } from 'react-jss';
@@ -41,8 +43,7 @@ const Sidebar: FC<PropsTypes> = ({ className = '' }) => {
         <div className={styles.main} ref={myRef}>
           {messages.map((item, index) => (
             <Comment
-              // eslint-disable-next-line react/no-array-index-key
-              key={item.id + index}
+              key={item._id + index}
               author={item.author}
               avatar={
                 // eslint-disable-next-line react/jsx-wrap-multilines

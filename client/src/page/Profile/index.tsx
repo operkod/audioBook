@@ -1,24 +1,31 @@
 /*eslint-disable */
 import './Profile.scss';
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { ChangeEvent, ChangeEventHandler, InputHTMLAttributes, useCallback } from 'react';
 import { Card, Image, Typography } from 'antd';
-import { getAvatar, getUserName } from 'redux/selectors';
 import { useTranslation } from 'react-i18next';
+import useBooks from 'hooks/api/useBooks';
+import useUserData from 'hooks/api/useUserData';
 import CardBook from './CardBook';
-import useAuth from 'hooks/api/useAuth';
 
 const { Title } = Typography;
 
 const Profile = () => {
   const { t } = useTranslation();
-  const avatar = useSelector(getAvatar);
-  const userName = useSelector(getUserName);
-  const dispatch = useDispatch();
+  const { booksData } = useBooks();
+  const { userData, editUserAvatar, updateAvatar } = useUserData();
+  const { name, avatar } = userData;
 
-  const onChange = (e: any) => {
-    // dispatch(ActionsUser.updateAvatar(e.target.files[0]));
-  };
+  const onChange = useCallback((event: any) => {
+    const file = event.target.files[0];
+    const formData = new FormData();
+    formData.append('image', file);
+    editUserAvatar({
+      file: formData,
+      successCallback: ({ avatar }: any) => {
+        updateAvatar(avatar);
+      },
+    });
+  }, []);
 
   return (
     <div className="profile">
@@ -32,16 +39,16 @@ const Profile = () => {
             </div>
             <Title level={1} className="profile__header-title">
               <span style={{ fontSize: '20px' }}>{t('profile.name')}:</span>
-              {userName}
+              {name}
             </Title>
           </div>
         </Card>
         <Card>
           <Title level={3}>{t('profile.select')}</Title>
           <div className="profile__list">
-            {/* {books.map((book) => (
+            {booksData.books.map((book: any) => (
               <CardBook key={book._id} {...book} />
-            ))} */}
+            ))}
           </div>
         </Card>
       </div>
