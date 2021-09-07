@@ -35,6 +35,8 @@ const BooksScreen: FC<PropsTypes> = ({ className = '' }) => {
       params.search = parsString.search;
     }
     if (params.page !== page || params.search !== search) {
+      // eslint-disable-next-line no-debugger
+      debugger;
       setRequestBookParams({ page: params.page, search: params.search });
     }
   }, [history.location.search]);
@@ -53,9 +55,9 @@ const BooksScreen: FC<PropsTypes> = ({ className = '' }) => {
 
   const onChangePage = useCallback(
     (valuePage: number) => {
-      setRequestBookParams({ page: valuePage });
+      setRequestBookParams({ page: valuePage, search });
     },
-    [setRequestBookParams],
+    [setRequestBookParams, search],
   );
 
   return (

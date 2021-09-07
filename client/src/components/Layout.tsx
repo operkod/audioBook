@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import Header from 'components/Header';
 import AudioPlayer from 'components/AudioPlayer';
-import Modal from 'components/Modal';
+// import Modal from 'components/Modal';
 import Loader from 'components/Loader';
 import { getAudioId } from 'redux/selectors';
 import { createUseStyles } from 'react-jss';
@@ -30,7 +30,6 @@ const MyLayout = ({ children }: any) => {
       <Header />
       <div className={styles.wrapper}>{children}</div>
       {!!isAudio && <AudioPlayer />}
-      <Modal />
     </>
   );
 };

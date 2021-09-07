@@ -6,20 +6,19 @@ export interface IGetBooksParams extends IQueriesType {
   id: string;
 }
 
-const getBooks = ({ id, resultKey = 'bookComments', successCallback, errorCallback }: IGetBooksParams) =>
+const getBookComment = ({ id, resultKey = 'bookComments', successCallback, errorCallback }: IGetBooksParams) =>
   requestAsync({
-    url: endpoints.getBookCommentUrl(),
+    url: endpoints.getBookCommentUrl(id),
     transform: (response) => ({
       [resultKey]: response,
     }),
-    queryKey: endpoints.getBookCommentUrl(),
+    queryKey: endpoints.getBookCommentUrl(id),
     meta: {
       successCallback,
       errorCallback,
     },
-    body: { id },
     options: {
-      method: 'POST',
+      method: 'GET',
       headers: {
         Accept: 'application/json',
       },
@@ -29,4 +28,4 @@ const getBooks = ({ id, resultKey = 'bookComments', successCallback, errorCallba
     },
   });
 
-export default getBooks;
+export default getBookComment;

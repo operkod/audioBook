@@ -1,6 +1,7 @@
 import React from 'react';
 import { createUseStyles } from 'react-jss';
 import Sidebar from 'components/Sidebar';
+import Modal from 'components/Modal';
 import BooksScreen from './BooksScreen';
 
 // TODO: убирать компонент Sidebar при ширине <1200
@@ -11,6 +12,7 @@ const Home = () => {
     <div className={styles.home}>
       <BooksScreen className={styles.books} />
       <Sidebar className={styles.sidebar} />
+      <Modal />
     </div>
   );
 };

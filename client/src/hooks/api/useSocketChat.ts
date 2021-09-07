@@ -24,7 +24,7 @@ const useSocketChat = () => {
 
   useEffect(() => {
     (async () => {
-      const { data } = await axios.get('/book/chat');
+      const { data } = await axios.get('/chat');
       setMessages(data);
     })();
   }, []);

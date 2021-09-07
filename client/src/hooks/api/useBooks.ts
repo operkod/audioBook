@@ -50,7 +50,10 @@ const useAuth = () => {
             updateEntities({
               bookComments: (prev: Array<any>) => [...prev, newComment],
             }),
-          setRequestBookParams: (requestBookParams: RequestBookParamsType) => updateUtils({ requestBookParams }),
+          setRequestBookParams: (requestBookParams: RequestBookParamsType) =>
+            updateUtils({
+              requestBookParams: { ...initialRequestBookParams, ...requestBookParams },
+            }),
         },
         dispatch,
       ),

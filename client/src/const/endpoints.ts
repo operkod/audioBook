@@ -1,17 +1,17 @@
 import getParams from 'helpers/getParams';
 
 const host = window.location.origin; // TODO:
-const signIn = 'auth/signin';
-const signUp = 'auth/signup';
-const user = 'auth/user';
+const signIn = 'user/signin';
+const signUp = 'user/signup';
+const user = 'user/me';
 
 export default {
+  getUserUrl: (): string => `${host}/${user}`,
   getAuthUrl: (): string => `${host}/${signIn}`,
   getSingUpUrl: (): string => `${host}/${signUp}`,
-  getUserUrl: (): string => `${host}/${user}`,
+  getUserAvatarUrl: (): string => `${host}/user/photo`,
   getBooksUrl: (params: object): string => `${host}/book${getParams(params)}`,
-  getBookCommentUrl: (): string => `${host}/book/comment`,
-  getBookAddCommentUrl: (): string => `${host}/book/addcomment`,
+  getBookCommentUrl: (id: string): string => `${host}/book/comment?id=${id}`,
+  getBookAddCommentUrl: (): string => `${host}/book/comment/add`,
   getBookLikeUrl: (): string => `${host}/book/like`,
-  getUserAvatarUrl: (): string => `${host}/auth/photo`,
 };
