@@ -11,12 +11,12 @@ const io = (server: http.Server) => {
   const io = new Server(server);
   io.on('connection', socket => {
     socket.on('MESSAGE', async ({ token, message }) => {
-      let user = null
-      //@ts-ignore
+      let user = null;
+      //@ts-ignore;
       if (token) {
         const decoding = jwt.verify(token, 'Operkod');
         user = await UserModel.findById(
-          //@ts-ignore
+          //@ts-ignore;
           { _id: decoding.userId },
           { id: 1, avatar: 1, fullname: 1 }
         );
