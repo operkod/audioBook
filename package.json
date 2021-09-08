@@ -13,7 +13,6 @@
     "client:install": "npm install --prefix client",
     "client:build": "npm run build --prefix client",
     "dev": "cross-env NODE_ENV=development concurrently \"npm run server\" \"npm run client\"",
-    "heroku-prebuild": "npm run client:instal",
     "heroku-postbuild": "npm run client:build"
   },
   "dependencies": {
