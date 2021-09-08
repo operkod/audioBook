@@ -1,6 +1,5 @@
-import { Schema, model } from 'mongoose'
-import { IComment } from './Comment'
-
+import { Schema, model } from 'mongoose';
+import { IComment } from './Comment';
 export interface IBook extends Document {
 	name: string;
 	author: string;
@@ -19,8 +18,8 @@ const BookSchema = new Schema(
 		comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
 		likes: [{ type: Schema.Types.String }] // TODO: ref user
 	}
-)
+);
 
-const BookModel = model<IBook | any>('Book', BookSchema)
+const BookModel = model<IBook | any>('Book', BookSchema);
 
-export default BookModel
+export default BookModel;

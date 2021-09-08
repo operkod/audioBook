@@ -1,12 +1,11 @@
-import { Schema, model, Document } from 'mongoose'
-// TODO: ref: user
+import { Schema, model, Document } from 'mongoose';
+// TODO: ref: user;
 
 export interface IChat extends Document {
-  author: string,
-  avatar: string,
-  message: string,
-
-}
+  author: string;
+  avatar: string;
+  message: string;
+};
 
 const ChatSchema = new Schema(
   {
@@ -17,8 +16,8 @@ const ChatSchema = new Schema(
   {
     timestamps: true,
   },
-)
+);
 
-const ChatModel = model<IChat>('Chat', ChatSchema)
+const ChatModel = model<IChat>('Chat', ChatSchema);
 
-export default ChatModel
+export default ChatModel;

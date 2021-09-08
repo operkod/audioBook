@@ -1,10 +1,10 @@
-import { Schema, model, Document } from 'mongoose'
-import { IUser } from './User'
+import { Schema, model, Document } from 'mongoose';
+import { IUser } from './User';
 
 export interface IComment extends Document {
-	author: IUser | string
-	text: string
-}
+	author: IUser | string;
+	text: string;
+};
 
 
 const CommentSchema = new Schema(
@@ -15,8 +15,8 @@ const CommentSchema = new Schema(
 	{
 		timestamps: true,
 	}
-)
+);
 
-const CommentModel = model<IComment>('Comment', CommentSchema)
+const CommentModel = model<IComment>('Comment', CommentSchema);
 
-export default CommentModel
+export default CommentModel;
