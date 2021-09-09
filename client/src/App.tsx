@@ -34,8 +34,6 @@ const useStyles = createUseStyles({
     },
 
     body: {
-      backgroundColor: 'red', // TODO:
-
       minHeight: '100vh',
       fontFamily: 'LatoRegular, sans-serif',
       fontSize: '13px',

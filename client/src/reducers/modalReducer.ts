@@ -1,4 +1,4 @@
-import { SET_MODAL } from '../actions';
+import { SET_MODAL } from 'actions';
 
 type initialStateType = typeof initialState;
 const initialState = {
